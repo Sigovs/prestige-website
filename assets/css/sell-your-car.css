@@ -284,10 +284,16 @@
     position: absolute;
     inset: 0;
     background-color: #1a1b1f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
+}
+
+.hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     opacity: 0.42;
+    display: block;
 }
 
 .hero__overlay {
@@ -350,10 +356,15 @@
     to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes hero-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 .hero__content .eyebrow      { animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.10s both; }
 .hero__content .hero__headline { animation: hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both; }
 .hero__content .hero__sub      { animation: hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.38s both; }
-.hero__form-col                { animation: hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.30s both; }
+.hero__form-col                { animation: hero-fade 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.30s both; }
 
 @media (prefers-reduced-motion: reduce) {
     .hero__content .eyebrow,
@@ -369,10 +380,11 @@
    ============================================================ */
 .form-card {
     background-color: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(15.95px);
+    -webkit-backdrop-filter: blur(15.95px);
     border-radius: 7px;
     padding: 30px 42px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: var(--sp-3);

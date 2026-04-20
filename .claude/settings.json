@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Read(//Users/alex/.claude/**)",
-      "Bash(claude mcp *)"
+      "Bash(claude mcp *)",
+      "WebFetch(domain:www.prestigeimports.com)",
+      "Bash(git -C /Users/alex/Desktop/WORK/PRESTIGE/prestige-website diff sell-your-car.html assets/css/sell-your-car.css)",
+      "mcp__figma__get_design_context"
     ]
   }
 }
