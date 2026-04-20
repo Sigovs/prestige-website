@@ -213,10 +213,21 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid transparent;
+    transition:
+        background-color 0.3s ease,
+        backdrop-filter 0.3s ease,
+        -webkit-backdrop-filter 0.3s ease,
+        border-color 0.3s ease;
+}
+.site-header.is-scrolled {
     background-color: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid #232323;
+    border-bottom-color: #232323;
 }
 
 .site-header__inner {
@@ -233,8 +244,21 @@
     text-transform: uppercase;
     color: var(--text-primary);
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+.logo img {
+    display: block;
+    height: 64px; /* base size */
+    width: auto;
+    filter: brightness(0) invert(1); /* force pure #FFFFFF */
+    transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.site-header.is-scrolled .logo img {
+    height: 54px; /* ~15% smaller */
 }
 .logo--sm { opacity: 0.48; letter-spacing: 0.20em; }
+.logo--sm img { height: 22px; }
 
 .site-header__nav {
     display: flex;
@@ -594,6 +618,103 @@
 }
 
 
+/* ── Reveal animation: section--why ─────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+
+/* Header — eyebrow → heading → body */
+.section--why[data-reveal] .section-header > * {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--why[data-reveal].is-visible .section-header > * {
+    opacity: 1;
+    transform: none;
+}
+.section--why[data-reveal].is-visible .section-header > *:nth-child(1) { transition-delay: 0.05s; }
+.section--why[data-reveal].is-visible .section-header > *:nth-child(2) { transition-delay: 0.18s; }
+.section--why[data-reveal].is-visible .section-header > *:nth-child(3) { transition-delay: 0.32s; }
+
+/* Feature cards — lift + fade with stagger */
+.section--why[data-reveal] .feature {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+        opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+.section--why[data-reveal].is-visible .feature {
+    opacity: 1;
+    transform: none;
+}
+.section--why[data-reveal].is-visible .why__features li:nth-child(1) .feature { transition-delay: 0.42s; }
+.section--why[data-reveal].is-visible .why__features li:nth-child(2) .feature { transition-delay: 0.56s; }
+.section--why[data-reveal].is-visible .why__features li:nth-child(3) .feature { transition-delay: 0.70s; }
+.section--why[data-reveal].is-visible .why__features li:nth-child(4) .feature { transition-delay: 0.84s; }
+
+/* Icon: scale-in inside its card after card rises */
+.section--why[data-reveal] .feature__icon {
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+        opacity 0.45s ease,
+        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--why[data-reveal].is-visible .feature__icon { opacity: 1; transform: scale(1); }
+.section--why[data-reveal].is-visible .why__features li:nth-child(1) .feature__icon { transition-delay: 0.58s; }
+.section--why[data-reveal].is-visible .why__features li:nth-child(2) .feature__icon { transition-delay: 0.72s; }
+.section--why[data-reveal].is-visible .why__features li:nth-child(3) .feature__icon { transition-delay: 0.86s; }
+.section--why[data-reveal].is-visible .why__features li:nth-child(4) .feature__icon { transition-delay: 1.00s; }
+
+/* Card hover — richer bg + brighter border + slight lift */
+.feature {
+    cursor: default;
+}
+.section--why[data-reveal] .feature:hover {
+    background-color: rgba(20, 38, 44, 0.55);
+    border-color: rgba(237, 234, 228, 0.18);
+    transform: translateY(-3px);
+}
+
+/* Wide image — curtain reveal from left + slight push-in */
+.section--why[data-reveal] .why__image {
+    position: relative;
+    isolation: isolate;
+}
+.section--why[data-reveal] .why__image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: #0a0f11;
+    transform: scaleX(1);
+    transform-origin: right center;
+    transition: transform 1.2s cubic-bezier(0.7, 0, 0.15, 1);
+    z-index: 2;
+    pointer-events: none;
+    border-radius: 10px;
+}
+.section--why[data-reveal].is-visible .why__image::after {
+    transform: scaleX(0);
+    transition-delay: 1.0s;
+}
+.section--why[data-reveal] .why__image .placeholder,
+.section--why[data-reveal] .why__image img {
+    transform: scale(1.06);
+    transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--why[data-reveal].is-visible .why__image .placeholder,
+.section--why[data-reveal].is-visible .why__image img {
+    transform: scale(1);
+    transition-delay: 1.1s;
+}
+
+} /* end @media */
+
+
 /* ============================================================
    04 — TRUST & CREDIBILITY (Our Reviews)
    Figma: 4-cell stats grid with L-dividers, 3 testimonial cards.
@@ -655,66 +776,219 @@
 .testimonial {
     background-color: var(--bg-dark);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 3px;
-    padding: 32px 33px 25px;
+    border-radius: 8px;
+    padding: 24px 24px 22px;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 14px;
+}
+
+.testimonial__head {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    align-items: center;
+    gap: 12px;
+}
+
+.testimonial__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--avatar-bg, #4285F4);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: uppercase;
+    font-family: 'Roboto', var(--font);
+    user-select: none;
+}
+
+.testimonial__who {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.testimonial__source {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.82;
+}
+.testimonial__source svg { display: block; }
+
+.testimonial__rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1;
+    margin-top: -2px;
+}
+
+.testimonial__stars {
+    display: inline-flex;
+    gap: 1px;
+    color: #FBBC04;
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0.5px;
 }
 
 .testimonial__quote {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 300;
     font-style: normal;
     line-height: 1.6;
     color: var(--text-secondary);
     margin: 0;
-    padding-bottom: 26px;
+    padding: 0;
     flex: 1;
 }
 
-.testimonial__attribution {
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    padding-top: 31px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+.testimonial__author {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-transform: none;
+    color: var(--text-primary);
 }
 
-.testimonial__author,
+.testimonial__meta {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.3;
+    text-transform: none;
+    color: var(--text-muted);
+}
+
 .testimonial__date {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.2;
-    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
     color: var(--text-muted);
 }
 
 
 /* ============================================================
    05 — RECENTLY PURCHASED
-   Figma: 4-photo horizontal gallery, gap 10px.
+   Figma: horizontal slider, shifted right — items extend beyond
+   the container's right edge, first item aligns with container.
    ============================================================ */
 .section--recent {
     background:
         radial-gradient(120% 140% at 29% 8%, rgba(12, 27, 33, 1) 0%, var(--bg-page) 65%),
         var(--bg-page);
+    overflow: hidden;
+}
+
+.section-header--slider {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+}
+.section-header--slider .section-header__text { max-width: 832px; }
+
+.slider-controls {
+    display: inline-flex;
+    gap: 10px;
+    flex-shrink: 0;
+    padding-bottom: 4px;
+}
+
+.slider-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: transparent;
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        opacity 0.22s ease,
+        transform 0.22s ease;
+    font-family: inherit;
+}
+.slider-btn i { font-size: 18px; line-height: 1; }
+.slider-btn:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.32);
+}
+.slider-btn:active { transform: scale(0.96); }
+.slider-btn:disabled,
+.slider-btn[aria-disabled="true"] {
+    opacity: 0.32;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .gallery--recent {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
     gap: 10px;
+    /* Break out of container to the right — first item stays aligned with
+       container's left edge, the row extends past its right edge to hint at
+       more content, like the Figma mockup. */
+    margin-right: calc((100% - 100vw) / 2);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 0;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 2px;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
 }
+.gallery--recent.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+}
+.gallery--recent.is-dragging * { pointer-events: none; }
+.gallery--recent::-webkit-scrollbar { display: none; }
 
 .gallery__item {
+    flex: 0 0 auto;
+    width: 479px;
+    aspect-ratio: 479 / 309;
+    scroll-snap-align: start;
     overflow: hidden;
     border-radius: 2px;
 }
+.gallery__item:first-child { width: 464px; }
+
 .gallery__item .placeholder {
     height: 100%;
     width: 100%;
+}
+
+@media (max-width: 1120px) {
+    .gallery__item,
+    .gallery__item:first-child { width: 380px; }
+}
+
+@media (max-width: 640px) {
+    .gallery__item,
+    .gallery__item:first-child { width: 82vw; }
 }
 
 
@@ -999,9 +1273,6 @@
 
     .testimonials { grid-template-columns: 1fr; gap: var(--sp-2); }
 
-    /* Recent gallery */
-    .gallery--recent { grid-template-columns: repeat(2, 1fr); }
-
     /* Difference / FAQ — stack */
     .difference__layout {
         grid-template-columns: 1fr;
@@ -1043,8 +1314,6 @@
         border-top: 1px solid var(--border-dim);
     }
     .trust-stat:first-child { border-top: none; }
-
-    .gallery--recent { grid-template-columns: 1fr; }
 
     .final-cta__heading { font-size: clamp(40px, 10vw, 60px); }
 

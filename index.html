@@ -22,7 +22,7 @@
 
     <header class="site-header">
         <div class="container site-header__inner">
-            <a href="index.html" class="logo" aria-label="Prestige Imports — Home">PRESTIGE IMPORTS</a>
+            <a href="index.html" class="logo" aria-label="Prestige Imports — Home"><img src="assets/images/logo.svg" alt="Prestige Imports"></a>
             <nav class="site-header__nav" aria-label="Site navigation">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="#inventory" class="nav-link">Inventory</a>
@@ -42,13 +42,9 @@
         <!-- 01 — HERO -->
         <section class="hero" aria-label="Prestige Imports — luxury and exotic vehicles">
             <div class="hero__bg" aria-hidden="true">
-                <!-- When ready, swap this placeholder for:
-                <video class="hero__video" autoplay muted loop playsinline preload="metadata"
-                       poster="assets/media/hero-poster.jpg">
-                    <source src="assets/media/hero.mp4" type="video/mp4">
+                <video class="hero__video" autoplay muted loop playsinline preload="metadata">
+                    <source src="assets/videos/hero_video_d.mp4" type="video/mp4">
                 </video>
-                -->
-                <span class="placeholder__label">VIDEO — Hero mashup (events + showroom, 15–30s loop)</span>
             </div>
             <div class="hero__overlay" aria-hidden="true"></div>
 
@@ -71,10 +67,15 @@
                         <a href="sell-your-car.html" class="btn btn--ghost">Sell Your Vehicle</a>
                     </div>
 
-                    <div class="hero__meta" aria-label="Service highlights">
-                        <span class="hero__meta-item">South Florida</span>
-                        <span class="hero__meta-item">Nationwide Delivery</span>
-                        <span class="hero__meta-item">By Appointment</span>
+                    <div class="hero__meta" aria-label="Contact">
+                        <a class="hero__meta-item" href="tel:+13059531000">
+                            <i class="ph-thin ph-phone" aria-hidden="true"></i>
+                            <span>+1 (305) 953-1000</span>
+                        </a>
+                        <a class="hero__meta-item" href="https://maps.google.com/?q=14780+Biscayne+Blvd+North+Miami+FL" target="_blank" rel="noopener">
+                            <i class="ph-thin ph-map-pin" aria-hidden="true"></i>
+                            <span>14780 Biscayne Blvd · North Miami, FL</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -92,26 +93,32 @@
 
                 <ul class="brands-grid" aria-label="Our brands">
                     <li>
-                        <a href="#" class="brand-card">
-                            <span class="brand-card__name">Pagani</span>
+                        <a href="#" class="brand-card" aria-label="Pagani Miami">
+                            <img class="brand-card__logo" src="assets/images/pagani%20_logo.svg" alt="Pagani" loading="lazy">
                             <span class="brand-card__sub">Miami</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="brand-card">
-                            <span class="brand-card__name">Lamborghini</span>
+                        <a href="#" class="brand-card" aria-label="Lamborghini Miami">
+                            <img class="brand-card__logo" src="assets/images/lambo_logo.svg" alt="Lamborghini" loading="lazy">
                             <span class="brand-card__sub">Miami</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="brand-card">
-                            <span class="brand-card__name">Lotus</span>
+                        <a href="#" class="brand-card" aria-label="Lotus Miami">
+                            <img class="brand-card__logo" src="assets/images/lotus_logo.svg" alt="Lotus" loading="lazy">
                             <span class="brand-card__sub">Miami</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="brand-card">
-                            <span class="brand-card__name">Karma</span>
+                        <a href="#" class="brand-card" aria-label="Karma Miami">
+                            <img class="brand-card__logo" src="assets/images/karma_logo.svg" alt="Karma" loading="lazy">
+                            <span class="brand-card__sub">Miami</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="brand-card" aria-label="Czinger Miami">
+                            <img class="brand-card__logo" src="assets/images/czinger_logo.svg" alt="Czinger" loading="lazy">
                             <span class="brand-card__sub">Miami</span>
                         </a>
                     </li>
@@ -129,7 +136,7 @@
                     <div class="inventory__header-text">
                         <p class="eyebrow">FEATURED INVENTORY</p>
                         <h2 class="section__heading" id="inventory-heading">A Curated Selection of Premium Vehicles.</h2>
-                        <p class="section__intro">New Lamborghini, Pagani, Lotus, and Karma — alongside pre-owned Ferrari, Bentley, Porsche, McLaren, Rolls-Royce, Bugatti, and other collector-grade vehicles.</p>
+                        <p class="section__intro">New Lamborghini, Pagani, Lotus, Karma, and Czinger — factory-new inventory from the marques we represent as an authorized dealer.</p>
                     </div>
                     <a href="#" class="btn btn--ghost">View All Inventory</a>
                 </div>
@@ -139,13 +146,13 @@
                     <li>
                         <a href="#" class="vehicle-card">
                             <div class="vehicle-card__media">
-                                <span class="placeholder__label">PHOTO — Ferrari (4:3)</span>
+                                <img src="assets/images/2024%20Lamborghini%20Revuelto.jpg" alt="2024 Lamborghini Revuelto" loading="lazy">
                             </div>
                             <div class="vehicle-card__body">
-                                <h3 class="vehicle-card__name">2022 Ferrari 812 Superfast</h3>
+                                <h3 class="vehicle-card__name">2024 Lamborghini Revuelto</h3>
                                 <ul class="vehicle-card__specs">
-                                    <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>4,200 mi</span></li>
-                                    <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>389,500</span></li>
+                                    <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>120 mi</span></li>
+                                    <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>645,000</span></li>
                                     <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
                                 </ul>
                             </div>
@@ -155,7 +162,39 @@
                     <li>
                         <a href="#" class="vehicle-card">
                             <div class="vehicle-card__media">
-                                <span class="placeholder__label">PHOTO — Lamborghini (4:3)</span>
+                                <img src="assets/images/2024%20Pagani%20Utopia.webp" alt="2024 Pagani Utopia" loading="lazy">
+                            </div>
+                            <div class="vehicle-card__body">
+                                <h3 class="vehicle-card__name">2024 Pagani Utopia</h3>
+                                <ul class="vehicle-card__specs">
+                                    <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>85 mi</span></li>
+                                    <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>2,900,000</span></li>
+                                    <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Manual</span></li>
+                                </ul>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="vehicle-card">
+                            <div class="vehicle-card__media">
+                                <img src="assets/images/2024%20Czinger%2021C.webp" alt="2024 Czinger 21C" loading="lazy">
+                            </div>
+                            <div class="vehicle-card__body">
+                                <h3 class="vehicle-card__name">2024 Czinger 21C</h3>
+                                <ul class="vehicle-card__specs">
+                                    <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>60 mi</span></li>
+                                    <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>2,000,000</span></li>
+                                    <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
+                                </ul>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="vehicle-card">
+                            <div class="vehicle-card__media">
+                                <img src="assets/images/2023%20Lamborghini%20Hurac%C3%A1n%20STO.webp" alt="2023 Lamborghini Huracán STO" loading="lazy">
                             </div>
                             <div class="vehicle-card__body">
                                 <h3 class="vehicle-card__name">2023 Lamborghini Huracán STO</h3>
@@ -171,29 +210,13 @@
                     <li>
                         <a href="#" class="vehicle-card">
                             <div class="vehicle-card__media">
-                                <span class="placeholder__label">PHOTO — Porsche GT (4:3)</span>
+                                <img src="assets/images/Karma%20GS-6.avif" alt="2024 Karma GS-6" loading="lazy">
                             </div>
                             <div class="vehicle-card__body">
-                                <h3 class="vehicle-card__name">2023 Porsche 911 GT3 RS</h3>
+                                <h3 class="vehicle-card__name">2024 Karma GS-6</h3>
                                 <ul class="vehicle-card__specs">
-                                    <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>950 mi</span></li>
-                                    <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>298,000</span></li>
-                                    <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>PDK</span></li>
-                                </ul>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="vehicle-card">
-                            <div class="vehicle-card__media">
-                                <span class="placeholder__label">PHOTO — McLaren (4:3)</span>
-                            </div>
-                            <div class="vehicle-card__body">
-                                <h3 class="vehicle-card__name">2022 McLaren 765LT</h3>
-                                <ul class="vehicle-card__specs">
-                                    <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>2,400 mi</span></li>
-                                    <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>489,000</span></li>
+                                    <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>45 mi</span></li>
+                                    <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>96,000</span></li>
                                     <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
                                 </ul>
                             </div>
@@ -203,23 +226,7 @@
                     <li>
                         <a href="#" class="vehicle-card">
                             <div class="vehicle-card__media">
-                                <span class="placeholder__label">PHOTO — AMG (4:3)</span>
-                            </div>
-                            <div class="vehicle-card__body">
-                                <h3 class="vehicle-card__name">2021 Mercedes-AMG GT Black Series</h3>
-                                <ul class="vehicle-card__specs">
-                                    <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>3,100 mi</span></li>
-                                    <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>445,000</span></li>
-                                    <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
-                                </ul>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="vehicle-card">
-                            <div class="vehicle-card__media">
-                                <span class="placeholder__label">PHOTO — Lotus Emira (4:3)</span>
+                                <img src="assets/images/2024%20Lotus%20Emira%20First%20Edition.avif" alt="2024 Lotus Emira First Edition" loading="lazy">
                             </div>
                             <div class="vehicle-card__body">
                                 <h3 class="vehicle-card__name">2024 Lotus Emira First Edition</h3>
@@ -241,7 +248,7 @@
         <!-- 03 — SELL YOUR VEHICLE (bridge to sell-your-car.html) -->
         <section class="section section--sell-bridge" aria-labelledby="sell-heading">
             <div class="container">
-                <div class="sell-bridge">
+                <div class="sell-bridge" data-reveal>
 
                     <div class="sell-bridge__text">
                         <p class="eyebrow">SELL YOUR VEHICLE</p>
@@ -251,8 +258,8 @@
                         <a href="sell-your-car.html" class="btn btn--primary">Get an Offer</a>
                     </div>
 
-                    <div class="sell-bridge__photo placeholder" aria-hidden="true">
-                        <span class="placeholder__label">PHOTO — Exotic car detail (portrait 4:5)</span>
+                    <div class="sell-bridge__photo" aria-hidden="true">
+                        <img src="assets/images/SELL%20YOUR%20VEHICLE.jpg" alt="" loading="lazy">
                     </div>
 
                 </div>
@@ -264,13 +271,13 @@
         <section class="section" id="services" aria-labelledby="services-heading">
             <div class="container">
 
-                <div class="section-header">
+                <div class="section-header" data-reveal>
                     <p class="eyebrow">SERVICES</p>
                     <h2 class="section__heading" id="services-heading">Beyond the Sale.</h2>
                     <p class="section__intro">Concierge-level support that extends past the transaction — because the right vehicle deserves the right experience, from delivery through ownership.</p>
                 </div>
 
-                <ul class="services-grid" aria-label="Services">
+                <ul class="services-grid" aria-label="Services" data-reveal>
                     <li class="service">
                         <span class="service__num">01</span>
                         <h3 class="service__title">Concierge Pickup &amp; Delivery</h3>
@@ -310,7 +317,7 @@
                 <div class="events__layout">
 
                     <!-- Featured event -->
-                    <article class="event-featured">
+                    <article class="event-featured" data-reveal>
                         <a href="#" class="event-featured__media placeholder" aria-label="Formula 1 Miami Grand Prix">
                             <span class="placeholder__label">PHOTO — F1 Miami (4:3)</span>
                         </a>
@@ -327,7 +334,7 @@
                     </article>
 
                     <!-- Event list -->
-                    <ol class="events-list" aria-label="Upcoming events">
+                    <ol class="events-list" aria-label="Upcoming events" data-reveal>
                         <li class="event-row">
                             <a href="#" class="event-row__link">
                                 <div class="event-row__meta">
@@ -369,7 +376,7 @@
         <!-- 05 — PRESTIGE DIFFERENCE / ABOUT -->
         <section class="section section--difference" id="about" aria-labelledby="difference-heading">
             <div class="container">
-                <div class="difference">
+                <div class="difference" data-reveal>
 
                     <div class="difference__header">
                         <p class="eyebrow">THE PRESTIGE DIFFERENCE</p>
@@ -377,7 +384,7 @@
                     </div>
 
                     <div class="difference__body">
-                        <p class="difference__para difference__para--dropcap">A second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Four premium franchises — Lamborghini, Pagani, Lotus, and Karma — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
+                        <p class="difference__para difference__para--dropcap"><span class="difference__dropcap">A</span> second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Four premium franchises — Lamborghini, Pagani, Lotus, and Karma — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
                         <p class="difference__para">We don't just sell cars. We provide lifestyles — from acquisition and nationwide delivery through long-term ownership support. For clients who also prefer the water, we offer VanDutch luxury marine alongside our automotive portfolio.</p>
 
                         <div class="difference__meta">
@@ -406,7 +413,7 @@
 
 
         <!-- 06 — FINAL CTA -->
-        <section class="section section--final-cta" aria-labelledby="final-cta-heading">
+        <section class="section section--final-cta" aria-labelledby="final-cta-heading" data-reveal>
             <div class="container">
                 <p class="eyebrow">START THE CONVERSATION</p>
                 <h2 class="final-cta__heading" id="final-cta-heading">Whether You're Buying or Selling — Start Here.</h2>
@@ -436,6 +443,7 @@
     <script>
         document.getElementById('footer-year').textContent = new Date().getFullYear();
     </script>
+    <script src="assets/js/main.js" defer></script>
 
 </body>
 </html>
