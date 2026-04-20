@@ -1,0 +1,1044 @@
+/*
+ * sell-your-car.css
+ * Prestige Imports — Sell Your Vehicle acquisition page.
+ * Aligned to Figma: uCrlfBySwWc1YQ9tgyV8lm / 0:488 (SELL).
+ */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: min(92%, 1440px);
+    margin: 0 auto;
+}
+
+
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+    --bg-page:     #070a0b;
+    --bg-dark:     #0c1b1f;
+    --bg-darker:   #080c0e;
+    --bg-deepest:  #091012;
+    --bg-card:     #0a1518;
+    --bg-ph:       #1c1c1c;
+    --bg-ph-b:     #222222;
+
+    --border-card:   #14262c;
+    --border-dim:    rgba(255, 255, 255, 0.06);
+    --border-input:  rgba(131, 131, 131, 0.43);
+    --border-strong: rgba(255, 255, 255, 0.22);
+
+    --text-primary:   #edeae4;
+    --text-secondary: rgba(237, 234, 228, 0.58);
+    --text-muted:     rgba(237, 234, 228, 0.35);
+    --text-dim:       rgba(237, 234, 228, 0.18);
+
+    --num-color:  #2e5461;
+    --num-bg:     rgba(25, 50, 58, 0.26);
+    --eyebrow-bg: #274049;
+
+    --accent-teal: #143138;
+    --dark-btn:    #0a1113;
+
+    --sp-1: 8px;
+    --sp-2: 16px;
+    --sp-3: 20px;
+    --sp-4: 25px;
+    --sp-5: 40px;
+    --sp-6: 60px;
+    --sp-7: 80px;
+    --sp-8: 120px;
+    --sp-9: 160px;
+
+    --section-py: 120px;
+    --header-h:   94px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+
+/* ============================================================
+   PAGE BASE
+   ============================================================ */
+.page-sell {
+    font-family: var(--font);
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+/* Eyebrow — teal pill (Figma #274049, 12px, letter-spacing 2px) */
+.eyebrow {
+    display: inline-block;
+    background-color: var(--eyebrow-bg);
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.17em;
+    line-height: 22px;
+    text-transform: uppercase;
+    padding: 0 10px;
+    height: 22px;
+    margin: 0 0 var(--sp-3);
+}
+
+.section__heading {
+    font-size: clamp(24px, 2.8vw, 36px);
+    font-weight: 300;
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.section__intro,
+.section__body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-top: var(--sp-3);
+    max-width: 830px;
+}
+
+.section-header {
+    margin-bottom: var(--sp-6);
+    max-width: 830px;
+}
+
+
+/* ============================================================
+   PLACEHOLDERS
+   ============================================================ */
+.placeholder {
+    background-color: var(--bg-ph);
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder--cinema    { aspect-ratio: 3 / 1;   background-color: var(--bg-ph-b); }
+.placeholder--landscape { aspect-ratio: 479 / 309; }
+.placeholder--portrait  { aspect-ratio: 3 / 4; }
+.placeholder--square    { aspect-ratio: 1 / 1; }
+
+.placeholder__label {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    pointer-events: none;
+    text-align: center;
+    padding: 0 var(--sp-3);
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.086em;
+    line-height: 1;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: 14px 32px;
+    height: 45px;
+    cursor: pointer;
+    transition: opacity 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+    white-space: nowrap;
+    -webkit-appearance: none;
+}
+
+.btn--primary {
+    background-color: #ffffff;
+    color: var(--bg-page);
+    border-color: #ffffff;
+}
+.btn--primary:hover { opacity: 0.86; }
+
+.btn--dark {
+    background-color: var(--dark-btn);
+    color: #ffffff;
+}
+.btn--dark:hover { opacity: 0.88; }
+
+.btn--dark-teal {
+    background-color: var(--accent-teal);
+    color: #ffffff;
+    min-width: 221px;
+}
+.btn--dark-teal:hover { opacity: 0.86; }
+
+.btn--outline-sm {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+    height: auto;
+    padding: 11px 23px;
+    font-size: 12px;
+    letter-spacing: 0.092em;
+}
+.btn--outline-sm:hover { border-color: var(--text-primary); }
+
+.btn--full { width: 100%; }
+.btn--lg   { height: 65px; padding: 14px 32px; font-size: 14px; }
+
+
+/* ============================================================
+   SITE HEADER
+   Figma: blurred translucent bar, 94px tall.
+   ============================================================ */
+.site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid #232323;
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-h);
+}
+
+.logo {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+.logo--sm { opacity: 0.48; letter-spacing: 0.20em; }
+
+.site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+}
+
+.nav-link {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.068em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.18s;
+}
+.nav-link:hover { color: var(--text-primary); }
+
+
+/* ============================================================
+   SECTION BASE — radial depth gradient per Figma
+   ============================================================ */
+.section {
+    padding-top: var(--section-py);
+    padding-bottom: var(--section-py);
+    position: relative;
+}
+
+
+/* ============================================================
+   01 — HERO
+   Figma: 1080px tall, text left / glass form right (463px),
+   warm radial glow upper-right, bottom gradient fade.
+   ============================================================ */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: calc(var(--header-h) + var(--sp-7));
+    padding-bottom: var(--sp-8);
+    background-color: var(--bg-page);
+    overflow: hidden;
+}
+
+.hero__bg {
+    position: absolute;
+    inset: 0;
+    background-color: #1a1b1f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.42;
+}
+
+.hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, var(--bg-deepest) 0%, rgba(9, 16, 18, 0) 55%);
+    pointer-events: none;
+}
+
+/* Warm right-side glow — Figma ellipse */
+.hero__glow {
+    position: absolute;
+    top: -20%;
+    right: -20%;
+    width: 80%;
+    height: 120%;
+    background: radial-gradient(ellipse at center, rgba(39, 64, 73, 0.45) 0%, rgba(9, 16, 18, 0) 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 463px;
+    gap: 150px;
+    align-items: center;
+    width: 100%;
+}
+
+.hero__content {
+    max-width: 830px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.hero__headline {
+    font-size: clamp(44px, 5.8vw, 80px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0 0 var(--sp-3);
+}
+
+.hero__sub {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: #ffffff;
+    margin: 0;
+}
+
+
+/* ── Hero entrance animations ─────────────────────────── */
+@keyframes hero-rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero__content .eyebrow      { animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.10s both; }
+.hero__content .hero__headline { animation: hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both; }
+.hero__content .hero__sub      { animation: hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.38s both; }
+.hero__form-col                { animation: hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.30s both; }
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__content .eyebrow,
+    .hero__content .hero__headline,
+    .hero__content .hero__sub,
+    .hero__form-col { animation: none; opacity: 1; }
+}
+
+
+/* ============================================================
+   HERO FORM — glassmorphism per Figma
+   backdrop-blur 16px, bg rgba(255,255,255,0.06), radius 7px.
+   ============================================================ */
+.form-card {
+    background-color: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 7px;
+    padding: 30px 42px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+
+.form-card__heading {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+
+.form__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form__field { width: 100%; }
+
+.form__input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-input);
+    border-radius: 2px;
+    padding: 18px 0;
+    color: #ffffff;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: border-color 0.18s;
+}
+.form__input::placeholder {
+    color: #ffffff;
+    opacity: 1;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.form__input--vin::placeholder { color: #9d9d9d; }
+.form__input:focus { border-bottom-color: var(--text-primary); }
+.form__input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px transparent inset;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 9999s ease-out 0s;
+}
+
+.form .btn--dark {
+    width: 100%;
+    margin-top: 0;
+}
+
+
+/* ============================================================
+   02 — HOW IT WORKS
+   Figma: 4 equal cards in a row, big thin number on teal plate,
+   CTA aligned to the right of the header.
+   ============================================================ */
+.section--process {
+    background:
+        radial-gradient(120% 140% at 29% -5%, rgba(12, 27, 33, 1) 0%, var(--bg-page) 62%),
+        var(--bg-page);
+}
+
+.process__header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--sp-4);
+    align-items: end;
+    margin-bottom: var(--sp-6);
+}
+
+.process__header-text { max-width: 830px; }
+
+.process__cta { align-self: end; }
+
+.process-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-4);
+}
+
+.process-step {
+    background-color: transparent;
+    border: 1px solid var(--border-card);
+    border-radius: 3px;
+    padding: var(--sp-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+
+.process-step__num {
+    display: inline-block;
+    background-color: var(--num-bg);
+    color: var(--num-color);
+    font-size: 63px;
+    font-weight: 100;
+    line-height: 1;
+    letter-spacing: -0.002em;
+    min-width: 99px;
+    max-width: max-content;
+    padding: 0 4px 0 0;
+}
+
+.process-step__title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.process-step__text {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.72;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+
+/* ============================================================
+   03 — WHY SELL TO PRESTIGE
+   Figma: 4 icon cards, then wide image below.
+   ============================================================ */
+.section--why {
+    background:
+        radial-gradient(130% 140% at 29% 12%, rgba(12, 27, 33, 1) 0%, var(--bg-page) 60%),
+        var(--bg-page);
+}
+
+.why__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--sp-7);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-4);
+}
+
+.feature {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 5px;
+    padding: var(--sp-3);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.feature__icon {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    color: var(--text-primary);
+}
+.feature__icon svg { width: 100%; height: 100%; display: block; }
+
+.feature__title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.feature__text {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.72;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.why__image {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #dedede;
+}
+.why__image .placeholder {
+    aspect-ratio: 3 / 1;
+    border-radius: 10px;
+}
+
+
+/* ============================================================
+   04 — TRUST & CREDIBILITY (Our Reviews)
+   Figma: 4-cell stats grid with L-dividers, 3 testimonial cards.
+   ============================================================ */
+.section--trust {
+    background:
+        radial-gradient(120% 140% at 29% 8%, rgba(12, 27, 33, 1) 0%, var(--bg-page) 62%),
+        var(--bg-page);
+}
+
+.trust-stats {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--sp-6);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border-dim);
+    border-bottom: 1px solid var(--border-dim);
+}
+
+.trust-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: var(--sp-5) 0 var(--sp-5) 41px;
+    border-left: 1px solid var(--border-dim);
+}
+.trust-stat:first-child {
+    padding-left: 0;
+    border-left: none;
+}
+
+.trust-stat__value {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.009em;
+    line-height: 22px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+.trust-stat__label {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.083em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.testimonials {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 33px;
+}
+
+.testimonial {
+    background-color: var(--bg-dark);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 3px;
+    padding: 32px 33px 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.testimonial__quote {
+    font-size: 15px;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+    padding-bottom: 26px;
+    flex: 1;
+}
+
+.testimonial__attribution {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 31px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.testimonial__author,
+.testimonial__date {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+
+/* ============================================================
+   05 — RECENTLY PURCHASED
+   Figma: 4-photo horizontal gallery, gap 10px.
+   ============================================================ */
+.section--recent {
+    background:
+        radial-gradient(120% 140% at 29% 8%, rgba(12, 27, 33, 1) 0%, var(--bg-page) 65%),
+        var(--bg-page);
+}
+
+.gallery--recent {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.gallery__item {
+    overflow: hidden;
+    border-radius: 2px;
+}
+.gallery__item .placeholder {
+    height: 100%;
+    width: 100%;
+}
+
+
+/* ============================================================
+   06 — THE PRESTIGE DIFFERENCE
+   Figma: 2-column layout (464px header / 830px body), no photo,
+   bg #0c1b1f.
+   ============================================================ */
+.section--difference {
+    background-color: var(--bg-dark);
+}
+
+.difference__layout {
+    display: grid;
+    grid-template-columns: 464px 1fr;
+    gap: 146px;
+    align-items: start;
+}
+
+.difference__header {
+    display: flex;
+    flex-direction: column;
+}
+
+.difference__body { max-width: 830px; }
+
+.difference__para {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0 0 var(--sp-3);
+}
+.difference__para:last-child { margin-bottom: 0; }
+
+
+/* ============================================================
+   07 — FAQ
+   Figma: 2-column layout (463px header / 832px list).
+   ============================================================ */
+.section--faq {
+    background:
+        radial-gradient(140% 140% at 51% 8%, rgba(12, 27, 33, 1) 0%, var(--bg-page) 65%),
+        var(--bg-page);
+}
+
+.faq__layout {
+    display: grid;
+    grid-template-columns: 463px 1fr;
+    gap: 146px;
+    align-items: start;
+}
+
+.faq__layout-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.faq {
+    margin: 0;
+    max-width: 832px;
+    justify-self: end;
+    width: 100%;
+}
+
+.faq__item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.faq__item:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding: 20px 0;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    transition: color 0.18s;
+    list-style: none;
+}
+.faq__q:hover { color: var(--text-secondary); }
+.faq__q::-webkit-details-marker { display: none; }
+
+.faq__icon {
+    flex-shrink: 0;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    opacity: 0.40;
+    transition: opacity 0.18s;
+}
+.faq__item.is-open .faq__icon { opacity: 0.65; }
+
+.faq__icon::before,
+.faq__icon::after {
+    content: '';
+    position: absolute;
+    background-color: var(--text-primary);
+    border-radius: 1px;
+    top: 50%;
+    left: 50%;
+    transition: transform 0.22s ease, opacity 0.22s ease;
+}
+.faq__icon::before {
+    width: 12px;
+    height: 1px;
+    transform: translate(-50%, -50%);
+}
+.faq__icon::after {
+    width: 1px;
+    height: 12px;
+    transform: translate(-50%, -50%);
+}
+.faq__item.is-open .faq__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    opacity: 0;
+}
+
+.faq__a {
+    display: none;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    padding-bottom: 20px;
+    max-width: 780px;
+}
+.faq__item.is-open .faq__a { display: block; }
+
+
+/* ============================================================
+   08 — FINAL CTA
+   Figma: headline (1fr) / aside (465px, right-aligned, dark-teal
+   button 65px), then wide closing photo below.
+   ============================================================ */
+.section--final-cta {
+    background-color: var(--bg-darker);
+}
+
+.section--final-cta .container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+}
+
+.final-cta__inner {
+    display: grid;
+    grid-template-columns: 1fr 465px;
+    gap: 146px;
+    align-items: center;
+}
+
+.final-cta__heading {
+    font-size: clamp(44px, 6vw, 80px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0;
+}
+
+.final-cta__aside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 70px;
+    text-align: right;
+}
+
+.final-cta__aside .eyebrow {
+    align-self: flex-start;
+}
+
+.final-cta__body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.final-cta__photo {
+    border-radius: 10px;
+    overflow: hidden;
+}
+.final-cta__photo .placeholder {
+    aspect-ratio: 3 / 1;
+    border-radius: 10px;
+}
+
+
+/* ============================================================
+   FOOTER — Figma: border-top dim, logo at 48% opacity.
+   ============================================================ */
+.site-footer {
+    background-color: var(--bg-deepest);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 29px 0 28px;
+}
+
+.site-footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.site-footer__copy {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* Large tablet — tighten gaps before breaks */
+@media (max-width: 1240px) {
+    .hero__inner {
+        grid-template-columns: 1fr 420px;
+        gap: var(--sp-7);
+    }
+    .difference__layout,
+    .faq__layout,
+    .final-cta__inner {
+        gap: var(--sp-7);
+    }
+    .difference__layout    { grid-template-columns: 380px 1fr; }
+    .faq__layout           { grid-template-columns: 380px 1fr; }
+    .final-cta__inner      { grid-template-columns: 1fr 400px; }
+}
+
+/* Tablet */
+@media (max-width: 960px) {
+    :root {
+        --section-py: 80px;
+        --sp-8: 80px;
+    }
+
+    .site-header__nav .nav-link { display: none; }
+
+    /* Hero — stack */
+    .hero {
+        min-height: auto;
+        padding-top: calc(var(--header-h) + var(--sp-6));
+        padding-bottom: var(--sp-7);
+        align-items: flex-start;
+    }
+    .hero__inner {
+        grid-template-columns: 1fr;
+        gap: var(--sp-6);
+        align-items: start;
+    }
+    .hero__form-col { max-width: 520px; width: 100%; }
+    .form-card { padding: var(--sp-4) var(--sp-3); }
+
+    /* Process */
+    .process__header { grid-template-columns: 1fr; }
+    .process__cta { justify-self: start; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); gap: var(--sp-2); }
+
+    /* Why features */
+    .why__features { grid-template-columns: repeat(2, 1fr); gap: var(--sp-2); }
+
+    /* Trust stats — 2x2 grid with adjusted dividers */
+    .trust-stats { grid-template-columns: repeat(2, 1fr); }
+    .trust-stat { padding: var(--sp-3) 0 var(--sp-3) var(--sp-3); }
+    .trust-stat:nth-child(odd) {
+        padding-left: 0;
+        border-left: none;
+    }
+    .trust-stat:nth-child(3),
+    .trust-stat:nth-child(4) { border-top: 1px solid var(--border-dim); }
+
+    .testimonials { grid-template-columns: 1fr; gap: var(--sp-2); }
+
+    /* Recent gallery */
+    .gallery--recent { grid-template-columns: repeat(2, 1fr); }
+
+    /* Difference / FAQ — stack */
+    .difference__layout {
+        grid-template-columns: 1fr;
+        gap: var(--sp-4);
+    }
+    .faq__layout {
+        grid-template-columns: 1fr;
+        gap: var(--sp-4);
+    }
+
+    /* Final CTA — stack */
+    .final-cta__inner {
+        grid-template-columns: 1fr;
+        gap: var(--sp-5);
+    }
+    .final-cta__aside {
+        align-items: flex-start;
+        text-align: left;
+        gap: var(--sp-5);
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    :root { --section-py: 64px; }
+
+    .hero {
+        padding-top: calc(var(--header-h) + var(--sp-5));
+        padding-bottom: var(--sp-6);
+    }
+
+    .process-steps { grid-template-columns: 1fr; }
+    .why__features { grid-template-columns: 1fr; }
+
+    .trust-stats { grid-template-columns: 1fr; }
+    .trust-stat {
+        padding: var(--sp-3) 0;
+        border-left: none !important;
+        border-top: 1px solid var(--border-dim);
+    }
+    .trust-stat:first-child { border-top: none; }
+
+    .gallery--recent { grid-template-columns: 1fr; }
+
+    .final-cta__heading { font-size: clamp(40px, 10vw, 60px); }
+
+    .site-footer__inner {
+        flex-direction: column;
+        gap: var(--sp-2);
+        text-align: center;
+    }
+}
