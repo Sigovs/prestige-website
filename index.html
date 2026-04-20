@@ -3,20 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prestige</title>
+    <title>Prestige Imports — Luxury &amp; Exotic Vehicles</title>
+    <meta name="description" content="Prestige Imports — a refined marketplace for luxury, exotic, and high-end enthusiast vehicles. Curated inventory, discreet acquisition, and concierge service.">
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/home.css">
 </head>
-<body>
+<body class="page-home">
+
+
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a href="index.html" class="logo" aria-label="Prestige Imports — Home">PRESTIGE IMPORTS</a>
+            <nav class="site-header__nav" aria-label="Site navigation">
+                <a href="#inventory" class="nav-link">Inventory</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="sell-your-car.html" class="btn btn--outline-sm">Sell Your Car</a>
+            </nav>
+        </div>
+    </header>
+
 
     <main>
-        <section class="hero">
+
+        <!-- 01 — HERO -->
+        <section class="hero" aria-label="Prestige Imports — luxury and exotic vehicles">
+            <div class="hero__bg" aria-hidden="true">
+                <span class="placeholder__label">PHOTO — Hero (full bleed, cinematic car shot)</span>
+            </div>
+            <div class="hero__overlay" aria-hidden="true"></div>
+
             <div class="container">
-                <h1>Prestige Project Started</h1>
-                <p>Initial development environment is ready.</p>
+                <div class="hero__inner">
+                    <p class="eyebrow">LUXURY &amp; EXOTIC</p>
+                    <h1 class="hero__headline">A Refined Marketplace for the World's Most Desirable Vehicles.</h1>
+                    <p class="hero__sub">Curated inventory, discreet acquisition, and concierge-level service for owners and collectors of luxury, exotic, and high-end enthusiast vehicles.</p>
+
+                    <div class="hero__actions">
+                        <a href="#inventory" class="btn btn--primary">View Inventory</a>
+                        <a href="sell-your-car.html" class="btn btn--ghost">Sell Your Vehicle</a>
+                    </div>
+
+                    <div class="hero__meta" aria-label="Service highlights">
+                        <span class="hero__meta-item">South Florida</span>
+                        <span class="hero__meta-item">Nationwide Delivery</span>
+                        <span class="hero__meta-item">By Appointment</span>
+                    </div>
+                </div>
             </div>
         </section>
+
+
+        <!-- 02 — INVENTORY PREVIEW -->
+        <section class="section section--inventory" id="inventory" aria-labelledby="inventory-heading">
+            <div class="container">
+
+                <div class="inventory__header">
+                    <div class="inventory__header-text">
+                        <p class="eyebrow">FEATURED INVENTORY</p>
+                        <h2 class="section__heading" id="inventory-heading">A Curated Selection of Premium Vehicles.</h2>
+                        <p class="section__intro">Ferrari, Lamborghini, McLaren, Porsche GT, AMG, BMW M, and other significant enthusiast and collector vehicles.</p>
+                    </div>
+                    <a href="#" class="btn btn--ghost">View All Inventory</a>
+                </div>
+
+                <ul class="inventory-grid" aria-label="Featured vehicles">
+
+                    <li>
+                        <a href="#" class="vehicle-card">
+                            <div class="vehicle-card__media">
+                                <span class="placeholder__label">PHOTO — Ferrari (4:3)</span>
+                            </div>
+                            <div class="vehicle-card__meta">
+                                <div>
+                                    <div class="vehicle-card__name">Ferrari 812 Superfast</div>
+                                    <div class="vehicle-card__sub">2022 · 4,200 mi</div>
+                                </div>
+                                <div class="vehicle-card__price">$389,500</div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="vehicle-card">
+                            <div class="vehicle-card__media">
+                                <span class="placeholder__label">PHOTO — Lamborghini (4:3)</span>
+                            </div>
+                            <div class="vehicle-card__meta">
+                                <div>
+                                    <div class="vehicle-card__name">Lamborghini Huracán STO</div>
+                                    <div class="vehicle-card__sub">2023 · 1,800 mi</div>
+                                </div>
+                                <div class="vehicle-card__price">$412,000</div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="vehicle-card">
+                            <div class="vehicle-card__media">
+                                <span class="placeholder__label">PHOTO — Porsche GT (4:3)</span>
+                            </div>
+                            <div class="vehicle-card__meta">
+                                <div>
+                                    <div class="vehicle-card__name">Porsche 911 GT3 RS</div>
+                                    <div class="vehicle-card__sub">2023 · 950 mi</div>
+                                </div>
+                                <div class="vehicle-card__price">$298,000</div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="vehicle-card">
+                            <div class="vehicle-card__media">
+                                <span class="placeholder__label">PHOTO — McLaren (4:3)</span>
+                            </div>
+                            <div class="vehicle-card__meta">
+                                <div>
+                                    <div class="vehicle-card__name">McLaren 765LT</div>
+                                    <div class="vehicle-card__sub">2022 · 2,400 mi</div>
+                                </div>
+                                <div class="vehicle-card__price">$489,000</div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="vehicle-card">
+                            <div class="vehicle-card__media">
+                                <span class="placeholder__label">PHOTO — AMG (4:3)</span>
+                            </div>
+                            <div class="vehicle-card__meta">
+                                <div>
+                                    <div class="vehicle-card__name">Mercedes-AMG GT Black Series</div>
+                                    <div class="vehicle-card__sub">2021 · 3,100 mi</div>
+                                </div>
+                                <div class="vehicle-card__price">$445,000</div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="vehicle-card">
+                            <div class="vehicle-card__media">
+                                <span class="placeholder__label">PHOTO — BMW M (4:3)</span>
+                            </div>
+                            <div class="vehicle-card__meta">
+                                <div>
+                                    <div class="vehicle-card__name">BMW M4 CSL</div>
+                                    <div class="vehicle-card__sub">2023 · 1,200 mi</div>
+                                </div>
+                                <div class="vehicle-card__price">$189,500</div>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </section>
+
+
+        <!-- 03 — SELL YOUR VEHICLE (bridge to sell-your-car.html) -->
+        <section class="section section--sell-bridge" aria-labelledby="sell-heading">
+            <div class="container">
+                <div class="sell-bridge">
+
+                    <div class="sell-bridge__text">
+                        <p class="eyebrow">SELL YOUR VEHICLE</p>
+                        <h2 class="sell-bridge__heading" id="sell-heading">Selling a Luxury or Exotic Vehicle?</h2>
+                        <p class="sell-bridge__body">Prestige Imports offers a refined, discreet acquisition experience for owners of premium vehicles. Receive a market evaluation from specialists who understand high-end inventory.</p>
+                        <a href="sell-your-car.html" class="btn btn--primary">Get an Offer</a>
+                    </div>
+
+                    <div class="sell-bridge__photo placeholder" aria-hidden="true">
+                        <span class="placeholder__label">PHOTO — Exotic car detail (portrait 4:5)</span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 04 — SERVICES / CONCIERGE -->
+        <section class="section" id="services" aria-labelledby="services-heading">
+            <div class="container">
+
+                <div class="section-header">
+                    <p class="eyebrow">SERVICES</p>
+                    <h2 class="section__heading" id="services-heading">Beyond the Sale.</h2>
+                    <p class="section__intro">Concierge-level support that extends past the transaction — because the right vehicle deserves the right experience, from delivery through ownership.</p>
+                </div>
+
+                <ul class="services-grid" aria-label="Services">
+                    <li class="service">
+                        <span class="service__num">01</span>
+                        <h3 class="service__title">Concierge Pickup &amp; Delivery</h3>
+                        <p class="service__text">Door-to-door coordination for viewings, acquisitions, and service handling — scheduled around your availability.</p>
+                    </li>
+                    <li class="service">
+                        <span class="service__num">02</span>
+                        <h3 class="service__title">Enclosed Transport</h3>
+                        <p class="service__text">Enclosed-trailer vehicle transport for nationwide delivery, suited to luxury, exotic, and collector inventory.</p>
+                    </li>
+                    <li class="service">
+                        <span class="service__num">03</span>
+                        <h3 class="service__title">Body &amp; Restoration</h3>
+                        <p class="service__text">Premium body work and detail services — paint correction, PPF, and restoration for high-end vehicles.</p>
+                    </li>
+                    <li class="service">
+                        <span class="service__num">04</span>
+                        <h3 class="service__title">Warranty Options</h3>
+                        <p class="service__text">Curated extended warranty and coverage options aligned with the value and use profile of premium vehicles.</p>
+                    </li>
+                </ul>
+
+            </div>
+        </section>
+
+
+        <!-- 05 — PRESTIGE DIFFERENCE / ABOUT -->
+        <section class="section section--difference" id="about" aria-labelledby="difference-heading">
+            <div class="container">
+                <div class="difference">
+
+                    <div class="difference__header">
+                        <p class="eyebrow">THE PRESTIGE DIFFERENCE</p>
+                        <h2 class="difference__heading" id="difference-heading">A More Elevated Way to Buy, Sell, and Own.</h2>
+                    </div>
+
+                    <div class="difference__body">
+                        <p class="difference__para">Prestige Imports is built around a premium automotive experience. Our focus is on professionalism, presentation, and long-term client relationships rather than volume.</p>
+                        <p class="difference__para">From curated inventory to discreet acquisitions and concierge ownership support, every interaction is designed to match the level of vehicle you drive — or expect to.</p>
+
+                        <div class="difference__meta">
+                            <div>
+                                <div class="difference__stat-label">Focus</div>
+                                <div class="difference__stat-value">Luxury &amp; Exotic</div>
+                            </div>
+                            <div>
+                                <div class="difference__stat-label">Market</div>
+                                <div class="difference__stat-value">Nationwide</div>
+                            </div>
+                            <div>
+                                <div class="difference__stat-label">Process</div>
+                                <div class="difference__stat-value">By Appointment</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 06 — FINAL CTA -->
+        <section class="section section--final-cta" aria-labelledby="final-cta-heading">
+            <div class="container">
+                <p class="eyebrow">START THE CONVERSATION</p>
+                <h2 class="final-cta__heading" id="final-cta-heading">Whether You're Buying or Selling — Start Here.</h2>
+                <p class="final-cta__body">Browse curated inventory, request a discreet offer on your vehicle, or connect with our team for a more tailored conversation.</p>
+                <div class="final-cta__actions">
+                    <a href="#inventory" class="btn btn--primary btn--lg">View Inventory</a>
+                    <a href="sell-your-car.html" class="btn btn--ghost btn--lg">Sell Your Car</a>
+                </div>
+            </div>
+        </section>
+
     </main>
+
+
+    <footer class="site-footer">
+        <div class="container site-footer__inner">
+            <a href="index.html" class="logo logo--sm" aria-label="Prestige Imports — Home">PRESTIGE IMPORTS</a>
+            <nav class="site-footer__nav" aria-label="Footer navigation">
+                <a href="#inventory" class="nav-link">Inventory</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="sell-your-car.html" class="nav-link">Sell</a>
+            </nav>
+            <p class="site-footer__copy">&copy; <span id="footer-year"></span> Prestige Imports.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
 
 </body>
 </html>
