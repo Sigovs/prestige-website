@@ -236,6 +236,75 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    // --- Events list → featured card preview / swap -------------------------
+    const eventsFeatured = document.querySelector('.event-featured');
+    const eventsMedia = eventsFeatured?.querySelector('.event-featured__media');
+    const eventsRows = document.querySelectorAll('.event-row__link[data-event-img]');
+
+    if (eventsFeatured && eventsMedia && eventsRows.length) {
+        const baseImg = eventsMedia.querySelector('img');
+        const titleEl = eventsFeatured.querySelector('.event-featured__title');
+        const dateEl  = eventsFeatured.querySelector('.event__date');
+        const catEl   = eventsFeatured.querySelector('.event__cat');
+        const textEl  = eventsFeatured.querySelector('.event-featured__text');
+        const bodyEl  = eventsFeatured.querySelector('.event-featured__body');
+
+        if (baseImg) {
+            const hoverImg = document.createElement('img');
+            hoverImg.className = 'event-featured__img-hover';
+            hoverImg.alt = '';
+            hoverImg.setAttribute('aria-hidden', 'true');
+            hoverImg.decoding = 'async';
+            eventsMedia.appendChild(hoverImg);
+
+            // Preload all preview images
+            const preloaded = new Map();
+
+            const applyRow = row => {
+                const d = row.dataset;
+                if (d.eventImg) baseImg.src = d.eventImg;
+                if (titleEl && d.eventTitle) titleEl.textContent = d.eventTitle;
+                if (dateEl  && d.eventDate)  dateEl.textContent  = d.eventDate;
+                if (catEl   && d.eventCat)   catEl.textContent   = d.eventCat;
+                if (textEl  && d.eventBody)  textEl.textContent  = d.eventBody;
+
+                // Clear hover preview since base image is now committed
+                eventsMedia.classList.remove('is-previewing');
+
+                // Briefly fade the featured card to signal the change
+                if (bodyEl) {
+                    eventsFeatured.classList.add('is-swapping');
+                    setTimeout(() => eventsFeatured.classList.remove('is-swapping'), 550);
+                }
+
+                // Mark row active
+                eventsRows.forEach(r => r.classList.toggle('is-active', r === row));
+            };
+
+            eventsRows.forEach(row => {
+                const src = row.dataset.eventImg;
+                if (!preloaded.has(src)) {
+                    const img = new Image();
+                    img.src = src;
+                    preloaded.set(src, img);
+                }
+                row.addEventListener('pointerenter', () => {
+                    if (row.classList.contains('is-active')) return;
+                    hoverImg.src = src;
+                    eventsMedia.classList.add('is-previewing');
+                });
+                row.addEventListener('pointerleave', () => {
+                    eventsMedia.classList.remove('is-previewing');
+                });
+                row.addEventListener('click', e => {
+                    e.preventDefault();
+                    applyRow(row);
+                });
+            });
+        }
+    }
+
+
     // --- Recently purchased slider (sell-your-car) --------------------------
     const sliderTrack = document.querySelector('[data-slider-track]');
     const prevBtn = document.querySelector('[data-slider-prev]');
