@@ -10,6 +10,43 @@ document.addEventListener('DOMContentLoaded', () => {
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 
+    // --- Full-screen menu toggle -------------------------------------------
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const siteMenu  = document.getElementById('site-menu');
+
+    if (navToggle && siteMenu) {
+        const setOpen = open => {
+            navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            siteMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+            siteMenu.classList.toggle('is-open', open);
+            document.body.classList.toggle('menu-open', open);
+            const label = navToggle.querySelector('.site-nav-toggle__label');
+            if (label) {
+                label.textContent = open
+                    ? (label.dataset.whenOpen || 'Close')
+                    : (label.dataset.whenClosed || 'Menu');
+            }
+        };
+
+        navToggle.addEventListener('click', () => {
+            const open = navToggle.getAttribute('aria-expanded') !== 'true';
+            setOpen(open);
+        });
+
+        // Close on link click (so anchor jumps work)
+        siteMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => setOpen(false));
+        });
+
+        // Esc closes
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
+                setOpen(false);
+            }
+        });
+    }
+
+
     // --- Header scroll state -----------------------------------------------
     const siteHeader = document.querySelector('.site-header');
     if (siteHeader) {
@@ -19,6 +56,258 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', updateHeaderScroll, { passive: true });
         updateHeaderScroll();
     }
+
+
+    // --- Inventory scroll-driven scrollytelling -----------------------------
+    // While the inventory section is sticky-pinned to the viewport, scroll
+    // progress (0..1 across its tall runway) drives:
+    //   • the title block translating up and fading out
+    //   • each card appearing from below in a staircase, one after the other
+    const invSection = document.querySelector('.section--inventory');
+    const invHeader  = invSection?.querySelector('.inventory__header');
+    const invCards   = invSection ? Array.from(invSection.querySelectorAll('.inventory__grid > li')) : [];
+
+    if (invSection && invHeader && invCards.length) {
+        let rafId = null;
+        const ease = t => 1 - Math.pow(1 - t, 2.2);
+
+        // Split into rows. Cards 0-2 = first row (always visible).
+        // Cards 3-5 = second row (rises from below in staircase as user scrolls).
+        const FIRST_ROW = invCards.slice(0, 3);
+        const SECOND_ROW = invCards.slice(3);
+
+        const tick = () => {
+            rafId = null;
+            const rect = invSection.getBoundingClientRect();
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+
+            // Sticky-scroll progress: 0 when section top hits viewport top,
+            // 1 when sticky releases (section bottom reaches viewport top).
+            const total = rect.height - vh;
+            const passed = -rect.top;
+            const p = Math.max(0, Math.min(1, total > 0 ? passed / total : 0));
+
+            // Entrance progress: 0 when section top is one viewport below
+            // viewport top, 1 when section top reaches viewport top (sticky engages).
+            const ep = Math.max(0, Math.min(1, (vh - rect.top) / vh));
+
+            // Header — slides up under the header bar and fades over 0..35%
+            const HEADER_END = 0.35;
+            const hp = Math.max(0, Math.min(1, p / HEADER_END));
+            const hEased = ease(hp);
+            invHeader.style.transform = `translateY(${(-hEased * 220).toFixed(2)}px)`;
+            invHeader.style.opacity = (1 - hEased).toFixed(3);
+
+            // First row — staircase tied to entrance progress (40..95% of entry)
+            const ROW1_START = 0.40;
+            const ROW1_END   = 0.95;
+            const ROW1_SPAN  = 0.18;
+            const stagger1 = FIRST_ROW.length > 1
+                ? (ROW1_END - ROW1_START - ROW1_SPAN) / (FIRST_ROW.length - 1)
+                : 0;
+            FIRST_ROW.forEach((card, i) => {
+                const start = ROW1_START + i * stagger1;
+                const cp = Math.max(0, Math.min(1, (ep - start) / ROW1_SPAN));
+                const e = ease(cp);
+                card.style.transform = `translateY(${((1 - e) * 120).toFixed(2)}px)`;
+                card.style.opacity = e.toFixed(3);
+            });
+
+            // Second row — rises from below in staircase over sticky 30..58%
+            const ROW2_START = 0.30;
+            const ROW2_END   = 0.58;
+            const ROW2_SPAN  = 0.13;
+            const stagger2 = SECOND_ROW.length > 1
+                ? (ROW2_END - ROW2_START - ROW2_SPAN) / (SECOND_ROW.length - 1)
+                : 0;
+
+            SECOND_ROW.forEach((card, i) => {
+                const start = ROW2_START + i * stagger2;
+                const cp = Math.max(0, Math.min(1, (p - start) / ROW2_SPAN));
+                const e = ease(cp);
+                card.style.transform = `translateY(${((1 - e) * 120).toFixed(2)}px)`;
+                card.style.opacity = e.toFixed(3);
+            });
+        };
+
+        const onScroll = () => {
+            if (rafId === null) rafId = requestAnimationFrame(tick);
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        tick();
+    }
+
+
+    // --- Nav active section highlight ---------------------------------------
+    // Each nav link with href="#section-id" gets .is-active when its target
+    // section is the dominant one in the viewport.
+    const navLinks = Array.from(document.querySelectorAll('.site-nav__link'));
+    const navTargets = navLinks
+        .map(link => {
+            const href = link.getAttribute('href') || '';
+            if (!href.startsWith('#')) return null;
+            const el = document.querySelector(href);
+            return el ? { link, el } : null;
+        })
+        .filter(Boolean);
+
+    if (navTargets.length && 'IntersectionObserver' in window) {
+        // Track the most-visible target via its intersection ratio.
+        const ratios = new Map(navTargets.map(t => [t.el, 0]));
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => ratios.set(e.target, e.intersectionRatio));
+            // Pick the target with the highest current ratio
+            let bestEl = null, best = 0;
+            ratios.forEach((r, el) => {
+                if (r > best) { best = r; bestEl = el; }
+            });
+            navLinks.forEach(l => l.classList.remove('is-active'));
+            if (bestEl) {
+                const t = navTargets.find(t => t.el === bestEl);
+                if (t && best > 0.15) t.link.classList.add('is-active');
+            }
+        }, { threshold: [0.15, 0.35, 0.55, 0.75] });
+
+        navTargets.forEach(t => observer.observe(t.el));
+    }
+
+
+    // --- Scroll-driven hero SLIDES (sticky pattern) -------------------------
+    // Hero is a tall scroll runway with a sticky inner. As the user scrolls
+    // through the section, the slide index advances. Once past the hero,
+    // the next section reveals naturally.
+    const scrubHosts = document.querySelectorAll('[data-scrub-video]');
+
+    scrubHosts.forEach(host => {
+        const slidesHost = host.querySelector('[data-hero-slides]');
+        const slides = slidesHost ? Array.from(slidesHost.querySelectorAll('.hero__slide')) : [];
+        if (!slides.length) return;
+
+        let activeSlideIdx = 0;
+        host.dataset.activeSlide = '0';
+        const setActiveSlide = idx => {
+            if (idx === activeSlideIdx) return;
+            slides.forEach((s, i) => {
+                s.classList.toggle('is-active', i === idx);
+                s.classList.toggle('is-passed', i < idx);
+            });
+            host.dataset.activeSlide = String(idx);
+            activeSlideIdx = idx;
+        };
+
+        let rafId = null;
+        const tick = () => {
+            rafId = null;
+            const rect = host.getBoundingClientRect();
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const total = rect.height - vh;
+            const passed = -rect.top;
+            const p = Math.max(0, Math.min(1, total > 0 ? passed / total : 0));
+            const idx = Math.min(slides.length - 1, Math.floor(p * slides.length));
+            setActiveSlide(idx);
+        };
+
+        const onScroll = () => {
+            if (rafId === null) rafId = requestAnimationFrame(tick);
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        tick();
+    });
+
+    /* ============================================================
+       VIDEO SCRUB (saved for later)
+       ============================================================
+       To bring the wheel-driven video scrub back:
+         1. Remove `autoplay loop` attributes from <video class="hero__video">.
+         2. Inside the scrubHosts loop, re-introduce:
+              - video.removeAttribute('autoplay'); video.removeAttribute('loop'); video.pause();
+              - SETTLE_FRAMES + SMOOTHING + SETTLE_EPSILON constants
+              - target/current state, RAF lerp loop that writes video.currentTime
+              - Wait for `loadedmetadata`, then duration = video.duration
+              - In setProgress, also do: target = duration * progress; kick the loop.
+       The lerp formula:
+              current += (target - current) * SMOOTHING;
+              SMOOTHING = 4.6 / SETTLE_FRAMES   // bigger frames = smoother
+       ============================================================ */
+
+
+    // --- Scroll-driven hero video (sticky-section variant) -----------------
+    // Kept for any other section using [data-scroll-video].
+    const scrollVideoHosts = document.querySelectorAll('[data-scroll-video]');
+
+    scrollVideoHosts.forEach(host => {
+        const video = host.querySelector('video');
+        if (!video) return;
+
+        video.removeAttribute('autoplay');
+        video.removeAttribute('loop');
+        video.pause();
+
+        // Tweak this. BIGGER = smoother / silkier. SMALLER = snappier.
+        // It's roughly "how many frames the video takes to catch up to scroll".
+        //   30 = balanced silk, 60 = very smooth, 15 = quick, 5 = near instant.
+        const SETTLE_FRAMES = 60;
+        const SMOOTHING = Math.max(0.02, Math.min(1, 4.6 / Math.max(1, SETTLE_FRAMES)));
+        const SETTLE_EPSILON = 0.004;
+
+        let duration = 0;
+        let target = 0;
+        let current = 0;
+        let running = false;
+
+        const computeTarget = () => {
+            const rect = host.getBoundingClientRect();
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const total = rect.height - vh;
+            const passed = -rect.top;
+            const p = Math.max(0, Math.min(1, total > 0 ? passed / total : 0));
+            target = duration * p;
+        };
+
+        const loop = () => {
+            current += (target - current) * SMOOTHING;
+            const delta = target - current;
+
+            if (Math.abs(delta) > SETTLE_EPSILON) {
+                try { video.currentTime = current; } catch {}
+                requestAnimationFrame(loop);
+            } else {
+                current = target;
+                try { video.currentTime = current; } catch {}
+                running = false;
+            }
+        };
+
+        const kick = () => {
+            if (!duration) return;
+            computeTarget();
+            if (!running) {
+                running = true;
+                requestAnimationFrame(loop);
+            }
+        };
+
+        const init = () => {
+            duration = video.duration;
+            if (!isFinite(duration) || duration <= 0) return;
+            current = 0;
+            target = 0;
+            kick();
+        };
+
+        if (video.readyState >= 1 && isFinite(video.duration) && video.duration > 0) {
+            init();
+        } else {
+            video.addEventListener('loadedmetadata', init, { once: true });
+        }
+
+        window.addEventListener('scroll', kick, { passive: true });
+        window.addEventListener('resize', kick, { passive: true });
+    });
 
 
     // --- FAQ accordion -----------------------------------------------------

@@ -562,49 +562,73 @@
         var(--bg-page);
 }
 
-.why__features {
+/* Editorial numbered list — magazine spec-sheet style.
+   No cards, no icons. Hairline rules between rows.
+   Grid: large numeral · serif title · body copy. */
+.why-list {
     list-style: none;
     padding: 0;
     margin: 0 0 var(--sp-7);
+    border-top: 1px solid rgba(237, 234, 228, 0.10);
+}
+
+.why-row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--sp-4);
+    grid-template-columns: 140px minmax(0, 1.1fr) minmax(0, 1.4fr);
+    column-gap: var(--sp-5);
+    row-gap: var(--sp-2);
+    align-items: baseline;
+    padding: var(--sp-4) 0;
+    border-bottom: 1px solid rgba(237, 234, 228, 0.10);
+    transition: background-color 0.35s ease;
+}
+.why-row:hover {
+    background-color: rgba(237, 234, 228, 0.015);
 }
 
-.feature {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: 5px;
-    padding: var(--sp-3);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.why-row__num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(48px, 5.4vw, 84px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: rgba(237, 234, 228, 0.32);
+    user-select: none;
+    transition: color 0.35s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.feature__icon {
-    display: inline-flex;
-    width: 20px;
-    height: 20px;
+.why-row:hover .why-row__num {
     color: var(--text-primary);
+    transform: translateX(6px);
 }
-.feature__icon svg { width: 100%; height: 100%; display: block; }
 
-.feature__title {
-    font-size: 14px;
+.why-row__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(20px, 1.9vw, 28px);
     font-weight: 400;
-    line-height: 22px;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: -0.018em;
     color: var(--text-primary);
     margin: 0;
 }
 
-.feature__text {
-    font-size: 13px;
+.why-row__text {
+    font-size: 14px;
     font-weight: 300;
     line-height: 1.72;
     color: var(--text-secondary);
     margin: 0;
+    max-width: 520px;
+}
+
+@media (max-width: 880px) {
+    .why-row {
+        grid-template-columns: 90px 1fr;
+        row-gap: var(--sp-2);
+    }
+    .why-row__num { grid-row: span 2; }
+    .why-row__title { grid-column: 2; }
+    .why-row__text  { grid-column: 2; }
 }
 
 .why__image {
@@ -637,48 +661,49 @@
 .section--why[data-reveal].is-visible .section-header > *:nth-child(2) { transition-delay: 0.18s; }
 .section--why[data-reveal].is-visible .section-header > *:nth-child(3) { transition-delay: 0.32s; }
 
-/* Feature cards — lift + fade with stagger */
-.section--why[data-reveal] .feature {
-    opacity: 0;
-    transform: translateY(14px);
-    transition:
-        opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-        background-color 0.3s ease,
-        border-color 0.3s ease;
+/* Editorial numbered list — each row reveals: numeral first, then title,
+   then body. The hairline rule under each row draws in last. */
+.section--why[data-reveal] .why-row {
+    --reveal-delay: 0s;
+    border-bottom-color: transparent;
 }
-.section--why[data-reveal].is-visible .feature {
+.section--why[data-reveal].is-visible .why-row {
+    border-bottom-color: rgba(237, 234, 228, 0.10);
+    transition: border-bottom-color 0.6s ease var(--reveal-delay);
+}
+
+.section--why[data-reveal] .why-row__num,
+.section--why[data-reveal] .why-row__title,
+.section--why[data-reveal] .why-row__text {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--why[data-reveal].is-visible .why-row__num,
+.section--why[data-reveal].is-visible .why-row__title,
+.section--why[data-reveal].is-visible .why-row__text {
     opacity: 1;
     transform: none;
 }
-.section--why[data-reveal].is-visible .why__features li:nth-child(1) .feature { transition-delay: 0.42s; }
-.section--why[data-reveal].is-visible .why__features li:nth-child(2) .feature { transition-delay: 0.56s; }
-.section--why[data-reveal].is-visible .why__features li:nth-child(3) .feature { transition-delay: 0.70s; }
-.section--why[data-reveal].is-visible .why__features li:nth-child(4) .feature { transition-delay: 0.84s; }
 
-/* Icon: scale-in inside its card after card rises */
-.section--why[data-reveal] .feature__icon {
-    opacity: 0;
-    transform: scale(0.6);
-    transition:
-        opacity 0.45s ease,
-        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.section--why[data-reveal].is-visible .feature__icon { opacity: 1; transform: scale(1); }
-.section--why[data-reveal].is-visible .why__features li:nth-child(1) .feature__icon { transition-delay: 0.58s; }
-.section--why[data-reveal].is-visible .why__features li:nth-child(2) .feature__icon { transition-delay: 0.72s; }
-.section--why[data-reveal].is-visible .why__features li:nth-child(3) .feature__icon { transition-delay: 0.86s; }
-.section--why[data-reveal].is-visible .why__features li:nth-child(4) .feature__icon { transition-delay: 1.00s; }
+/* Per-row stagger: numeral arrives first, title 100ms later, body 200ms */
+.section--why[data-reveal].is-visible .why-row:nth-child(1) .why-row__num   { transition-delay: 0.40s; }
+.section--why[data-reveal].is-visible .why-row:nth-child(1) .why-row__title { transition-delay: 0.50s; }
+.section--why[data-reveal].is-visible .why-row:nth-child(1) .why-row__text  { transition-delay: 0.60s; }
 
-/* Card hover — richer bg + brighter border + slight lift */
-.feature {
-    cursor: default;
-}
-.section--why[data-reveal] .feature:hover {
-    background-color: rgba(20, 38, 44, 0.55);
-    border-color: rgba(237, 234, 228, 0.18);
-    transform: translateY(-3px);
-}
+.section--why[data-reveal].is-visible .why-row:nth-child(2) .why-row__num   { transition-delay: 0.58s; }
+.section--why[data-reveal].is-visible .why-row:nth-child(2) .why-row__title { transition-delay: 0.68s; }
+.section--why[data-reveal].is-visible .why-row:nth-child(2) .why-row__text  { transition-delay: 0.78s; }
+
+.section--why[data-reveal].is-visible .why-row:nth-child(3) .why-row__num   { transition-delay: 0.76s; }
+.section--why[data-reveal].is-visible .why-row:nth-child(3) .why-row__title { transition-delay: 0.86s; }
+.section--why[data-reveal].is-visible .why-row:nth-child(3) .why-row__text  { transition-delay: 0.96s; }
+
+.section--why[data-reveal].is-visible .why-row:nth-child(4) .why-row__num   { transition-delay: 0.94s; }
+.section--why[data-reveal].is-visible .why-row:nth-child(4) .why-row__title { transition-delay: 1.04s; }
+.section--why[data-reveal].is-visible .why-row:nth-child(4) .why-row__text  { transition-delay: 1.14s; }
 
 /* Wide image — curtain reveal from left + slight push-in */
 .section--why[data-reveal] .why__image {
@@ -1274,9 +1299,6 @@
     .process__cta { justify-self: start; }
     .process-steps { grid-template-columns: repeat(2, 1fr); gap: var(--sp-2); }
 
-    /* Why features */
-    .why__features { grid-template-columns: repeat(2, 1fr); gap: var(--sp-2); }
-
     /* Trust stats — 2x2 grid with adjusted dividers */
     .trust-stats { grid-template-columns: repeat(2, 1fr); }
     .trust-stat { padding: var(--sp-3) 0 var(--sp-3) var(--sp-3); }
@@ -1321,7 +1343,6 @@
     }
 
     .process-steps { grid-template-columns: 1fr; }
-    .why__features { grid-template-columns: 1fr; }
 
     .trust-stats { grid-template-columns: 1fr; }
     .trust-stat {
