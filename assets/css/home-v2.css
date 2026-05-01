@@ -787,16 +787,20 @@ body.menu-open {
     color: var(--ink);
     position: relative;
     padding-top: 0;
-    /* Extra runway after content allows sticky to release naturally,
-       so the title + cards eventually scroll up out of view. */
-    padding-bottom: 80vh;
+    /* Extra runway after content gives the sticky scrollytelling enough
+       scroll distance so the title-out + row-2 staircase feels gradual. */
+    padding-bottom: 200vh;
 }
 .section--inventory__sticky {
     position: sticky;
     top: 0;
-    padding-top: var(--section-py);
+    /* Just clear the fixed header — keep title close to top of viewport
+       so the cards sit visually under it without a yawning gap. */
+    padding-top: calc(var(--header-h) + 24px);
     padding-bottom: var(--sp-5);
     background-color: var(--bg);
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .inventory__header {
@@ -805,13 +809,13 @@ body.menu-open {
     align-items: flex-end;
     justify-content: space-between;
     gap: 40px;
-    margin-bottom: 60px;
+    margin-bottom: 32px;
 }
 .inventory__header-text {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
+    gap: 14px;
     flex: 1;
 }
 .inventory__cta {
@@ -851,7 +855,7 @@ body.menu-open {
     font-weight: 400;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 4px;
     max-width: 708px;
 }
 .inventory__heading-primary {
@@ -1010,20 +1014,34 @@ body.menu-open {
 }
 
 
-/* Initial states — JS animates these continuously based on scroll position.
-   All 6 cards start hidden below; staircase reveals them.
-   First row uses entrance progress, second row uses sticky-scroll progress. */
+/* Header: scroll-driven (JS translates it up under the header bar).
+   Cards: one-shot staircase reveal when section enters view, then stay put. */
 .inventory__header {
     will-change: transform, opacity;
 }
+
 .inventory__grid > li {
     opacity: 0;
-    transform: translateY(120px);
+    transform: translateY(60px);
     will-change: transform, opacity;
+    transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.section--inventory.is-visible .inventory__grid > li {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Tight cascading staircase — both rows reveal as one wave */
+.section--inventory.is-visible .inventory__grid > li:nth-child(1) { transition-delay: 0.05s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(2) { transition-delay: 0.12s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(3) { transition-delay: 0.19s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(4) { transition-delay: 0.26s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(5) { transition-delay: 0.33s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(6) { transition-delay: 0.40s; }
 
 @media (prefers-reduced-motion: reduce) {
-    .inventory__grid > li { opacity: 1; transform: none; }
+    .inventory__grid > li { opacity: 1; transform: none; transition: none; }
 }
 
 

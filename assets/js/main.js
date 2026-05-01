@@ -67,29 +67,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const invHeader  = invSection?.querySelector('.inventory__header');
     const invCards   = invSection ? Array.from(invSection.querySelectorAll('.inventory__grid > li')) : [];
 
-    if (invSection && invHeader && invCards.length) {
+    if (invSection && invHeader) {
+        // Cards reveal once via CSS (triggered by [data-reveal] observer
+        // adding .is-visible). JS only drives the title-out scroll effect.
         let rafId = null;
         const ease = t => 1 - Math.pow(1 - t, 2.2);
-
-        // Split into rows. Cards 0-2 = first row (always visible).
-        // Cards 3-5 = second row (rises from below in staircase as user scrolls).
-        const FIRST_ROW = invCards.slice(0, 3);
-        const SECOND_ROW = invCards.slice(3);
 
         const tick = () => {
             rafId = null;
             const rect = invSection.getBoundingClientRect();
             const vh = window.innerHeight || document.documentElement.clientHeight;
-
-            // Sticky-scroll progress: 0 when section top hits viewport top,
-            // 1 when sticky releases (section bottom reaches viewport top).
             const total = rect.height - vh;
             const passed = -rect.top;
             const p = Math.max(0, Math.min(1, total > 0 ? passed / total : 0));
-
-            // Entrance progress: 0 when section top is one viewport below
-            // viewport top, 1 when section top reaches viewport top (sticky engages).
-            const ep = Math.max(0, Math.min(1, (vh - rect.top) / vh));
 
             // Header — slides up under the header bar and fades over 0..35%
             const HEADER_END = 0.35;
@@ -97,37 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const hEased = ease(hp);
             invHeader.style.transform = `translateY(${(-hEased * 220).toFixed(2)}px)`;
             invHeader.style.opacity = (1 - hEased).toFixed(3);
-
-            // First row — staircase tied to entrance progress (40..95% of entry)
-            const ROW1_START = 0.40;
-            const ROW1_END   = 0.95;
-            const ROW1_SPAN  = 0.18;
-            const stagger1 = FIRST_ROW.length > 1
-                ? (ROW1_END - ROW1_START - ROW1_SPAN) / (FIRST_ROW.length - 1)
-                : 0;
-            FIRST_ROW.forEach((card, i) => {
-                const start = ROW1_START + i * stagger1;
-                const cp = Math.max(0, Math.min(1, (ep - start) / ROW1_SPAN));
-                const e = ease(cp);
-                card.style.transform = `translateY(${((1 - e) * 120).toFixed(2)}px)`;
-                card.style.opacity = e.toFixed(3);
-            });
-
-            // Second row — rises from below in staircase over sticky 30..58%
-            const ROW2_START = 0.30;
-            const ROW2_END   = 0.58;
-            const ROW2_SPAN  = 0.13;
-            const stagger2 = SECOND_ROW.length > 1
-                ? (ROW2_END - ROW2_START - ROW2_SPAN) / (SECOND_ROW.length - 1)
-                : 0;
-
-            SECOND_ROW.forEach((card, i) => {
-                const start = ROW2_START + i * stagger2;
-                const cp = Math.max(0, Math.min(1, (p - start) / ROW2_SPAN));
-                const e = ease(cp);
-                card.style.transform = `translateY(${((1 - e) * 120).toFixed(2)}px)`;
-                card.style.opacity = e.toFixed(3);
-            });
         };
 
         const onScroll = () => {
