@@ -58,44 +58,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- Inventory scroll-driven scrollytelling -----------------------------
-    // While the inventory section is sticky-pinned to the viewport, scroll
-    // progress (0..1 across its tall runway) drives:
-    //   • the title block translating up and fading out
-    //   • each card appearing from below in a staircase, one after the other
-    const invSection = document.querySelector('.section--inventory');
-    const invHeader  = invSection?.querySelector('.inventory__header');
-    const invCards   = invSection ? Array.from(invSection.querySelectorAll('.inventory__grid > li')) : [];
+    // Inventory cards reveal once via CSS staircase ([data-reveal] +
+    // .is-visible nth-child transition-delays). Sticky title-out effect
+    // removed so the next section sits directly below the grid.
 
-    if (invSection && invHeader) {
-        // Cards reveal once via CSS (triggered by [data-reveal] observer
-        // adding .is-visible). JS only drives the title-out scroll effect.
-        let rafId = null;
-        const ease = t => 1 - Math.pow(1 - t, 2.2);
 
-        const tick = () => {
-            rafId = null;
-            const rect = invSection.getBoundingClientRect();
-            const vh = window.innerHeight || document.documentElement.clientHeight;
-            const total = rect.height - vh;
-            const passed = -rect.top;
-            const p = Math.max(0, Math.min(1, total > 0 ? passed / total : 0));
+    // --- Sell Your Vehicle: trigger one-shot auto-animation when sticky
+    // engages (i.e., the video pins under the header bar). After that the
+    // CSS handles the band rise → text → CTA timing entirely on its own,
+    // not tied to scroll position.
+    const sellSection = document.querySelector('.section--sell');
 
-            // Header — slides up under the header bar and fades over 0..35%
-            const HEADER_END = 0.35;
-            const hp = Math.max(0, Math.min(1, p / HEADER_END));
-            const hEased = ease(hp);
-            invHeader.style.transform = `translateY(${(-hEased * 220).toFixed(2)}px)`;
-            invHeader.style.opacity = (1 - hEased).toFixed(3);
+    if (sellSection) {
+        let revealed = false;
+        const trigger = () => {
+            if (revealed) return;
+            const rect = sellSection.getBoundingClientRect();
+            // Fire as soon as the section's top reaches (or passes) viewport top
+            if (rect.top <= 0) {
+                sellSection.classList.add('is-visible');
+                revealed = true;
+                window.removeEventListener('scroll', trigger);
+            }
         };
-
-        const onScroll = () => {
-            if (rafId === null) rafId = requestAnimationFrame(tick);
-        };
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll, { passive: true });
-        tick();
+        window.addEventListener('scroll', trigger, { passive: true });
+        trigger();
     }
 
 
