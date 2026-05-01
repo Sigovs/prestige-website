@@ -24,7 +24,7 @@
             </a>
             <nav class="site-nav" aria-label="Primary">
                 <a href="#inventory" class="site-nav__link">Inventory</a>
-                <a href="sell-your-car.html" class="site-nav__link">Sell Your Vehicle</a>
+                <a href="#sell" class="site-nav__link">Sell Your Vehicle</a>
                 <a href="#service" class="site-nav__link">Service</a>
                 <a href="#store" class="site-nav__link">Store</a>
                 <a href="#research" class="site-nav__link">Research</a>
@@ -65,8 +65,10 @@
                         </h1>
                         <p class="hero__intro">A second-generation, family-owned dealership offering Lamborghini, Pagani, Lotus, Karma, and Czinger — alongside a curated inventory of pre-owned exotics for collectors and enthusiasts.</p>
                         <div class="hero__actions">
-                            <a href="#inventory" class="hero__cta hero__cta--primary">View Inventory</a>
-                            <a href="sell-your-car.html" class="hero__cta hero__cta--ghost">Sell Your Vehicle</a>
+                            <a href="#inventory" class="hero__cta-link">
+                                <span>Browse the collection</span>
+                                <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </article>
 
@@ -87,7 +89,7 @@
                     <a href="#inventory" class="hero__brand-link" aria-label="View Pagani inventory">
                         <img src="assets/images/pagani%20_logo.svg" alt="Pagani">
                         <span class="hero__brand-sub">
-                            <span class="hero__brand-sub-hover">View Inventory →</span>
+                            <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
                 </li>
@@ -95,7 +97,7 @@
                     <a href="#inventory" class="hero__brand-link" aria-label="View Lamborghini inventory">
                         <img src="assets/images/lambo_logo.svg" alt="Lamborghini">
                         <span class="hero__brand-sub">
-                            <span class="hero__brand-sub-hover">View Inventory →</span>
+                            <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
                 </li>
@@ -103,7 +105,7 @@
                     <a href="#inventory" class="hero__brand-link" aria-label="View Lotus inventory">
                         <img src="assets/images/Lotus.svg" alt="Lotus">
                         <span class="hero__brand-sub">
-                            <span class="hero__brand-sub-hover">View Inventory →</span>
+                            <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
                 </li>
@@ -111,7 +113,7 @@
                     <a href="#inventory" class="hero__brand-link" aria-label="View Karma inventory">
                         <img src="assets/images/karma_logo.svg" alt="Karma">
                         <span class="hero__brand-sub">
-                            <span class="hero__brand-sub-hover">View Inventory →</span>
+                            <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
                 </li>
@@ -119,7 +121,7 @@
                     <a href="#inventory" class="hero__brand-link" aria-label="View Czinger inventory">
                         <img src="assets/images/czinger_logo.svg" alt="Czinger">
                         <span class="hero__brand-sub">
-                            <span class="hero__brand-sub-hover">View Inventory →</span>
+                            <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
                 </li>
@@ -141,7 +143,10 @@
                         </h2>
                         <p class="inventory__intro">New Lamborghini, Pagani, Lotus, Karma, and Czinger — factory-new inventory from the marques we represent as an authorized dealer.</p>
                     </div>
-                    <a href="#" class="inventory__cta">View Inventory</a>
+                    <a href="#" class="inventory__cta">
+                        <span>Explore the collection</span>
+                        <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                    </a>
                 </header>
 
                 <ul class="inventory__grid" aria-label="Featured vehicles">
@@ -249,18 +254,362 @@
                         <source src="assets/videos/sell_video.mp4" type="video/mp4">
                     </video>
                 </div>
-                <div class="sell__band" aria-hidden="true"></div>
+                <div class="sell__panel">
+                    <div class="sell__band" aria-hidden="true"></div>
 
-                <div class="sell__inner">
-                    <div class="sell__text">
-                        <span class="eyebrow-stamp">Sell Your Vehicle</span>
-                        <h2 class="sell__heading" id="sell-heading">
-                            <span class="sell__heading-primary">Selling a</span>
-                            <span class="sell__heading-secondary">Luxury or Exotic Vehicle?</span>
-                        </h2>
-                        <p class="sell__intro">Prestige Imports offers a refined, discreet acquisition experience for owners of premium vehicles. Receive a market evaluation from specialists who understand high-end inventory.</p>
+                    <div class="sell__inner">
+                        <div class="sell__text">
+                            <span class="eyebrow-stamp">Sell Your Vehicle</span>
+                            <h2 class="sell__heading" id="sell-heading">
+                                <span class="sell__heading-primary">Selling a</span>
+                                <span class="sell__heading-secondary">Luxury or Exotic Vehicle?</span>
+                            </h2>
+                            <p class="sell__intro">Prestige Imports offers a refined, discreet acquisition experience for owners of premium vehicles. Receive a market evaluation from specialists who understand high-end inventory.</p>
+                        </div>
+                        <a href="sell-your-car.html" class="sell__cta">
+                            <span>Request a private valuation</span>
+                            <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                        </a>
                     </div>
-                    <a href="sell-your-car.html" class="sell__cta">Get an Offer</a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- BEYOND THE SALE — editorial 2-col: heading + 2×2 cards on left,
+             media slab on right. Light bg, sticky 100vh runway, content
+             fades in once section pins (handoff from sell exit). -->
+        <section class="section section--services" id="service" aria-labelledby="services-heading">
+            <div class="services__sticky">
+                <div class="services__bg" aria-hidden="true"></div>
+
+                <div class="services__inner">
+                    <div class="services__col">
+                        <div class="services__text">
+                            <span class="eyebrow-stamp">Services</span>
+                            <h2 class="services__heading" id="services-heading">
+                                <span class="services__heading-primary">Beyond</span>
+                                <span class="services__heading-secondary">the Sale.</span>
+                            </h2>
+                            <p class="services__intro-text">Concierge-level support that extends past the transaction — because the right vehicle deserves the right experience, from delivery through ownership.</p>
+                            <a href="#" class="services__cta">
+                                <span>Schedule appointment</span>
+                                <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+
+                        <ul class="services__grid" aria-label="Services">
+                            <li class="service">
+                                <span class="service__num">01</span>
+                                <h3 class="service__title">
+                                    <span>Concierge Pickup &amp; Delivery</span>
+                                    <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                                </h3>
+                                <p class="service__body">Over 80% of clients served via door-to-door pickup and delivery. Viewings, acquisitions, and service handled on your schedule.</p>
+                            </li>
+                            <li class="service">
+                                <span class="service__num">02</span>
+                                <h3 class="service__title">
+                                    <span>Enclosed Transport</span>
+                                    <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                                </h3>
+                                <p class="service__body">Enclosed-trailer vehicle transport for nationwide delivery, suited to luxury, exotic, and collector inventory.</p>
+                            </li>
+                            <li class="service">
+                                <span class="service__num">03</span>
+                                <h3 class="service__title">
+                                    <span>Body &amp; Restoration</span>
+                                    <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                                </h3>
+                                <p class="service__body">Premium body work and detail services — paint correction, PPF, and restoration for high-end vehicles.</p>
+                            </li>
+                            <li class="service">
+                                <span class="service__num">04</span>
+                                <h3 class="service__title">
+                                    <span>Warranty Options</span>
+                                    <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                                </h3>
+                                <p class="service__body">Curated extended warranty and coverage options aligned with the value and use profile of premium vehicles.</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="services__media" aria-hidden="true">
+                        <img class="services__media-image" src="assets/images/services.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- NEWS & EVENTS — editorial magazine spread: featured event left,
+             heading + upcoming list right. Hover row → swaps featured. -->
+        <section class="section section--events" id="events" aria-labelledby="events-heading">
+            <div class="events__sticky">
+                <div class="events__bg" aria-hidden="true"></div>
+
+                <div class="events__inner">
+                    <article class="event-featured">
+                        <a href="#" class="event-featured__media" aria-label="Formula 1 Miami Grand Prix">
+                            <img src="assets/images/NEWS%20%26%20EVENTS.jpg" alt="Formula 1 Miami Grand Prix" loading="lazy">
+                        </a>
+                        <div class="event-featured__body">
+                            <div class="event-featured__meta">
+                                <span class="event-featured__date">MAY 04</span>
+                                <span class="event-featured__sep" aria-hidden="true"></span>
+                                <span class="event-featured__cat">Motorsport</span>
+                            </div>
+                            <h3 class="event-featured__title">Formula 1 Miami Grand Prix</h3>
+                            <p class="event-featured__text">Prestige Imports joins the Miami race weekend with curated viewing experiences and exclusive client events at Hard Rock Stadium.</p>
+                            <a href="#" class="event-featured__link">
+                                <span>Read more</span>
+                                <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <div class="events__col">
+                        <div class="events__text">
+                            <span class="eyebrow-stamp">News &amp; Events</span>
+                            <h2 class="events__heading" id="events-heading">
+                                <span class="events__heading-primary">From the Paddock to</span>
+                                <span class="events__heading-secondary">the Showroom.</span>
+                            </h2>
+                            <p class="events__intro-text">Motorsport, brand launches, and lifestyle moments that shape the premium automotive calendar.</p>
+                        </div>
+
+                        <ol class="events__list" aria-label="Upcoming events">
+                            <li class="event-row">
+                                <a href="#" class="event-row__link is-active"
+                                   data-event-img="assets/images/NEWS%20%26%20EVENTS.jpg"
+                                   data-event-title="Formula 1 Miami Grand Prix"
+                                   data-event-date="MAY 04"
+                                   data-event-cat="Motorsport"
+                                   data-event-body="Prestige Imports joins the Miami race weekend with curated viewing experiences and exclusive client events at Hard Rock Stadium.">
+                                    <div class="event-row__meta">
+                                        <span class="event-row__date">MAY 04</span>
+                                        <span class="event-row__sep" aria-hidden="true">·</span>
+                                        <span class="event-row__cat">Motorsport</span>
+                                    </div>
+                                    <h4 class="event-row__title">Formula 1 Miami Grand Prix</h4>
+                                    <i class="ph-thin ph-caret-right event-row__arrow" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="event-row">
+                                <a href="#" class="event-row__link"
+                                   data-event-img="assets/images/Moda%20Miami%20Concourse%20d%27Elegance.jpg"
+                                   data-event-title="Moda Miami Concourse d'Elegance"
+                                   data-event-date="APR 15"
+                                   data-event-cat="Concourse"
+                                   data-event-body="A curated gathering of coachbuilt classics, prewar masterpieces, and modern hypercars — the Moda Miami Concourse d'Elegance assembles collector-grade automobiles for a single day in the gardens of the Fontainebleau estate.">
+                                    <div class="event-row__meta">
+                                        <span class="event-row__date">APR 15</span>
+                                        <span class="event-row__sep" aria-hidden="true">·</span>
+                                        <span class="event-row__cat">Concourse</span>
+                                    </div>
+                                    <h4 class="event-row__title">Moda Miami Concourse d'Elegance</h4>
+                                    <i class="ph-thin ph-caret-right event-row__arrow" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="event-row">
+                                <a href="#" class="event-row__link"
+                                   data-event-img="assets/images/2024%20Lamborghini%20Revuelto.jpg"
+                                   data-event-title="Lamborghini Temerario Preview Night"
+                                   data-event-date="MAY 22"
+                                   data-event-cat="Launch"
+                                   data-event-body="A private preview of the all-new Lamborghini Temerario — the next chapter in V8 hybrid hypercar engineering, presented for South Florida clients ahead of public unveiling.">
+                                    <div class="event-row__meta">
+                                        <span class="event-row__date">MAY 22</span>
+                                        <span class="event-row__sep" aria-hidden="true">·</span>
+                                        <span class="event-row__cat">Launch</span>
+                                    </div>
+                                    <h4 class="event-row__title">Lamborghini Temerario Preview Night</h4>
+                                    <i class="ph-thin ph-caret-right event-row__arrow" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="event-row">
+                                <a href="#" class="event-row__link"
+                                   data-event-img="assets/images/2024%20Pagani%20Utopia.webp"
+                                   data-event-title="Pagani Utopia Roadster — Private Showing"
+                                   data-event-date="JUN 10"
+                                   data-event-cat="Private"
+                                   data-event-body="An invitation-only viewing of the Pagani Utopia Roadster — limited-production open-top hypercar, hosted at the Prestige Imports North Miami showroom for collectors and existing Pagani owners.">
+                                    <div class="event-row__meta">
+                                        <span class="event-row__date">JUN 10</span>
+                                        <span class="event-row__sep" aria-hidden="true">·</span>
+                                        <span class="event-row__cat">Private</span>
+                                    </div>
+                                    <h4 class="event-row__title">Pagani Utopia Roadster — Private Showing</h4>
+                                    <i class="ph-thin ph-caret-right event-row__arrow" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Cinematic break — full-bleed image, slow fade-in +
+             settle as it scrolls into view. -->
+        <div class="section-break" data-reveal aria-hidden="true">
+            <img src="assets/images/brake.jpg" alt="" loading="lazy">
+        </div>
+
+
+        <!-- ============================================================
+             PRESTIGE DIFFERENCE — three variants for review. After
+             picking, the other two will be removed.
+             ============================================================ -->
+
+        <!-- VARIANT 1 — "Quiet Sit-Down" — sticky portrait + manifesto -->
+        <section class="section section--difference section--diff-v1" id="about-v1" aria-labelledby="diff-v1-heading" data-reveal>
+            <span class="diff-variant-label">Variant 1 — Quiet Sit-Down</span>
+            <div class="diff-v1__inner">
+                <aside class="diff-v1__portrait-col">
+                    <div class="diff-v1__portrait-sticky">
+                        <div class="diff-v1__portrait-frame">
+                            <img src="assets/images/Irv%20David.png" alt="Irv David, Founder of Prestige Imports">
+                        </div>
+                        <div class="diff-v1__caption">
+                            <span class="diff-v1__caption-rule" aria-hidden="true"></span>
+                            <span class="diff-v1__caption-name">Irv David</span>
+                            <span class="diff-v1__caption-meta">Founder · Est. 1977</span>
+                        </div>
+                    </div>
+                </aside>
+                <article class="diff-v1__body">
+                    <span class="eyebrow-stamp eyebrow-stamp--light">The Prestige Difference</span>
+                    <h2 class="diff-v1__heading" id="diff-v1-heading">
+                        <span class="diff-v1__heading-primary">A Different Kind of Dealership.</span>
+                        <span class="diff-v1__heading-secondary">Since 1977.</span>
+                    </h2>
+                    <div class="diff-v1__rule" aria-hidden="true"></div>
+                    <p class="diff-v1__para diff-v1__para--lead"><span class="diff-v1__dropcap">A</span> second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Four premium franchises — Lamborghini, Pagani, Lotus, and Karma — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
+                    <p class="diff-v1__para">We don't just sell cars. We provide lifestyles — from acquisition and nationwide delivery through long-term ownership support. For clients who also prefer the water, we offer VanDutch luxury marine alongside our automotive portfolio.</p>
+                    <ul class="diff-v1__stats" aria-label="At a glance">
+                        <li>
+                            <span class="diff-v1__stat-label">Established</span>
+                            <span class="diff-v1__stat-value">1977</span>
+                        </li>
+                        <li>
+                            <span class="diff-v1__stat-label">Ownership</span>
+                            <span class="diff-v1__stat-value">Family · 2nd Gen</span>
+                        </li>
+                        <li>
+                            <span class="diff-v1__stat-label">Franchises</span>
+                            <span class="diff-v1__stat-value">4 Luxury Marques</span>
+                        </li>
+                        <li>
+                            <span class="diff-v1__stat-label">Reach</span>
+                            <span class="diff-v1__stat-value">Nationwide</span>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+
+        <!-- VARIANT 2 — "Founder Anchor" — portrait bleeds, dominant -->
+        <section class="section section--difference section--diff-v2" id="about-v2" aria-labelledby="diff-v2-heading" data-reveal>
+            <span class="diff-variant-label">Variant 2 — Founder Anchor</span>
+            <div class="diff-v2__portrait" aria-hidden="false">
+                <img src="assets/images/Irv%20David.png" alt="Irv David, Founder of Prestige Imports">
+                <p class="diff-v2__caption">
+                    <span class="diff-v2__caption-rule" aria-hidden="true"></span>
+                    <span class="diff-v2__caption-name">Irv David</span>
+                    <span class="diff-v2__caption-meta">Founder · 1977</span>
+                </p>
+            </div>
+            <div class="diff-v2__inner">
+                <article class="diff-v2__body">
+                    <span class="eyebrow-stamp eyebrow-stamp--light">The Prestige Difference</span>
+                    <h2 class="diff-v2__heading" id="diff-v2-heading">
+                        <span class="diff-v2__heading-primary">A Different Kind of Dealership.</span>
+                        <span class="diff-v2__heading-secondary">Since 1977.</span>
+                    </h2>
+                    <p class="diff-v2__para diff-v2__para--lead"><span class="diff-v2__dropcap">A</span> second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Four premium franchises — Lamborghini, Pagani, Lotus, and Karma — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
+                    <p class="diff-v2__para">We don't just sell cars. We provide lifestyles — from acquisition and nationwide delivery through long-term ownership support. For clients who also prefer the water, we offer VanDutch luxury marine alongside our automotive portfolio.</p>
+                    <dl class="diff-v2__stats">
+                        <div><dt>Established</dt><dd>1977</dd></div>
+                        <div><dt>Ownership</dt><dd>Family · 2nd Gen</dd></div>
+                        <div><dt>Franchises</dt><dd>4 Luxury Marques</dd></div>
+                        <div><dt>Reach</dt><dd>Nationwide</dd></div>
+                    </dl>
+                </article>
+            </div>
+        </section>
+
+
+        <!-- VARIANT 3 — "Year Monolith" — 1977 as typographic atmosphere -->
+        <section class="section section--difference section--diff-v3" id="about-v3" aria-labelledby="diff-v3-heading" data-reveal>
+            <span class="diff-variant-label">Variant 3 — Year Monolith</span>
+            <div class="diff-v3__year" aria-hidden="true">1977</div>
+            <div class="diff-v3__inner">
+                <header class="diff-v3__header">
+                    <span class="eyebrow-stamp eyebrow-stamp--light">The Prestige Difference</span>
+                    <h2 class="diff-v3__heading" id="diff-v3-heading">
+                        <span class="diff-v3__heading-primary">A Different Kind of Dealership.</span>
+                        <span class="diff-v3__heading-secondary">Since 1977.</span>
+                    </h2>
+                </header>
+                <div class="diff-v3__columns">
+                    <div class="diff-v3__manifesto">
+                        <p class="diff-v3__para diff-v3__para--lead"><span class="diff-v3__dropcap">A</span> second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Four premium franchises — Lamborghini, Pagani, Lotus, and Karma — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
+                        <p class="diff-v3__para">We don't just sell cars. We provide lifestyles — from acquisition and nationwide delivery through long-term ownership support. For clients who also prefer the water, we offer VanDutch luxury marine alongside our automotive portfolio.</p>
+                    </div>
+                    <aside class="diff-v3__founder">
+                        <div class="diff-v3__portrait">
+                            <img src="assets/images/Irv%20David.png" alt="Irv David, Founder of Prestige Imports">
+                        </div>
+                        <p class="diff-v3__founder-caption">
+                            <span class="diff-v3__founder-name">Irv David</span>
+                            <span class="diff-v3__founder-meta">Founder · 1977</span>
+                        </p>
+                    </aside>
+                </div>
+                <ul class="diff-v3__stats" aria-label="At a glance">
+                    <li><span class="diff-v3__stat-label">Established</span><span class="diff-v3__stat-value">1977</span></li>
+                    <li><span class="diff-v3__stat-label">Ownership</span><span class="diff-v3__stat-value">Family · 2nd Gen</span></li>
+                    <li><span class="diff-v3__stat-label">Franchises</span><span class="diff-v3__stat-value">4 Luxury Marques</span></li>
+                    <li><span class="diff-v3__stat-label">Reach</span><span class="diff-v3__stat-value">Nationwide</span></li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- VARIANT 4 — "Editorial Spread" — heading + portrait stacked left,
+             dropcap manifesto + stats + See More CTA on the right. -->
+        <section class="section section--difference section--diff-v4" id="about-v4" aria-labelledby="diff-v4-heading" data-reveal>
+            <span class="diff-variant-label">Variant 4 — Editorial Spread</span>
+            <div class="diff-v4__inner">
+                <div class="diff-v4__left">
+                    <span class="eyebrow-stamp eyebrow-stamp--light">The Prestige Difference</span>
+                    <h2 class="diff-v4__heading" id="diff-v4-heading">
+                        A Different Kind of<br>Dealership. Since<br>1977.
+                    </h2>
+                    <figure class="diff-v4__portrait">
+                        <img src="assets/images/Irv%20David.png" alt="Irv David, Founder of Prestige Imports">
+                        <figcaption class="diff-v4__caption">Irv David</figcaption>
+                    </figure>
+                </div>
+                <div class="diff-v4__right">
+                    <div class="diff-v4__manifesto">
+                        <p class="diff-v4__para diff-v4__para--lead"><span class="diff-v4__dropcap">A</span> second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Four premium franchises — Lamborghini, Pagani, Lotus, and Karma — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
+                        <p class="diff-v4__para">We don't just sell cars. We provide lifestyles — from acquisition and nationwide delivery through long-term ownership support. For clients who also prefer the water, we offer VanDutch luxury marine alongside our automotive portfolio.</p>
+                    </div>
+                    <div class="diff-v4__rule" aria-hidden="true"></div>
+                    <div class="diff-v4__footer">
+                        <ul class="diff-v4__stats" aria-label="At a glance">
+                            <li><span class="diff-v4__stat-label">Established</span><span class="diff-v4__stat-value">1977</span></li>
+                            <li><span class="diff-v4__stat-label">Ownership</span><span class="diff-v4__stat-value">Family · 2nd Gen</span></li>
+                            <li><span class="diff-v4__stat-label">Franchises</span><span class="diff-v4__stat-value">4 Luxury Marques</span></li>
+                            <li><span class="diff-v4__stat-label">Reach</span><span class="diff-v4__stat-value">Nationwide</span></li>
+                        </ul>
+                        <a href="#" class="diff-v4__cta">
+                            <span>See More</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

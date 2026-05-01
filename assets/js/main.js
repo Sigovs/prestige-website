@@ -68,22 +68,68 @@ document.addEventListener('DOMContentLoaded', () => {
     // CSS handles the band rise → text → CTA timing entirely on its own,
     // not tied to scroll position.
     const sellSection = document.querySelector('.section--sell');
+    const sellPanel = sellSection?.querySelector('.sell__panel');
 
     if (sellSection) {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let revealed = false;
+        let rafPending = false;
+
+        // Sell panel (white band + text/CTA together) scroll-scrubs upward
+        // at 1:1 with page scroll while sticky is engaged. Video bg stays
+        // sticky in place underneath. Section 4 emerges from below at the
+        // same rate so band and section 4 cross paths in lockstep.
+        const update = () => {
+            rafPending = false;
+            const rect = sellSection.getBoundingClientRect();
+
+            // One-shot trigger when sticky engages (band rise + text fade-in)
+            if (!revealed && rect.top <= 0) {
+                sellSection.classList.add('is-visible');
+                revealed = true;
+            }
+
+            if (reducedMotion || !sellPanel) return;
+
+            // rect.top: 0 at pin start → -100vh at pin release. Cap translation
+            // at one viewport-height so panel doesn't drift beyond after release.
+            const vh = window.innerHeight;
+            const scrolled = Math.max(0, -rect.top);
+            const translateY = -Math.min(scrolled, vh);
+            sellPanel.style.transform = `translateY(${translateY}px)`;
+        };
+
+        const onScroll = () => {
+            if (rafPending) return;
+            rafPending = true;
+            requestAnimationFrame(update);
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        update();
+    }
+
+
+    // --- Services + Events: fire content reveals when each section is
+    // half-emerged from below (rect.top <= 50vh) — content reveal
+    // animations start while the section is still rising into view, so
+    // the user sees them appear sooner rather than waiting for the
+    // section to fully pin.
+    document.querySelectorAll('.section--services, .section--events').forEach(section => {
         let revealed = false;
         const trigger = () => {
             if (revealed) return;
-            const rect = sellSection.getBoundingClientRect();
-            // Fire as soon as the section's top reaches (or passes) viewport top
-            if (rect.top <= 0) {
-                sellSection.classList.add('is-visible');
+            const rect = section.getBoundingClientRect();
+            const halfEmerged = window.innerHeight * 0.5;
+            if (rect.top <= halfEmerged) {
+                section.classList.add('is-visible');
                 revealed = true;
                 window.removeEventListener('scroll', trigger);
             }
         };
         window.addEventListener('scroll', trigger, { passive: true });
         trigger();
-    }
+    });
 
 
     // --- Nav active section highlight ---------------------------------------
@@ -479,8 +525,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (eventsFeatured && eventsMedia && eventsRows.length) {
         const baseImg = eventsMedia.querySelector('img');
         const titleEl = eventsFeatured.querySelector('.event-featured__title');
-        const dateEl  = eventsFeatured.querySelector('.event__date');
-        const catEl   = eventsFeatured.querySelector('.event__cat');
+        const dateEl  = eventsFeatured.querySelector('.event-featured__date');
+        const catEl   = eventsFeatured.querySelector('.event-featured__cat');
         const textEl  = eventsFeatured.querySelector('.event-featured__text');
         const bodyEl  = eventsFeatured.querySelector('.event-featured__body');
 
@@ -497,23 +543,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const applyRow = row => {
                 const d = row.dataset;
-                if (d.eventImg) baseImg.src = d.eventImg;
-                if (titleEl && d.eventTitle) titleEl.textContent = d.eventTitle;
-                if (dateEl  && d.eventDate)  dateEl.textContent  = d.eventDate;
-                if (catEl   && d.eventCat)   catEl.textContent   = d.eventCat;
-                if (textEl  && d.eventBody)  textEl.textContent  = d.eventBody;
 
-                // Clear hover preview since base image is now committed
+                // Mark active row immediately — the dark-fill invert
+                // glides in over 0.6s while the featured swap runs.
+                eventsRows.forEach(r => r.classList.toggle('is-active', r === row));
+
+                // Clear hover preview before the swap so the base
+                // image is what fades to/from black.
                 eventsMedia.classList.remove('is-previewing');
 
-                // Briefly fade the featured card to signal the change
-                if (bodyEl) {
-                    eventsFeatured.classList.add('is-swapping');
-                    setTimeout(() => eventsFeatured.classList.remove('is-swapping'), 550);
-                }
-
-                // Mark row active
-                eventsRows.forEach(r => r.classList.toggle('is-active', r === row));
+                // Crossfade: fade out body + base img, replace under
+                // the hood, fade back in. Timing aligned with the CSS
+                // transition (0.45s on body / 0.55s on img).
+                eventsFeatured.classList.add('is-swapping');
+                setTimeout(() => {
+                    if (d.eventImg) baseImg.src = d.eventImg;
+                    if (titleEl && d.eventTitle) titleEl.textContent = d.eventTitle;
+                    if (dateEl  && d.eventDate)  dateEl.textContent  = d.eventDate;
+                    if (catEl   && d.eventCat)   catEl.textContent   = d.eventCat;
+                    if (textEl  && d.eventBody)  textEl.textContent  = d.eventBody;
+                    eventsFeatured.classList.remove('is-swapping');
+                }, 360);
             };
 
             eventsRows.forEach(row => {
