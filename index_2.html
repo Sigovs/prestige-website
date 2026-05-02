@@ -457,46 +457,270 @@
 
 
         <!-- ============================================================
+             GOOGLE REVIEWS — drag-able horizontal stripe of client
+             quotes. Center 3 cards are fully active; cards on the
+             edges fade out via mask gradient. "Leave a Review" pill
+             matches the hero contact-link styling.
+             ============================================================ -->
+        <section class="section section--reviews" id="reviews" data-reveal>
+            <div class="reviews__inner">
+                <header class="reviews__header">
+                    <div class="reviews__meta">
+                        <i class="ph-fill ph-star reviews__icon" aria-hidden="true"></i>
+                        <span class="reviews__rating">4.9</span>
+                        <span class="reviews__divider" aria-hidden="true"></span>
+                        <span class="reviews__label">Google Reviews</span>
+                    </div>
+                    <a href="https://www.google.com/maps/place/Prestige+Imports" target="_blank" rel="noopener" class="reviews__cta">
+                        <i class="ph-thin ph-pencil-simple-line" aria-hidden="true"></i>
+                        <span>Leave a Review</span>
+                    </a>
+                </header>
+
+                <div class="reviews__track" data-reviews-track>
+                    <article class="review-card">
+                        <div class="review-card__stars" aria-label="5 out of 5 stars">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="review-card__text">A genuinely first-class experience from first call to delivery. They handled every detail and the car arrived in better condition than I expected.</p>
+                        <div class="review-card__author">
+                            <span class="review-card__name">M. Hartwell</span>
+                            <span class="review-card__date">3 weeks ago</span>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <div class="review-card__stars" aria-label="5 out of 5 stars">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="review-card__text">Discreet, knowledgeable, and refreshingly honest. They sourced exactly what I was looking for and the paperwork was painless.</p>
+                        <div class="review-card__author">
+                            <span class="review-card__name">D. Castellanos</span>
+                            <span class="review-card__date">1 month ago</span>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <div class="review-card__stars" aria-label="5 out of 5 stars">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="review-card__text">Bought my Lotus through Prestige and they made the whole process feel effortless. Door-to-door delivery to the Northeast was flawless.</p>
+                        <div class="review-card__author">
+                            <span class="review-card__name">A. Whitford</span>
+                            <span class="review-card__date">2 months ago</span>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <div class="review-card__stars" aria-label="5 out of 5 stars">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="review-card__text">They sold my Aventador for me, handled the listing privately, and got me a number I didn't think was possible. Real professionals.</p>
+                        <div class="review-card__author">
+                            <span class="review-card__name">R. Linden</span>
+                            <span class="review-card__date">2 months ago</span>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <div class="review-card__stars" aria-label="5 out of 5 stars">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="review-card__text">Service department is on another level — they treat the car the way you would. Trust them with anything in my collection.</p>
+                        <div class="review-card__author">
+                            <span class="review-card__name">P. Sloan</span>
+                            <span class="review-card__date">3 months ago</span>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <div class="review-card__stars" aria-label="5 out of 5 stars">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="review-card__text">Second purchase with them. The first was a Karma, this time a Pagani. Same level of care, same quiet competence. Hard to find elsewhere.</p>
+                        <div class="review-card__author">
+                            <span class="review-card__name">J. Okafor</span>
+                            <span class="review-card__date">4 months ago</span>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <div class="review-card__stars" aria-label="5 out of 5 stars">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="review-card__text">I've worked with most of the major exotic dealers on the East Coast. Prestige stands apart — no pressure, no theatrics, just exceptional inventory and follow-through.</p>
+                        <div class="review-card__author">
+                            <span class="review-card__name">E. Voss</span>
+                            <span class="review-card__date">5 months ago</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================================
              PRESTIGE DIFFERENCE — combo of v4 editorial spread layout
              (heading + founder portrait stacked left, dropcap manifesto
              + stats + See More CTA right) on top of v3 "1977" typographic
              atmosphere (huge italic year as low-opacity watermark).
              ============================================================ -->
         <section class="section section--difference" id="about" aria-labelledby="diff-heading" data-reveal>
+            <div class="diff__bg" aria-hidden="true"></div>
             <div class="diff__year" aria-hidden="true">1977</div>
             <div class="diff__inner">
-                <div class="diff__left">
+
+                <header class="diff__header">
                     <span class="eyebrow-stamp eyebrow-stamp--light">The Prestige Difference</span>
                     <h2 class="diff__heading" id="diff-heading">
-                        A Different Kind of<br>Dealership. Since<br>1977.
+                        <span class="diff__heading-primary">A Different Kind of Dealership.</span>
+                        <span class="diff__heading-secondary">Since 1977.</span>
                     </h2>
-                    <figure class="diff__portrait">
-                        <img src="assets/images/Irv%20David.png" alt="Irv David, Founder of Prestige Imports">
-                        <figcaption class="diff__caption">Irv David</figcaption>
-                    </figure>
-                </div>
-                <div class="diff__right">
+                    <div class="diff__rule" aria-hidden="true"></div>
+                </header>
+
+                <div class="diff__body">
                     <div class="diff__manifesto">
                         <p class="diff__para diff__para--lead"><span class="diff__dropcap">A</span> second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Four premium franchises — Lamborghini, Pagani, Lotus, and Karma — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
                         <p class="diff__para">We don't just sell cars. We provide lifestyles — from acquisition and nationwide delivery through long-term ownership support. For clients who also prefer the water, we offer VanDutch luxury marine alongside our automotive portfolio.</p>
+                        <a href="#" class="diff__readmore">
+                            <span>Read more</span>
+                            <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                        </a>
                     </div>
-                    <div class="diff__rule" aria-hidden="true"></div>
-                    <div class="diff__footer">
-                        <ul class="diff__stats" aria-label="At a glance">
-                            <li><span class="diff__stat-label">Established</span><span class="diff__stat-value">1977</span></li>
-                            <li><span class="diff__stat-label">Ownership</span><span class="diff__stat-value">Family · 2nd Gen</span></li>
-                            <li><span class="diff__stat-label">Franchises</span><span class="diff__stat-value">4 Luxury Marques</span></li>
-                            <li><span class="diff__stat-label">Reach</span><span class="diff__stat-value">Nationwide</span></li>
+
+                    <aside class="diff__sidebar" aria-label="At a glance">
+                        <ul class="diff__stats">
+                            <li>
+                                <span class="diff__stat-label">Established</span>
+                                <span class="diff__stat-value">1977</span>
+                            </li>
+                            <li>
+                                <span class="diff__stat-label">Ownership</span>
+                                <span class="diff__stat-value">Family · 2nd Gen</span>
+                            </li>
+                            <li>
+                                <span class="diff__stat-label">Franchises</span>
+                                <span class="diff__stat-value">4 Luxury Marques</span>
+                            </li>
+                            <li>
+                                <span class="diff__stat-label">Reach</span>
+                                <span class="diff__stat-value">Nationwide</span>
+                            </li>
                         </ul>
+
                         <a href="#" class="diff__cta">
                             <span>See More</span>
                         </a>
-                    </div>
+                    </aside>
                 </div>
+
             </div>
         </section>
 
     </main>
+
+
+    <!-- ============================================================
+         FOOTER — dark ink continuation. 4-col link grid + bottom bar
+         with copyright, social icons, legal.
+         ============================================================ -->
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+
+            <div class="site-footer__brand">
+                <a href="index_2.html" class="site-footer__logo" aria-label="Prestige Imports — Home">
+                    <img src="assets/images/logo.svg" alt="Prestige Imports">
+                </a>
+                <p class="site-footer__tagline">A second-generation, family-owned dealership for luxury, exotic, and collector automobiles. South Florida, since 1977.</p>
+            </div>
+
+            <div class="site-footer__rule" aria-hidden="true"></div>
+
+            <div class="site-footer__cols">
+
+                <div class="site-footer__col">
+                    <h3 class="site-footer__col-title">Inventory</h3>
+                    <ul class="site-footer__links">
+                        <li><a href="#inventory">All Inventory</a></li>
+                        <li><a href="#inventory">New</a></li>
+                        <li><a href="#inventory">Pre-Owned</a></li>
+                        <li><a href="#inventory">Sold</a></li>
+                    </ul>
+                </div>
+
+                <div class="site-footer__col">
+                    <h3 class="site-footer__col-title">Visit</h3>
+                    <address class="site-footer__address">
+                        <p>14780 Biscayne Blvd<br>North Miami, FL 33181</p>
+                        <p>
+                            <a href="tel:+13059531000">+1 (305) 953-1000</a>
+                        </p>
+                    </address>
+                    <p class="site-footer__hours">
+                        <span>Mon — Sat &middot; 9–6</span>
+                        <span>Sun &middot; By appointment</span>
+                    </p>
+                </div>
+
+                <div class="site-footer__col">
+                    <h3 class="site-footer__col-title">Service</h3>
+                    <ul class="site-footer__links">
+                        <li><a href="#service">About Service</a></li>
+                        <li><a href="#service">Schedule Appointment</a></li>
+                        <li><a href="#service">Parts</a></li>
+                        <li><a href="#sell">Sell Your Vehicle</a></li>
+                    </ul>
+                </div>
+
+                <div class="site-footer__col">
+                    <h3 class="site-footer__col-title">Connect</h3>
+                    <ul class="site-footer__links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#about">Our Team</a></li>
+                        <li><a href="#about">Heritage</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <ul class="site-footer__social" aria-label="Social media">
+                        <li>
+                            <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+                                <i class="ph-thin ph-instagram-logo" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
+                                <i class="ph-thin ph-facebook-logo" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube">
+                                <i class="ph-thin ph-youtube-logo" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                                <i class="ph-thin ph-linkedin-logo" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="site-footer__rule" aria-hidden="true"></div>
+
+            <div class="site-footer__bottom">
+                <p class="site-footer__copy">&copy; <span id="footer-year"></span> Prestige Imports. All rights reserved.</p>
+                <ul class="site-footer__legal">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Sitemap</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </footer>
+
 
     <script src="assets/js/main.js" defer></script>
 </body>

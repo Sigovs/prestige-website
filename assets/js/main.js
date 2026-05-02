@@ -675,6 +675,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // --- Reviews stripe — drag-to-scroll for the Google Reviews
+    // horizontal carousel between the section break and the about
+    // section. Mouse/pen drag; touch is handled natively. Snap is
+    // suspended during a drag to avoid jumpiness, then restored.
+    const reviewsTrack = document.querySelector('[data-reviews-track]');
+
+    if (reviewsTrack) {
+        let dragging = false;
+        let startX = 0;
+        let startScroll = 0;
+        let moved = 0;
+        const DRAG_THRESHOLD = 5;
+
+        reviewsTrack.addEventListener('pointerdown', e => {
+            if (e.pointerType === 'touch') return;
+            dragging = true;
+            moved = 0;
+            startX = e.clientX;
+            startScroll = reviewsTrack.scrollLeft;
+            reviewsTrack.classList.add('is-dragging');
+            reviewsTrack.style.scrollSnapType = 'none';
+            reviewsTrack.setPointerCapture(e.pointerId);
+        });
+
+        reviewsTrack.addEventListener('pointermove', e => {
+            if (!dragging) return;
+            const dx = e.clientX - startX;
+            moved = Math.abs(dx);
+            reviewsTrack.scrollLeft = startScroll - dx;
+        });
+
+        const endDrag = e => {
+            if (!dragging) return;
+            dragging = false;
+            reviewsTrack.classList.remove('is-dragging');
+            reviewsTrack.style.scrollSnapType = '';
+            try { reviewsTrack.releasePointerCapture(e.pointerId); } catch {}
+        };
+        reviewsTrack.addEventListener('pointerup', endDrag);
+        reviewsTrack.addEventListener('pointercancel', endDrag);
+        reviewsTrack.addEventListener('pointerleave', endDrag);
+
+        // Block click-through on cards after a meaningful drag.
+        reviewsTrack.addEventListener('click', e => {
+            if (moved > DRAG_THRESHOLD) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }, true);
+    }
+
+
     // Ribbon drift: subtle horizontal motion tied to scroll position.
     // Skip if user prefers reduced motion.
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
