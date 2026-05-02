@@ -1,875 +1,1843 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prestige Imports — Quiet Power. Since 1977.</title>
-    <meta name="description" content="Prestige Imports — South Florida's authorized house for Lamborghini, Pagani, Lotus, Karma, and Czinger. A second-generation, family-owned dealership for luxury, exotic, and collector automobiles.">
+    <title>Prestige Imports — Not just selling cars. Providing lifestyles.</title>
+    <meta name="description" content="A second-generation family house in North Miami Beach. Lamborghini, Pagani, Lotus, Karma — and a curated floor of pre-owned exotics. Since 1977.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Inter:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/thin/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <!-- META PIXEL: handled by Richard on production deploy -->
 
-    <link rel="stylesheet" href="assets/css/home-v3.css">
+    <style>
+    /* ============================================================
+       PRESTIGE IMPORTS — index_3
+       Editorial luxury. Bodoni serif + Instrument Sans + JetBrains
+       Mono. Cream paper, warm ink, single oxblood accent.
+       ============================================================ */
 
-    <script>document.documentElement.classList.remove('no-js');</script>
+    :root {
+        /* Surfaces */
+        --paper:        #F3EEE3;
+        --paper-deep:   #ECE5D5;
+        --ink:          #17130F;
+        --ink-soft:     #2C2620;
+        --ink-muted:    #6B6055;
+        --ink-faint:    #9A9085;
+
+        /* Single accent */
+        --oxblood:      #6E1A1A;
+        --oxblood-soft: #8B2424;
+
+        /* Hairlines */
+        --rule:         rgba(23, 19, 15, 0.10);
+        --rule-strong:  rgba(23, 19, 15, 0.20);
+        --rule-cream:   rgba(243, 238, 227, 0.16);
+
+        /* Typography */
+        --display:  'Bodoni Moda', 'Bodoni 72', Didot, serif;
+        --body:     'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --mono:     'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+
+        /* Layout */
+        --gutter:   24px;
+        --col-px:   24px;
+        --max:      1440px;
+        --masthead-h: 76px;
+
+        /* Easing */
+        --ease:     cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body {
+        background-color: var(--paper);
+        color: var(--ink);
+        font-family: var(--body);
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        overscroll-behavior-y: none;
+    }
+
+    /* Subtle film grain — fixed across viewport, multiply blend */
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.06;
+        mix-blend-mode: multiply;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        background-size: 240px 240px;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+
+    ::selection { background-color: var(--oxblood); color: var(--paper); }
+
+    :focus-visible {
+        outline: 2px solid var(--oxblood);
+        outline-offset: 3px;
+    }
+
+
+    /* ============================================================
+       LAYOUT — 12-col grid, asymmetric section headers
+       ============================================================ */
+    .wrap {
+        width: 100%;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding-inline: clamp(20px, 4vw, 56px);
+    }
+
+    .grid12 {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: var(--gutter);
+    }
+
+    /* Section header — eyebrow [1-2], title [3-9], aside [10-12] */
+    .sec-head {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: var(--gutter);
+        align-items: end;
+        margin-bottom: clamp(56px, 8vh, 96px);
+    }
+    .sec-head__eyebrow { grid-column: 1 / span 2; }
+    .sec-head__title   { grid-column: 3 / span 7; }
+    .sec-head__aside   { grid-column: 10 / span 3; padding-bottom: 8px; }
+
+
+    /* ============================================================
+       TYPOGRAPHY ATOMS
+       ============================================================ */
+    .eyebrow {
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        line-height: 1;
+    }
+
+    .display {
+        font-family: var(--display);
+        font-weight: 400;
+        font-style: italic;
+        margin: 0;
+        line-height: 0.96;
+        letter-spacing: -0.022em;
+        color: var(--ink);
+        font-optical-sizing: auto;
+    }
+    .display--upright { font-style: normal; }
+    .display em { font-style: italic; }
+    .display .roman { font-style: normal; }
+
+    .aside-note {
+        margin: 0;
+        font-family: var(--body);
+        font-size: 13px;
+        line-height: 1.55;
+        color: var(--ink-muted);
+        max-width: 28ch;
+    }
+
+    .body-text {
+        font-family: var(--body);
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--ink-soft);
+    }
+
+    .mono {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+    }
+
+    /* Hairlines */
+    .rule { height: 1px; background-color: var(--rule); border: 0; margin: 0; }
+
+
+    /* ============================================================
+       MASTHEAD — sticky, minimal
+       ============================================================ */
+    .mast {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        height: var(--masthead-h);
+        background-color: rgba(243, 238, 227, 0);
+        border-bottom: 1px solid transparent;
+        transition: background-color 0.4s var(--ease),
+                    border-color 0.4s var(--ease),
+                    backdrop-filter 0.4s var(--ease);
+    }
+    .mast.is-scrolled {
+        background-color: rgba(243, 238, 227, 0.9);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-bottom-color: var(--rule);
+    }
+
+    .mast__inner {
+        max-width: var(--max);
+        height: 100%;
+        margin: 0 auto;
+        padding-inline: clamp(20px, 4vw, 56px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+    }
+
+    .mast__brand {
+        font-family: var(--display);
+        font-size: 22px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        line-height: 1;
+    }
+    .mast__brand em { font-style: italic; }
+
+    .mast__nav {
+        display: flex;
+        align-items: center;
+        gap: clamp(20px, 2.4vw, 32px);
+    }
+    .mast__nav-link {
+        position: relative;
+        font-family: var(--body);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-soft);
+        line-height: 1;
+        padding: 6px 0;
+        transition: color 0.25s var(--ease);
+    }
+    .mast__nav-link::after {
+        content: '';
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 1px;
+        background-color: var(--oxblood);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 0.45s var(--ease);
+    }
+    .mast__nav-link:hover { color: var(--ink); }
+    .mast__nav-link:hover::after { transform: scaleX(1); }
+
+    .mast__meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ink-muted);
+        text-transform: uppercase;
+    }
+
+
+    /* ============================================================
+       HERO — single video, one headline, two-line subhead, one CTA
+       ============================================================ */
+    .hero {
+        position: relative;
+        padding-top: var(--masthead-h);
+        background-color: var(--paper);
+    }
+    .hero__inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: clamp(40px, 6vh, 80px) clamp(20px, 4vw, 56px) clamp(80px, 10vh, 120px);
+    }
+
+    .hero__reel {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        max-height: 78vh;
+        background:
+            linear-gradient(135deg,
+                #1a1411 0%,
+                #2c2218 35%,
+                #3d2a1f 60%,
+                #1f1a14 100%);
+        overflow: hidden;
+        margin-bottom: clamp(48px, 6vh, 72px);
+    }
+    .hero__video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    /* Reel chrome — corner labels */
+    .hero__reel-label {
+        position: absolute;
+        z-index: 2;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--paper);
+        line-height: 1;
+        padding: 14px 18px;
+    }
+    .hero__reel-label--tl { top: 0; left: 0; }
+    .hero__reel-label--tr { top: 0; right: 0; text-align: right; }
+    .hero__reel-label--bl {
+        bottom: 0; left: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .hero__reel-label--br { bottom: 0; right: 0; }
+    .hero__reel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background-color: var(--oxblood);
+        animation: livePulse 2s var(--ease) infinite;
+    }
+    @keyframes livePulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50%      { opacity: 0.4; transform: scale(1.15); }
+    }
+
+    /* Headline + subhead block under the reel */
+    .hero__statement { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+    .hero__headline {
+        grid-column: 1 / span 9;
+        font-family: var(--display);
+        font-style: normal;
+        font-weight: 400;
+        font-size: clamp(48px, 7vw, 116px);
+        line-height: 0.96;
+        letter-spacing: -0.024em;
+        color: var(--ink);
+        margin: 0 0 28px;
+    }
+    .hero__headline em {
+        font-style: italic;
+        color: var(--oxblood);
+    }
+    .hero__sub {
+        grid-column: 1 / span 7;
+        margin: 0;
+        font-family: var(--body);
+        font-size: clamp(15px, 1.2vw, 18px);
+        line-height: 1.65;
+        color: var(--ink-soft);
+        max-width: 64ch;
+    }
+    .hero__cta-row {
+        grid-column: 8 / span 5;
+        align-self: end;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .cta-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        padding: 18px 28px;
+        background-color: var(--ink);
+        color: var(--paper);
+        font-family: var(--body);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        line-height: 1;
+        border: 1px solid var(--ink);
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        transition: color 0.3s var(--ease);
+    }
+    .cta-primary::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--oxblood);
+        transform: translateX(-101%);
+        transition: transform 0.45s var(--ease);
+        z-index: -1;
+    }
+    .cta-primary:hover { color: var(--paper); }
+    .cta-primary:hover::before { transform: translateX(0); }
+    .cta-primary .arrow { transition: transform 0.4s var(--ease); }
+    .cta-primary:hover .arrow { transform: translateX(4px); }
+
+    .text-link {
+        font-family: var(--body);
+        font-size: 13px;
+        color: var(--ink-muted);
+        line-height: 1;
+        position: relative;
+        padding-bottom: 4px;
+    }
+    .text-link::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 1px;
+        background-color: var(--ink-muted);
+        transform: scaleX(1);
+        transform-origin: left;
+        transition: transform 0.4s var(--ease), background-color 0.3s var(--ease);
+    }
+    .text-link:hover { color: var(--ink); }
+    .text-link:hover::after { background-color: var(--oxblood); }
+
+
+    /* ============================================================
+       SECTION SCAFFOLD
+       ============================================================ */
+    .section { padding-block: clamp(96px, 14vh, 160px); position: relative; }
+    .section--inverted {
+        background-color: var(--ink);
+        color: var(--paper);
+    }
+    .section--inverted .eyebrow,
+    .section--inverted .aside-note { color: rgba(243, 238, 227, 0.55); }
+    .section--inverted .display { color: var(--paper); }
+    .section--inverted .display em { color: #d4a8a8; }
+
+
+    /* ============================================================
+       INVENTORY — 6 cards, asymmetric grid (1 feature 2× width)
+       ============================================================ */
+    .inventory__grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        column-gap: var(--gutter);
+        row-gap: clamp(56px, 7vh, 88px);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .inventory__item { grid-column: span 2; }
+    .inventory__item--feature { grid-column: span 4; }
+
+    .car {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        text-decoration: none;
+        color: var(--ink);
+    }
+    .car__media {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #2c2218 0%, #4a3a2a 100%);
+    }
+    .inventory__item--feature .car__media { aspect-ratio: 16 / 9; }
+    .car__media-grad-1 { background: linear-gradient(135deg, #3d2118 0%, #6e1a1a 50%, #2a1410 100%); } /* Pagani — oxblood */
+    .car__media-grad-2 { background: linear-gradient(135deg, #1a1612 0%, #3a2820 60%, #5a3a25 100%); } /* Revuelto — bianco-warm */
+    .car__media-grad-3 { background: linear-gradient(135deg, #0d0d0d 0%, #1f1f1f 50%, #3a3a3a 100%); } /* Czinger — carbon */
+    .car__media-grad-4 { background: linear-gradient(135deg, #2a1410 0%, #5a2814 60%, #c25a1a 100%); } /* Huracán STO — arancio */
+    .car__media-grad-5 { background: linear-gradient(135deg, #1a2622 0%, #2a3a32 60%, #3a4a40 100%); } /* Lotus — Hethel green */
+    .car__media-grad-6 { background: linear-gradient(135deg, #14181a 0%, #1a2630 60%, #2c3a4a 100%); } /* Karma — slate blue */
+    .car__media-index {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        padding: 6px 10px;
+        background-color: rgba(23, 19, 15, 0.45);
+        border: 1px solid rgba(243, 238, 227, 0.15);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.10em;
+        color: var(--paper);
+        line-height: 1;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* Status overlay — "Sale Pending" ribbon-corner. Sits top-right.
+       Paper fill + oxblood text + pulsing dot. Bottom-left edge is
+       angled (clip-path) so it reads as a tucked-in tag, not a chip. */
+    .car__status {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 18px 12px 26px;
+        background-color: var(--paper);
+        color: var(--oxblood);
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        line-height: 1;
+        clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%);
+        box-shadow: 0 6px 20px -4px rgba(23, 19, 15, 0.35);
+    }
+    .car__status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background-color: var(--oxblood);
+        animation: statusPulse 2.4s var(--ease) infinite;
+        flex-shrink: 0;
+    }
+    @keyframes statusPulse {
+        0%, 100% { opacity: 1;   transform: scale(1); }
+        50%      { opacity: 0.4; transform: scale(1.25); }
+    }
+
+    .car__body {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        column-gap: 24px;
+        row-gap: 12px;
+        align-items: baseline;
+    }
+    .car__title {
+        margin: 0;
+        font-family: var(--display);
+        font-size: clamp(22px, 1.8vw, 28px);
+        font-weight: 400;
+        line-height: 1.1;
+        letter-spacing: -0.014em;
+        color: var(--ink);
+        grid-column: 1;
+    }
+    .inventory__item--feature .car__title { font-size: clamp(28px, 2.6vw, 40px); }
+    .car__price {
+        font-family: var(--mono);
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--ink);
+        grid-column: 2;
+        white-space: nowrap;
+    }
+    .car__meta {
+        grid-column: 1 / -1;
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ink-muted);
+        text-transform: uppercase;
+        line-height: 1.4;
+    }
+
+    .car .car__media { transition: transform 0.5s var(--ease); }
+    .car:hover .car__media { transform: translateY(-4px); }
+    .car:hover .car__title { color: var(--oxblood); transition: color 0.3s var(--ease); }
+
+    .inventory__footer {
+        margin-top: clamp(56px, 7vh, 88px);
+        padding-top: 32px;
+        border-top: 1px solid var(--rule);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+    .inventory__footer-meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ink-muted);
+    }
+
+
+    /* ============================================================
+       SELL YOUR CAR — inverted dark, form on right
+       ============================================================ */
+    .sell__inner {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: var(--gutter);
+        row-gap: 56px;
+    }
+    .sell__hero { grid-column: 1 / span 7; }
+    .sell__form { grid-column: 8 / span 5; }
+
+    .sell__statement {
+        margin: 0 0 56px;
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(28px, 3vw, 44px);
+        line-height: 1.18;
+        letter-spacing: -0.014em;
+        color: var(--paper);
+    }
+    .sell__statement em { color: #e6c8c8; font-style: italic; }
+
+    .sell__points {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 36px;
+    }
+    .sell__point {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        column-gap: 20px;
+        align-items: start;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule-cream);
+    }
+    .sell__point-num {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 22px;
+        color: #d4a8a8;
+        line-height: 1;
+    }
+    .sell__point-body { display: flex; flex-direction: column; gap: 8px; }
+    .sell__point-title {
+        margin: 0;
+        font-family: var(--display);
+        font-size: 18px;
+        font-weight: 400;
+        font-style: normal;
+        color: var(--paper);
+        line-height: 1.3;
+    }
+    .sell__point-text {
+        margin: 0;
+        font-family: var(--body);
+        font-size: 14px;
+        line-height: 1.65;
+        color: rgba(243, 238, 227, 0.7);
+        max-width: 56ch;
+    }
+
+    /* Form */
+    .form-card {
+        padding: clamp(32px, 4vw, 48px);
+        background-color: rgba(243, 238, 227, 0.04);
+        border: 1px solid var(--rule-cream);
+    }
+    .form-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border: 1px solid var(--rule-cream);
+        border-radius: 999px;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: rgba(243, 238, 227, 0.7);
+        margin-bottom: 24px;
+        line-height: 1;
+    }
+    .form-pill .dot {
+        width: 6px; height: 6px; border-radius: 999px;
+        background-color: var(--oxblood);
+    }
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+    .form-grid__row { grid-column: 1 / -1; }
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .field__label {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: rgba(243, 238, 227, 0.55);
+        line-height: 1;
+    }
+    .field__input {
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid var(--rule-cream);
+        padding: 10px 0 12px;
+        font-family: var(--body);
+        font-size: 15px;
+        color: var(--paper);
+        line-height: 1.3;
+        outline: none;
+        transition: border-color 0.3s var(--ease);
+    }
+    .field__input:focus { border-bottom-color: var(--paper); }
+    .field__input::placeholder { color: rgba(243, 238, 227, 0.3); }
+
+    .cta-light {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        padding: 18px 24px;
+        background-color: var(--paper);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        line-height: 1;
+        border: 1px solid var(--paper);
+        cursor: pointer;
+        margin-top: 8px;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        transition: color 0.3s var(--ease);
+    }
+    .cta-light::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--oxblood);
+        transform: translateX(-101%);
+        transition: transform 0.45s var(--ease);
+        z-index: -1;
+    }
+    .cta-light:hover { color: var(--paper); border-color: var(--oxblood); }
+    .cta-light:hover::before { transform: translateX(0); }
+
+
+    /* ============================================================
+       SERVICES — 6 cards, hairline grid
+       ============================================================ */
+    .services__grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--rule-strong);
+    }
+    .service {
+        padding: clamp(32px, 4vh, 48px) clamp(24px, 3vw, 40px) clamp(40px, 5vh, 60px);
+        border-bottom: 1px solid var(--rule);
+        border-right: 1px solid var(--rule);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        transition: background-color 0.3s var(--ease);
+    }
+    .service:nth-child(3n) { border-right: 0; }
+    .service:nth-last-child(-n+3) { border-bottom: 1px solid var(--rule-strong); }
+    .service:hover { background-color: rgba(23, 19, 15, 0.025); }
+
+    .service__num {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.10em;
+        color: var(--oxblood);
+        text-transform: uppercase;
+        line-height: 1;
+    }
+    .service__title {
+        margin: 0;
+        font-family: var(--display);
+        font-size: clamp(22px, 1.8vw, 28px);
+        font-weight: 400;
+        font-style: normal;
+        line-height: 1.15;
+        letter-spacing: -0.012em;
+        color: var(--ink);
+    }
+    .service__text {
+        margin: 0;
+        font-family: var(--body);
+        font-size: 14px;
+        line-height: 1.65;
+        color: var(--ink-soft);
+        max-width: 36ch;
+    }
+
+
+    /* ============================================================
+       BRANDS — 4 primary franchise cards + secondary row
+       ============================================================ */
+    .brands__primary {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        column-gap: var(--gutter);
+        row-gap: var(--gutter);
+        list-style: none;
+        margin: 0 0 64px;
+        padding: 0;
+    }
+    .brand-card {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding: clamp(28px, 3.5vw, 40px);
+        background-color: var(--paper-deep);
+        border: 1px solid var(--rule);
+        text-decoration: none;
+        color: var(--ink);
+        transition: transform 0.4s var(--ease),
+                    background-color 0.3s var(--ease);
+        min-height: 280px;
+        justify-content: space-between;
+    }
+    .brand-card:hover {
+        transform: translateY(-4px);
+        background-color: var(--paper);
+    }
+    .brand-card__head {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .brand-card__origin {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        line-height: 1.3;
+    }
+    .brand-card__name {
+        margin: 0;
+        font-family: var(--display);
+        font-size: clamp(24px, 2.4vw, 36px);
+        font-style: italic;
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.014em;
+        color: var(--ink);
+    }
+    .brand-card__name .roman { font-style: normal; }
+    .brand-card__foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding-top: 20px;
+        border-top: 1px solid var(--rule);
+    }
+    .brand-card__status {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: var(--oxblood);
+    }
+    .brand-card__link {
+        font-family: var(--body);
+        font-size: 12px;
+        color: var(--ink-muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: color 0.3s var(--ease);
+    }
+    .brand-card:hover .brand-card__link { color: var(--ink); }
+
+    .brands__secondary-head {
+        margin: 0 0 24px;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+    }
+    .brands__secondary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: var(--gutter);
+        list-style: none;
+        margin: 0;
+        padding: 24px 0 0;
+        border-top: 1px solid var(--rule);
+    }
+    .brand-card--small {
+        background: none;
+        border: 0;
+        padding: 0;
+        min-height: 0;
+        gap: 12px;
+    }
+    .brand-card--small:hover {
+        transform: none;
+        background: none;
+    }
+    .brand-card--small .brand-card__name { font-size: clamp(18px, 1.4vw, 22px); }
+    .brand-card--small .brand-card__foot { padding-top: 12px; }
+
+
+    /* ============================================================
+       EVENTS — 4 cards, editorial grid
+       ============================================================ */
+    .events__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: var(--gutter);
+        row-gap: 48px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .event {
+        padding-top: 28px;
+        border-top: 1px solid var(--rule-strong);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+    .event__meta {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        line-height: 1;
+        color: var(--ink-muted);
+    }
+    .event__date { color: var(--ink); font-weight: 500; }
+    .event__sep { width: 16px; height: 1px; background-color: var(--ink-muted); }
+    .event__cat { color: var(--oxblood); }
+    .event__title {
+        margin: 0;
+        font-family: var(--display);
+        font-size: clamp(28px, 2.4vw, 36px);
+        font-weight: 400;
+        font-style: normal;
+        line-height: 1.1;
+        letter-spacing: -0.014em;
+        color: var(--ink);
+    }
+    .event__text {
+        margin: 0;
+        font-family: var(--body);
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--ink-soft);
+        max-width: 52ch;
+    }
+    .event__loc {
+        margin-top: 8px;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ink-muted);
+        text-transform: uppercase;
+    }
+
+
+    /* ============================================================
+       LETTER FROM THE HOUSE — drop-cap, sign-off
+       ============================================================ */
+    .letter__inner {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: var(--gutter);
+    }
+    .letter__body {
+        grid-column: 2 / span 8;
+        font-family: var(--display);
+        font-style: normal;
+        font-size: clamp(22px, 1.8vw, 28px);
+        line-height: 1.5;
+        letter-spacing: -0.008em;
+        color: var(--ink);
+        margin: 0 0 32px;
+    }
+    .letter__dropcap {
+        float: left;
+        font-family: var(--display);
+        font-style: italic;
+        font-size: clamp(80px, 8vw, 124px);
+        line-height: 0.82;
+        color: var(--oxblood);
+        margin: 6px 18px 0 0;
+    }
+    .letter__signoff {
+        grid-column: 2 / span 8;
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        margin: 0 0 80px;
+    }
+
+    .stat-row {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        column-gap: var(--gutter);
+        padding-top: 32px;
+        border-top: 1px solid var(--rule-strong);
+        list-style: none;
+        margin: 0;
+    }
+    .stat {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .stat__label {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+    }
+    .stat__value {
+        font-family: var(--display);
+        font-size: clamp(22px, 2vw, 30px);
+        font-weight: 400;
+        font-style: normal;
+        color: var(--ink);
+        line-height: 1;
+        letter-spacing: -0.012em;
+    }
+
+
+    /* ============================================================
+       SINGLE REVIEW
+       ============================================================ */
+    .review {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: var(--gutter);
+    }
+    .review__quote {
+        grid-column: 2 / span 9;
+        margin: 0;
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(28px, 3.2vw, 48px);
+        line-height: 1.22;
+        letter-spacing: -0.018em;
+        color: var(--ink);
+    }
+    .review__quote::before { content: '"'; color: var(--oxblood); margin-right: 4px; }
+    .review__quote::after  { content: '"'; color: var(--oxblood); margin-left: 4px; }
+
+    .review__attr {
+        grid-column: 2 / span 9;
+        margin: 32px 0 0;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+    }
+    .review__rating {
+        grid-column: 2 / span 9;
+        margin: 48px 0 0;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule);
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .review__rating-text {
+        font-family: var(--body);
+        font-size: 14px;
+        color: var(--ink-soft);
+    }
+    .review__rating-text .star { color: var(--oxblood); margin-right: 4px; }
+    .review__rating-text strong { color: var(--ink); font-weight: 500; }
+
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+        background-color: var(--ink);
+        color: var(--paper);
+        padding: clamp(80px, 10vh, 120px) 0 36px;
+    }
+    .footer__inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding-inline: clamp(20px, 4vw, 56px);
+    }
+    .footer__wordmark {
+        font-family: var(--display);
+        font-size: clamp(56px, 9vw, 140px);
+        font-weight: 400;
+        line-height: 0.92;
+        letter-spacing: -0.028em;
+        color: var(--paper);
+        margin: 0 0 64px;
+    }
+    .footer__wordmark em { font-style: italic; }
+    .footer__wordmark .outline {
+        font-style: italic;
+        -webkit-text-stroke: 1px var(--paper);
+        color: transparent;
+    }
+
+    .footer__cols {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        column-gap: var(--gutter);
+        row-gap: 36px;
+        padding-block: 48px;
+        border-top: 1px solid var(--rule-cream);
+        border-bottom: 1px solid var(--rule-cream);
+    }
+    .footer__col-title {
+        margin: 0 0 16px;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: rgba(243, 238, 227, 0.5);
+    }
+    .footer__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .footer__list a, .footer__list li {
+        font-family: var(--body);
+        font-size: 14px;
+        color: rgba(243, 238, 227, 0.85);
+        line-height: 1.5;
+        transition: color 0.3s var(--ease);
+    }
+    .footer__list a:hover { color: var(--oxblood-soft); }
+
+    .footer__bottom {
+        margin-top: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+    .footer__copy {
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: rgba(243, 238, 227, 0.5);
+    }
+    .footer__legal {
+        display: inline-flex;
+        gap: 22px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .footer__legal a {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: rgba(243, 238, 227, 0.5);
+        transition: color 0.3s var(--ease);
+    }
+    .footer__legal a:hover { color: var(--paper); }
+
+
+    /* ============================================================
+       MOTION — single staggered reveal on hero load
+       ============================================================ */
+    @keyframes heroRise {
+        from { opacity: 0; transform: translateY(24px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; animation: heroRise 1s var(--ease) forwards; }
+    .reveal:nth-child(1) { animation-delay: 0.10s; }
+    .reveal:nth-child(2) { animation-delay: 0.22s; }
+    .reveal:nth-child(3) { animation-delay: 0.34s; }
+    .reveal:nth-child(4) { animation-delay: 0.46s; }
+
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 980px) {
+        :root { --masthead-h: 64px; }
+        .mast__nav { display: none; }
+        .sec-head { row-gap: 16px; }
+        .sec-head__eyebrow { grid-column: 1 / -1; }
+        .sec-head__title   { grid-column: 1 / -1; }
+        .sec-head__aside   { grid-column: 1 / -1; padding-bottom: 0; max-width: 56ch; }
+
+        .hero__statement { grid-template-columns: 1fr; }
+        .hero__headline,
+        .hero__sub,
+        .hero__cta-row { grid-column: 1; }
+        .hero__cta-row { align-self: start; margin-top: 12px; }
+
+        .inventory__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 48px; }
+        .inventory__item,
+        .inventory__item--feature { grid-column: span 1; }
+        .inventory__item--feature .car__media { aspect-ratio: 4 / 3; }
+
+        .sell__inner { grid-template-columns: 1fr; }
+        .sell__hero,
+        .sell__form { grid-column: 1; }
+
+        .services__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .service:nth-child(3n) { border-right: 1px solid var(--rule); }
+        .service:nth-child(2n) { border-right: 0; }
+        .service:nth-last-child(-n+3) { border-bottom: 1px solid var(--rule); }
+        .service:nth-last-child(-n+2) { border-bottom: 1px solid var(--rule-strong); }
+
+        .brands__primary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .brands__secondary { grid-template-columns: 1fr; gap: 24px; }
+
+        .events__grid { grid-template-columns: 1fr; row-gap: 36px; }
+
+        .letter__body,
+        .letter__signoff,
+        .review__quote,
+        .review__attr,
+        .review__rating { grid-column: 1 / -1; }
+
+        .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }
+
+        .footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+        .form-grid { grid-template-columns: 1fr; }
+        .inventory__grid { grid-template-columns: 1fr; }
+        .services__grid { grid-template-columns: 1fr; }
+        .service { border-right: 0; }
+        .brands__primary { grid-template-columns: 1fr; }
+        .footer__cols { grid-template-columns: 1fr; }
+        .footer__bottom { flex-direction: column; align-items: flex-start; }
+        .review__quote::before, .review__quote::after { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.001ms !important;
+            transition-duration: 0.001ms !important;
+        }
+        .reveal { opacity: 1; transform: none; }
+        .hero__reel-dot { animation: none; }
+    }
+    </style>
 </head>
-<body class="page-home-v3">
+<body>
+
 
     <!-- ============================================================
-         HEADER
+         MASTHEAD
          ============================================================ -->
-    <header class="site-header3" data-header>
-        <div class="site-header3__inner">
-            <a href="index_3.html" class="site-header3__logo" aria-label="Prestige Imports — Home">
-                <img src="assets/images/logo.svg" alt="Prestige Imports">
-            </a>
-            <nav class="site-header3__nav" aria-label="Primary">
-                <a href="#inventory" class="site-header3__nav-link">Inventory</a>
-                <a href="#sell" class="site-header3__nav-link">Sell</a>
-                <a href="#service" class="site-header3__nav-link">Service</a>
-                <a href="#events" class="site-header3__nav-link">Events</a>
-                <a href="#about" class="site-header3__nav-link">About</a>
+    <header class="mast" data-mast>
+        <div class="mast__inner">
+            <a href="#" class="mast__brand">Prestige <em>Imports</em></a>
+            <nav class="mast__nav" aria-label="Primary">
+                <a href="#inventory" class="mast__nav-link">Inventory</a>
+                <a href="#sell" class="mast__nav-link">Sell Your Car</a>
+                <a href="#service" class="mast__nav-link">Service</a>
+                <a href="#brands" class="mast__nav-link">Brands</a>
+                <a href="#events" class="mast__nav-link">Events</a>
+                <a href="#contact" class="mast__nav-link">Contact</a>
             </nav>
-            <a href="tel:+13059531000" class="site-header3__cta">
-                <i class="ph-thin ph-phone" aria-hidden="true"></i>
-                <span>Speak to a Specialist</span>
-            </a>
+            <span class="mast__meta">Miami · Est. 1977</span>
         </div>
     </header>
 
 
-    <main>
+    <!-- ============================================================
+         HERO — single video, one headline, one CTA
+         ============================================================ -->
+    <section class="hero" aria-label="Prestige Imports">
+        <div class="hero__inner">
 
-        <!-- ============================================================
-             HERO — 2-slide deck: paired video + statement + CTA.
-             Auto-advance every 8s; click pagination to switch.
-             ============================================================ -->
-        <section class="hero3" aria-label="Prestige Imports" data-hero-deck>
-            <div class="hero3__bg">
-                <video class="hero3__video is-active" data-slide-video="0" autoplay muted loop playsinline preload="auto" disableremoteplayback>
+            <div class="hero__reel reveal">
+                <video class="hero__video" autoplay muted loop playsinline preload="auto" disableremoteplayback>
                     <source src="assets/videos/hero3.mp4" type="video/mp4">
                 </video>
-                <video class="hero3__video" data-slide-video="1" muted loop playsinline preload="auto" disableremoteplayback>
-                    <source src="assets/videos/slider2.mp4" type="video/mp4">
-                </video>
-                <video class="hero3__video" data-slide-video="2" muted loop playsinline preload="auto" disableremoteplayback>
-                    <source src="assets/videos/hero2.mp4" type="video/mp4">
-                </video>
-            </div>
-            <div class="hero3__scrim" aria-hidden="true"></div>
-
-            <div class="hero3__inner">
-                <div class="hero3__slides" data-hero-slides>
-
-                    <article class="hero3__slide is-active" data-slide="0" data-reveal-stagger>
-                        <span class="hero3__eyebrow" data-fade-up>Prestige Imports · Since 1977</span>
-                        <h1 class="hero3__headline" data-fade-up>
-                            <span>Quiet Power.</span>
-                            <em>Built into 48 years.</em>
-                        </h1>
-                        <div class="hero3__cta" data-fade-up>
-                            <a href="#inventory" class="cta-card cta-card--solid">
-                                <span class="cta-card__text">
-                                    <span class="cta-card__eyebrow">Inventory</span>
-                                    <span class="cta-card__title">Browse the Collection</span>
-                                    <span class="cta-card__meta">Lamborghini · Pagani · Lotus · Karma · Czinger</span>
-                                </span>
-                                <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <article class="hero3__slide" data-slide="1" data-reveal-stagger>
-                        <span class="hero3__eyebrow" data-fade-up>Authorized House for</span>
-                        <h1 class="hero3__headline" data-fade-up>
-                            <span>Five marques.</span>
-                            <em>One floor.</em>
-                        </h1>
-                        <div class="hero3__cta" data-fade-up>
-                            <a href="#sell" class="cta-card">
-                                <span class="cta-card__text">
-                                    <span class="cta-card__eyebrow">Acquisition</span>
-                                    <span class="cta-card__title">Sell Your Vehicle</span>
-                                    <span class="cta-card__meta">Private valuation in 24 hours</span>
-                                </span>
-                                <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <article class="hero3__slide" data-slide="2" data-reveal-stagger>
-                        <span class="hero3__eyebrow" data-fade-up>Beyond the Sale</span>
-                        <h1 class="hero3__headline" data-fade-up>
-                            <span>Past the keys.</span>
-                            <em>The relationship begins.</em>
-                        </h1>
-                        <div class="hero3__cta" data-fade-up>
-                            <a href="#service" class="cta-card">
-                                <span class="cta-card__text">
-                                    <span class="cta-card__eyebrow">Service</span>
-                                    <span class="cta-card__title">Concierge for the Long Drive</span>
-                                    <span class="cta-card__meta">Pickup · Transport · Restoration · Coverage</span>
-                                </span>
-                                <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
-                            </a>
-                        </div>
-                    </article>
-
-                </div>
+                <span class="hero__reel-label hero__reel-label--tl">Reel — Spring / 2026</span>
+                <span class="hero__reel-label hero__reel-label--tr">F1 Miami · Moda Concours · Showroom Floor</span>
+                <span class="hero__reel-label hero__reel-label--bl">
+                    <span class="hero__reel-dot" aria-hidden="true"></span>
+                    Live from the Floor
+                </span>
+                <span class="hero__reel-label hero__reel-label--br">01 / 01</span>
             </div>
 
-            <div class="hero3__contact" aria-label="Contact">
-                <a href="tel:+13059531000" class="hero3__contact-link">
-                    <i class="ph-thin ph-phone" aria-hidden="true"></i>
-                    <span>+1 (305) 953-1000</span>
-                </a>
-                <a href="https://maps.google.com/?q=14780+Biscayne+Blvd+North+Miami+FL" class="hero3__contact-link" target="_blank" rel="noopener">
-                    <i class="ph-thin ph-map-pin" aria-hidden="true"></i>
-                    <span>14780 Biscayne Blvd · North Miami, FL</span>
-                </a>
-            </div>
-
-            <div class="hero3__scroll" aria-hidden="true">
-                <span>Scroll</span>
-                <span class="hero3__scroll-line"></span>
-            </div>
-
-            <!-- Slide pagination — bottom-left, numerals + hairlines -->
-            <nav class="hero3__pagination" data-hero-pagination aria-label="Hero slides">
-                <button type="button" class="hero3__dot is-active" data-slide-to="0" aria-label="Slide 1">
-                    <span class="hero3__dot-num">01</span>
-                    <span class="hero3__dot-line" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="hero3__dot" data-slide-to="1" aria-label="Slide 2">
-                    <span class="hero3__dot-num">02</span>
-                    <span class="hero3__dot-line" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="hero3__dot" data-slide-to="2" aria-label="Slide 3">
-                    <span class="hero3__dot-num">03</span>
-                    <span class="hero3__dot-line" aria-hidden="true"></span>
-                </button>
-            </nav>
-
-            <!-- Slide nav — small prev/next buttons, right edge mid-height -->
-            <div class="hero3__nav" data-hero-nav>
-                <button type="button" class="hero3__nav-btn" data-hero-prev aria-label="Previous slide">
-                    <i class="ph-thin ph-arrow-left" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="hero3__nav-btn" data-hero-next aria-label="Next slide">
-                    <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
-                </button>
-            </div>
-        </section>
-
-
-        <!-- ============================================================
-             MARQUES STRIP — own narrow band below hero
-             ============================================================ -->
-        <section class="marques3" aria-label="Authorized marques">
-            <div class="marques3__inner">
-                <p class="marques3__caption">Authorized<br>House for</p>
-                <ul class="marques3__list">
-                    <li class="marques3__item">
-                        <a href="#inventory" class="marques3__link" aria-label="Lamborghini">
-                            <img src="assets/images/lambo_logo.svg" alt="Lamborghini">
-                        </a>
-                    </li>
-                    <li class="marques3__item">
-                        <a href="#inventory" class="marques3__link" aria-label="Pagani">
-                            <img src="assets/images/pagani%20_logo.svg" alt="Pagani">
-                        </a>
-                    </li>
-                    <li class="marques3__item">
-                        <a href="#inventory" class="marques3__link" aria-label="Lotus">
-                            <img src="assets/images/lotus_logo.png" alt="Lotus">
-                        </a>
-                    </li>
-                    <li class="marques3__item">
-                        <a href="#inventory" class="marques3__link" aria-label="Karma">
-                            <img src="assets/images/karma_logo.svg" alt="Karma">
-                        </a>
-                    </li>
-                    <li class="marques3__item">
-                        <a href="#inventory" class="marques3__link" aria-label="Czinger">
-                            <img src="assets/images/czinger_logo.svg" alt="Czinger">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-
-        <!-- ============================================================
-             INVENTORY — 2-col gallery, refined cards
-             ============================================================ -->
-        <section class="inventory3" id="inventory" aria-labelledby="inv3-heading">
-            <div class="container">
-
-                <header class="inventory3__header" data-reveal-stagger>
-                    <div class="inventory3__title-block">
-                        <span class="eyebrow" data-fade-up>On the Floor</span>
-                        <h2 class="section3__title" id="inv3-heading" data-fade-up>
-                            Six this month.
-                        </h2>
-                        <p class="section3__intro" data-fade-up>New from the marques we represent. Each one held to the standard.</p>
-                    </div>
-                    <a href="#" class="cta-card cta-card--ghost" data-fade-up>
-                        <span class="cta-card__text">
-                            <span class="cta-card__title">View All</span>
-                        </span>
-                        <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
+            <div class="hero__statement">
+                <h1 class="hero__headline reveal">
+                    Not just selling cars. <em>Providing lifestyles.</em>
+                </h1>
+                <p class="hero__sub reveal">
+                    A second-generation family house in North Miami Beach. Lamborghini, Pagani, Lotus, Karma — and a curated floor of pre-owned exotics. Since 1977.
+                </p>
+                <div class="hero__cta-row reveal">
+                    <a href="#inventory" class="cta-primary">
+                        <span>Browse the Collection</span>
+                        <span class="arrow" aria-hidden="true">→</span>
                     </a>
-                </header>
-
-                <ul class="inventory3__grid" aria-label="Featured vehicles">
-
-                    <li>
-                        <a href="#" class="vehicle-card3" data-card-reveal>
-                            <div class="vehicle-card3__media" data-image-reveal>
-                                <span class="vehicle-card3__index">01 / 06</span>
-                                <img src="assets/images/2024%20Lamborghini%20Revuelto.jpg" alt="2024 Lamborghini Revuelto" loading="lazy">
-                            </div>
-                            <div class="vehicle-card3__body">
-                                <span class="vehicle-card3__year">2024 · Lamborghini</span>
-                                <h3 class="vehicle-card3__name">Revuelto</h3>
-                                <div class="vehicle-card3__rule"></div>
-                                <div class="vehicle-card3__meta">
-                                    <ul class="vehicle-card3__specs">
-                                        <li>120 mi</li>
-                                        <li>Automatic</li>
-                                    </ul>
-                                    <span class="vehicle-card3__price">$645,000</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="vehicle-card3" data-card-reveal>
-                            <div class="vehicle-card3__media" data-image-reveal>
-                                <span class="vehicle-card3__index">02 / 06</span>
-                                <img src="assets/images/2024%20Pagani%20Utopia.webp" alt="2024 Pagani Utopia" loading="lazy">
-                            </div>
-                            <div class="vehicle-card3__body">
-                                <span class="vehicle-card3__year">2024 · Pagani</span>
-                                <h3 class="vehicle-card3__name">Utopia</h3>
-                                <div class="vehicle-card3__rule"></div>
-                                <div class="vehicle-card3__meta">
-                                    <ul class="vehicle-card3__specs">
-                                        <li>85 mi</li>
-                                        <li>Manual</li>
-                                    </ul>
-                                    <span class="vehicle-card3__price">$2,900,000</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="vehicle-card3" data-card-reveal>
-                            <div class="vehicle-card3__media" data-image-reveal>
-                                <span class="vehicle-card3__index">03 / 06</span>
-                                <img src="assets/images/2024%20Czinger%2021C.webp" alt="2024 Czinger 21C" loading="lazy">
-                            </div>
-                            <div class="vehicle-card3__body">
-                                <span class="vehicle-card3__year">2024 · Czinger</span>
-                                <h3 class="vehicle-card3__name">21C</h3>
-                                <div class="vehicle-card3__rule"></div>
-                                <div class="vehicle-card3__meta">
-                                    <ul class="vehicle-card3__specs">
-                                        <li>60 mi</li>
-                                        <li>Automatic</li>
-                                    </ul>
-                                    <span class="vehicle-card3__price">$2,000,000</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="vehicle-card3" data-card-reveal>
-                            <div class="vehicle-card3__media" data-image-reveal>
-                                <span class="vehicle-card3__index">04 / 06</span>
-                                <img src="assets/images/2023%20Lamborghini%20Hurac%C3%A1n%20STO.webp" alt="2023 Lamborghini Huracán STO" loading="lazy">
-                            </div>
-                            <div class="vehicle-card3__body">
-                                <span class="vehicle-card3__year">2023 · Lamborghini</span>
-                                <h3 class="vehicle-card3__name">Huracán STO</h3>
-                                <div class="vehicle-card3__rule"></div>
-                                <div class="vehicle-card3__meta">
-                                    <ul class="vehicle-card3__specs">
-                                        <li>1,800 mi</li>
-                                        <li>Automatic</li>
-                                    </ul>
-                                    <span class="vehicle-card3__price">$412,000</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="vehicle-card3" data-card-reveal>
-                            <div class="vehicle-card3__media" data-image-reveal>
-                                <span class="vehicle-card3__index">05 / 06</span>
-                                <img src="assets/images/Karma%20GS-6.avif" alt="2024 Karma GS-6" loading="lazy">
-                            </div>
-                            <div class="vehicle-card3__body">
-                                <span class="vehicle-card3__year">2024 · Karma</span>
-                                <h3 class="vehicle-card3__name">GS-6</h3>
-                                <div class="vehicle-card3__rule"></div>
-                                <div class="vehicle-card3__meta">
-                                    <ul class="vehicle-card3__specs">
-                                        <li>45 mi</li>
-                                        <li>Automatic</li>
-                                    </ul>
-                                    <span class="vehicle-card3__price">$96,000</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="vehicle-card3" data-card-reveal>
-                            <div class="vehicle-card3__media" data-image-reveal>
-                                <span class="vehicle-card3__index">06 / 06</span>
-                                <img src="assets/images/2024%20Lotus%20Emira%20First%20Edition.avif" alt="2024 Lotus Emira First Edition" loading="lazy">
-                            </div>
-                            <div class="vehicle-card3__body">
-                                <span class="vehicle-card3__year">2024 · Lotus</span>
-                                <h3 class="vehicle-card3__name">Emira First Edition</h3>
-                                <div class="vehicle-card3__rule"></div>
-                                <div class="vehicle-card3__meta">
-                                    <ul class="vehicle-card3__specs">
-                                        <li>450 mi</li>
-                                        <li>Manual</li>
-                                    </ul>
-                                    <span class="vehicle-card3__price">$108,500</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-
-                </ul>
-
-                <div class="inventory3__footer">
-                    <a href="#" class="cta-card" data-fade-up>
-                        <span class="cta-card__text">
-                            <span class="cta-card__eyebrow">Full Inventory</span>
-                            <span class="cta-card__title">Explore the Collection</span>
-                            <span class="cta-card__meta">28 vehicles available · Updated weekly</span>
-                        </span>
-                        <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
-                    </a>
+                    <a href="#sell" class="text-link">Or — sell us your car</a>
                 </div>
-
             </div>
-        </section>
+
+        </div>
+    </section>
 
 
-        <!-- ============================================================
-             SELL — sticky video, ONE statement, ONE CTA
-             ============================================================ -->
-        <section class="sell3" id="sell" aria-labelledby="sell3-heading">
-            <div class="sell3__sticky">
-                <div class="sell3__bg">
-                    <video class="sell3__video" data-sell-video autoplay muted loop playsinline preload="metadata">
-                        <source src="assets/videos/sell_video.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div class="sell3__scrim" aria-hidden="true"></div>
+    <!-- ============================================================
+         INVENTORY — 6 cards, asymmetric (1 feature 2× width)
+         ============================================================ -->
+    <section class="section" id="inventory">
+        <div class="wrap">
 
-                <div class="sell3__inner" data-reveal-stagger>
-                    <span class="sell3__eyebrow" data-fade-up>Discreet Acquisition</span>
-                    <h2 class="sell3__heading" id="sell3-heading" data-fade-up>
-                        <span>Selling is just as careful.</span>
-                        <em>As buying.</em>
-                    </h2>
-                    <p class="sell3__intro" data-fade-up>Private valuation. Specialist response within 24 hours.</p>
-                    <div class="sell3__cta" data-fade-up>
-                        <a href="sell-your-car.html" class="cta-card cta-card--solid">
-                            <span class="cta-card__text">
-                                <span class="cta-card__eyebrow">Acquisition</span>
-                                <span class="cta-card__title">Request a Private Valuation</span>
-                                <span class="cta-card__meta">Specialist response within 24 hours</span>
+            <header class="sec-head">
+                <p class="sec-head__eyebrow eyebrow">§ 02 — Inventory</p>
+                <h2 class="sec-head__title display">A floor that updates <em>daily.</em></h2>
+                <p class="sec-head__aside aside-note">120+ motor cars across the franchise floors and pre-owned bay. Live feed from AccuTrade.</p>
+            </header>
+
+            <ul class="inventory__grid">
+                <li class="inventory__item inventory__item--feature">
+                    <a href="#" class="car">
+                        <div class="car__media car__media-grad-1">
+                            <span class="car__media-index">01 / 06</span>
+                            <span class="car__status">
+                                <span class="car__status-dot" aria-hidden="true"></span>
+                                Sale Pending
                             </span>
-                            <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- ============================================================
-             SERVICES — stacked rows + media slab (no sticky)
-             ============================================================ -->
-        <section class="services3" id="service" aria-labelledby="services3-heading">
-            <div class="container services3__inner">
-
-                <div class="services3__col-text" data-reveal-stagger>
-
-                    <header class="services3__header">
-                        <span class="eyebrow" data-fade-up>Beyond the Sale</span>
-                        <h2 class="section3__title" id="services3-heading" data-fade-up>
-                            Past the keys.
-                            <em>The relationship begins.</em>
-                        </h2>
-                        <p class="section3__intro" data-fade-up>Concierge support for the long drive — pickup and delivery, enclosed transport, restoration, coverage.</p>
-                    </header>
-
-                    <ul class="services3__list" data-reveal-stagger>
-                        <li class="service3" data-fade-up>
-                            <span class="service3__num">01</span>
-                            <div class="service3__body">
-                                <h3 class="service3__title">Concierge Pickup &amp; Delivery</h3>
-                                <p class="service3__text">Over 80% of clients served via door-to-door pickup and delivery. Viewings, acquisitions, and service handled on your schedule.</p>
-                            </div>
-                            <span class="service3__arrow"><i class="ph-thin ph-arrow-right" aria-hidden="true"></i></span>
-                        </li>
-                        <li class="service3" data-fade-up>
-                            <span class="service3__num">02</span>
-                            <div class="service3__body">
-                                <h3 class="service3__title">Enclosed Transport</h3>
-                                <p class="service3__text">Enclosed-trailer vehicle transport for nationwide delivery, suited to luxury, exotic, and collector inventory.</p>
-                            </div>
-                            <span class="service3__arrow"><i class="ph-thin ph-arrow-right" aria-hidden="true"></i></span>
-                        </li>
-                        <li class="service3" data-fade-up>
-                            <span class="service3__num">03</span>
-                            <div class="service3__body">
-                                <h3 class="service3__title">Body &amp; Restoration</h3>
-                                <p class="service3__text">Premium body work and detail services — paint correction, paint protection film, and restoration for high-end vehicles.</p>
-                            </div>
-                            <span class="service3__arrow"><i class="ph-thin ph-arrow-right" aria-hidden="true"></i></span>
-                        </li>
-                        <li class="service3" data-fade-up>
-                            <span class="service3__num">04</span>
-                            <div class="service3__body">
-                                <h3 class="service3__title">Warranty &amp; Coverage</h3>
-                                <p class="service3__text">Curated extended warranty and coverage options aligned with the value and use profile of premium vehicles.</p>
-                            </div>
-                            <span class="service3__arrow"><i class="ph-thin ph-arrow-right" aria-hidden="true"></i></span>
-                        </li>
-                    </ul>
-
-                    <a href="#" class="cta-card services3__cta" data-fade-up>
-                        <span class="cta-card__text">
-                            <span class="cta-card__eyebrow">Service</span>
-                            <span class="cta-card__title">Schedule an Appointment</span>
-                            <span class="cta-card__meta">Mon–Sat · By appointment</span>
-                        </span>
-                        <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
-                    </a>
-
-                </div>
-
-                <figure class="services3__media" data-image-reveal data-parallax>
-                    <img src="assets/images/services.jpg" alt="Prestige Imports service department">
-                    <figcaption class="services3__media-caption">In-house service for exotic and collector inventory.</figcaption>
-                </figure>
-
-            </div>
-        </section>
-
-
-        <!-- ============================================================
-             EVENTS — editorial spread (no sticky), with swap
-             ============================================================ -->
-        <section class="events3" id="events" aria-labelledby="events3-heading">
-            <div class="container events3__inner">
-
-                <article class="event-featured3" data-events-featured data-reveal-stagger>
-                    <a href="#" class="event-featured3__media" data-events-media data-image-reveal aria-label="Featured event">
-                        <img src="assets/images/NEWS%20%26%20EVENTS.jpg" alt="Formula 1 Miami Grand Prix" loading="lazy">
-                    </a>
-                    <div class="event-featured3__body" data-events-body>
-                        <div class="event-featured3__meta">
-                            <span class="event-featured3__date" data-events-date>MAY 04</span>
-                            <span class="event-featured3__sep" aria-hidden="true"></span>
-                            <span class="event-featured3__cat" data-events-cat>Motorsport</span>
                         </div>
-                        <h3 class="event-featured3__title" data-events-title>Formula 1 Miami Grand Prix</h3>
-                        <p class="event-featured3__text" data-events-text>Prestige Imports joins the Miami race weekend with curated viewing experiences and exclusive client events at Hard Rock Stadium.</p>
-                        <a href="#" class="event-featured3__link">
-                            <span>Read the Story</span>
-                            <i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </article>
+                        <div class="car__body">
+                            <h3 class="car__title">2024 Pagani Utopia</h3>
+                            <span class="car__price">$ 2,900,000</span>
+                            <p class="car__meta">1 of 99 · 85 mi · Manual</p>
+                        </div>
+                    </a>
+                </li>
 
-                <div class="events3__col" data-reveal-stagger>
+                <li class="inventory__item">
+                    <a href="#" class="car">
+                        <div class="car__media car__media-grad-2">
+                            <span class="car__media-index">02 / 06</span>
+                        </div>
+                        <div class="car__body">
+                            <h3 class="car__title">2024 Lamborghini Revuelto</h3>
+                            <span class="car__price">$ 645,000</span>
+                            <p class="car__meta">Sant'Agata · 120 mi · Bianco Opalis</p>
+                        </div>
+                    </a>
+                </li>
 
-                    <header class="events3__col-header">
-                        <span class="eyebrow" data-fade-up>The Calendar</span>
-                        <h2 class="section3__title" id="events3-heading" data-fade-up>
-                            Where the houses meet.
-                        </h2>
-                        <p class="section3__intro" data-fade-up>Motorsport, concours, and brand previews. The premium calendar, curated.</p>
-                    </header>
+                <li class="inventory__item">
+                    <a href="#" class="car">
+                        <div class="car__media car__media-grad-3">
+                            <span class="car__media-index">03 / 06</span>
+                        </div>
+                        <div class="car__body">
+                            <h3 class="car__title">2024 Czinger 21C</h3>
+                            <span class="car__price">$ 2,000,000</span>
+                            <p class="car__meta">1 of 80 · 60 mi · Carbon</p>
+                        </div>
+                    </a>
+                </li>
 
-                    <ol class="events3__list" aria-label="Upcoming events">
-                        <li class="event-row3">
-                            <a href="#" class="event-row3__link is-active"
-                               data-event-img="assets/images/NEWS%20%26%20EVENTS.jpg"
-                               data-event-title="Formula 1 Miami Grand Prix"
-                               data-event-date="MAY 04"
-                               data-event-cat="Motorsport"
-                               data-event-body="Prestige Imports joins the Miami race weekend with curated viewing experiences and exclusive client events at Hard Rock Stadium.">
-                                <span class="event-row3__date">MAY 04</span>
-                                <h4 class="event-row3__title">Formula 1 Miami Grand Prix</h4>
-                                <span class="event-row3__cat">Motorsport</span>
-                                <i class="ph-thin ph-arrow-right event-row3__arrow" aria-hidden="true"></i>
-                            </a>
+                <li class="inventory__item">
+                    <a href="#" class="car">
+                        <div class="car__media car__media-grad-4">
+                            <span class="car__media-index">04 / 06</span>
+                        </div>
+                        <div class="car__body">
+                            <h3 class="car__title">2023 Lamborghini Huracán STO</h3>
+                            <span class="car__price">$ 412,000</span>
+                            <p class="car__meta">Sant'Agata · 1,800 mi · Arancio</p>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="inventory__item">
+                    <a href="#" class="car">
+                        <div class="car__media car__media-grad-5">
+                            <span class="car__media-index">05 / 06</span>
+                        </div>
+                        <div class="car__body">
+                            <h3 class="car__title">2024 Lotus Emira First Edition</h3>
+                            <span class="car__price">$ 108,500</span>
+                            <p class="car__meta">Hethel · 450 mi · Manual</p>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="inventory__item">
+                    <a href="#" class="car">
+                        <div class="car__media car__media-grad-6">
+                            <span class="car__media-index">06 / 06</span>
+                        </div>
+                        <div class="car__body">
+                            <h3 class="car__title">2024 Karma GS-6</h3>
+                            <span class="car__price">$ 96,000</span>
+                            <p class="car__meta">Karma · 45 mi · Automatic</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="inventory__footer">
+                <span class="inventory__footer-meta">Showing 6 of 127 · updated continuously</span>
+                <a href="#" class="cta-primary">
+                    <span>View Full Inventory</span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ============================================================
+         SELL YOUR CAR — inverted dark, form on right
+         ============================================================ -->
+    <section class="section section--inverted" id="sell">
+        <div class="wrap">
+
+            <header class="sec-head">
+                <p class="sec-head__eyebrow eyebrow">§ 03 — Acquisition</p>
+                <h2 class="sec-head__title display">We <em>buy</em> the cars we'd sell.</h2>
+                <p class="sec-head__aside aside-note">Direct purchase. Cleared funds in 48 hours. Brokerage available when patience favors the seller.</p>
+            </header>
+
+            <div class="sell__inner">
+
+                <div class="sell__hero">
+                    <p class="sell__statement">A straightforward <em>buyout offer</em> from a house that has been writing checks for forty-eight years — with the option to move to brokerage should the market favour patience.</p>
+
+                    <ol class="sell__points">
+                        <li class="sell__point">
+                            <span class="sell__point-num">i.</span>
+                            <div class="sell__point-body">
+                                <h3 class="sell__point-title">Enclosed Transport, Nationwide</h3>
+                                <p class="sell__point-text">We collect from driveways in Miami, Manhattan, Seattle, Austin, Milwaukee — wherever the car is. Eight in ten never see an open trailer.</p>
+                            </div>
                         </li>
-                        <li class="event-row3">
-                            <a href="#" class="event-row3__link"
-                               data-event-img="assets/images/Moda%20Miami%20Concourse%20d%27Elegance.jpg"
-                               data-event-title="Moda Miami Concourse d'Elegance"
-                               data-event-date="APR 15"
-                               data-event-cat="Concourse"
-                               data-event-body="A curated gathering of coachbuilt classics, prewar masterpieces, and modern hypercars — assembled for a single day in the gardens of the Fontainebleau estate.">
-                                <span class="event-row3__date">APR 15</span>
-                                <h4 class="event-row3__title">Moda Miami Concourse d'Elegance</h4>
-                                <span class="event-row3__cat">Concourse</span>
-                                <i class="ph-thin ph-arrow-right event-row3__arrow" aria-hidden="true"></i>
-                            </a>
+                        <li class="sell__point">
+                            <span class="sell__point-num">ii.</span>
+                            <div class="sell__point-body">
+                                <h3 class="sell__point-title">Offer Within 24 Hours</h3>
+                                <p class="sell__point-text">Reviewed by a principal buyer, not a call-center. Documented, in writing. Cleared funds in 48 hours.</p>
+                            </div>
                         </li>
-                        <li class="event-row3">
-                            <a href="#" class="event-row3__link"
-                               data-event-img="assets/images/2024%20Lamborghini%20Revuelto.jpg"
-                               data-event-title="Lamborghini Temerario Preview Night"
-                               data-event-date="MAY 22"
-                               data-event-cat="Launch"
-                               data-event-body="A private preview of the all-new Lamborghini Temerario — the next chapter in V8 hybrid hypercar engineering, presented for South Florida clients ahead of public unveiling.">
-                                <span class="event-row3__date">MAY 22</span>
-                                <h4 class="event-row3__title">Lamborghini Temerario Preview Night</h4>
-                                <span class="event-row3__cat">Launch</span>
-                                <i class="ph-thin ph-arrow-right event-row3__arrow" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        <li class="event-row3">
-                            <a href="#" class="event-row3__link"
-                               data-event-img="assets/images/2024%20Pagani%20Utopia.webp"
-                               data-event-title="Pagani Utopia Roadster — Private Showing"
-                               data-event-date="JUN 10"
-                               data-event-cat="Private"
-                               data-event-body="An invitation-only viewing of the Pagani Utopia Roadster — limited-production open-top hypercar, hosted at the North Miami showroom for collectors and existing Pagani owners.">
-                                <span class="event-row3__date">JUN 10</span>
-                                <h4 class="event-row3__title">Pagani Utopia Roadster — Private Showing</h4>
-                                <span class="event-row3__cat">Private</span>
-                                <i class="ph-thin ph-arrow-right event-row3__arrow" aria-hidden="true"></i>
-                            </a>
+                        <li class="sell__point">
+                            <span class="sell__point-num">iii.</span>
+                            <div class="sell__point-body">
+                                <h3 class="sell__point-title">Brokerage, When Wise</h3>
+                                <p class="sell__point-text">If buyout doesn't clear your number, we place the car on consignment under house terms — retaining the option, never defaulting to it.</p>
+                            </div>
                         </li>
                     </ol>
-
                 </div>
-            </div>
-        </section>
 
+                <form class="sell__form" onsubmit="event.preventDefault();">
+                    <div class="form-card">
+                        <span class="form-pill"><span class="dot"></span> Private Valuation</span>
 
-        <!-- ============================================================
-             CINEMATIC BREAK
-             ============================================================ -->
-        <div class="break3" aria-hidden="false">
-            <div class="break3__media" data-parallax>
-                <img src="assets/images/brake.jpg" alt="" loading="lazy">
+                        <div class="form-grid">
+                            <div class="field form-grid__row">
+                                <label class="field__label" for="ymm">Year · Make · Model</label>
+                                <input class="field__input" id="ymm" type="text" placeholder="2022 Ferrari 812 Superfast" required>
+                            </div>
+                            <div class="field">
+                                <label class="field__label" for="mileage">Mileage</label>
+                                <input class="field__input" id="mileage" type="text" placeholder="3,200" required>
+                            </div>
+                            <div class="field">
+                                <label class="field__label" for="zip">Zip</label>
+                                <input class="field__input" id="zip" type="text" placeholder="33181" required>
+                            </div>
+                            <div class="field form-grid__row">
+                                <label class="field__label" for="email">Email</label>
+                                <input class="field__input" id="email" type="email" placeholder="you@domain.com" required>
+                            </div>
+                            <div class="field form-grid__row">
+                                <label class="field__label" for="phone">Telephone</label>
+                                <input class="field__input" id="phone" type="tel" placeholder="+1">
+                            </div>
+                            <button class="cta-light form-grid__row" type="submit">
+                                <span>Request a Private Valuation</span>
+                                <span class="arrow" aria-hidden="true">→</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
             </div>
-            <p class="break3__caption" data-fade-up>Forty-eight years. One floor. One name.</p>
+
         </div>
+    </section>
 
 
-        <!-- ============================================================
-             REVIEWS
-             ============================================================ -->
-        <section class="reviews3" id="reviews" aria-label="Client reviews">
-            <div class="container reviews3__inner">
+    <!-- ============================================================
+         SERVICES — 6 cards, hairline grid
+         ============================================================ -->
+    <section class="section" id="service">
+        <div class="wrap">
 
-                <header class="reviews3__header" data-reveal-stagger>
-                    <div class="reviews3__title-block">
-                        <span class="eyebrow" data-fade-up>Owners on Record</span>
-                        <h2 class="section3__title" data-fade-up>
-                            Quiet trust.
-                            <em>Repeated.</em>
-                        </h2>
-                        <div class="reviews3__rating" data-fade-up>
-                            <span class="reviews3__rating-value">4.9</span>
-                            <span class="reviews3__rating-stars">
-                                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                            </span>
-                            <span class="reviews3__rating-meta">Google Reviews<br>Verified Owners</span>
+            <header class="sec-head">
+                <p class="sec-head__eyebrow eyebrow">§ 04 — Service</p>
+                <h2 class="sec-head__title display">Service <em>without the trip.</em></h2>
+                <p class="sec-head__aside aside-note">● Concierge Program</p>
+            </header>
+
+            <ul class="services__grid">
+                <li class="service">
+                    <span class="service__num">01</span>
+                    <h3 class="service__title">Enclosed Pick-up &amp; Delivery</h3>
+                    <p class="service__text">Four in five service appointments are handled door-to-door via covered transport, at no surcharge within Miami-Dade and Broward.</p>
+                </li>
+                <li class="service">
+                    <span class="service__num">02</span>
+                    <h3 class="service__title">Factory Technicians</h3>
+                    <p class="service__text">Lamborghini-, Pagani-, Lotus-, and Karma-certified technicians on a single floor. Warranty work retained in-house.</p>
+                </li>
+                <li class="service">
+                    <span class="service__num">03</span>
+                    <h3 class="service__title">Certified Collision &amp; Paint</h3>
+                    <p class="service__text">A certified collision center and certified paint shop on premises. Color-matched to factory formula cards.</p>
+                </li>
+                <li class="service">
+                    <span class="service__num">04</span>
+                    <h3 class="service__title">Extended Warranty</h3>
+                    <p class="service__text">Marque-approved coverage structured with the owner in mind — transferable, international options available.</p>
+                </li>
+                <li class="service">
+                    <span class="service__num">05</span>
+                    <h3 class="service__title">Storage &amp; Transport</h3>
+                    <p class="service__text">Climate-controlled long-term storage. Seasonal movement between Miami and Northeast residences on request.</p>
+                </li>
+                <li class="service">
+                    <span class="service__num">06</span>
+                    <h3 class="service__title">Pre-Purchase Inspection</h3>
+                    <p class="service__text">A 180-point inspection on any exotic, anywhere in North America, arranged through our technician network.</p>
+                </li>
+            </ul>
+
+        </div>
+    </section>
+
+
+    <!-- ============================================================
+         BRANDS — 4 primary franchise cards + secondary row
+         ============================================================ -->
+    <section class="section" id="brands">
+        <div class="wrap">
+
+            <header class="sec-head">
+                <p class="sec-head__eyebrow eyebrow">§ 05 — The Portfolio</p>
+                <h2 class="sec-head__title display">Four franchises, <em>one address.</em></h2>
+                <p class="sec-head__aside aside-note">Each marque has its own room on our floor — and its own dedicated site, linked from this one.</p>
+            </header>
+
+            <ul class="brands__primary">
+                <li>
+                    <a href="https://www.lamborghinimiami.com" target="_blank" rel="noopener" class="brand-card">
+                        <div class="brand-card__head">
+                            <span class="brand-card__origin">Sant'Agata → South Florida</span>
+                            <h3 class="brand-card__name">Lamborghini <span class="roman">Miami</span></h3>
                         </div>
+                        <div class="brand-card__foot">
+                            <span class="brand-card__status">Authorized Dealer</span>
+                            <span class="brand-card__link">lamborghinimiami.com →</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="brand-card">
+                        <div class="brand-card__head">
+                            <span class="brand-card__origin">Modena → Miami</span>
+                            <h3 class="brand-card__name">Pagani <span class="roman">Miami</span></h3>
+                        </div>
+                        <div class="brand-card__foot">
+                            <span class="brand-card__status">Authorized Dealer</span>
+                            <span class="brand-card__link">Visit the room →</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.lotusmiami.com" target="_blank" rel="noopener" class="brand-card">
+                        <div class="brand-card__head">
+                            <span class="brand-card__origin">Hethel → Miami</span>
+                            <h3 class="brand-card__name">Lotus <span class="roman">Miami</span></h3>
+                        </div>
+                        <div class="brand-card__foot">
+                            <span class="brand-card__status">Authorized Dealer</span>
+                            <span class="brand-card__link">lotusmiami.com →</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="brand-card">
+                        <div class="brand-card__head">
+                            <span class="brand-card__origin">Irvine → Miami</span>
+                            <h3 class="brand-card__name">Karma <span class="roman">Miami</span></h3>
+                        </div>
+                        <div class="brand-card__foot">
+                            <span class="brand-card__status">Authorized Dealer</span>
+                            <span class="brand-card__link">Visit the room →</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <p class="brands__secondary-head">Also on the floor</p>
+            <ul class="brands__secondary">
+                <li>
+                    <a href="#" class="brand-card brand-card--small">
+                        <div class="brand-card__head">
+                            <span class="brand-card__origin">Bespoke air-cooled Porsche</span>
+                            <h3 class="brand-card__name">Gunther <span class="roman">Werks</span></h3>
+                        </div>
+                        <div class="brand-card__foot">
+                            <span class="brand-card__status">Partnered Retailer</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="brand-card brand-card--small">
+                        <div class="brand-card__head">
+                            <span class="brand-card__origin">21C hypercar</span>
+                            <h3 class="brand-card__name">Czinger <span class="roman">Vehicles</span></h3>
+                        </div>
+                        <div class="brand-card__foot">
+                            <span class="brand-card__status">Miami Representative</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="brand-card brand-card--small">
+                        <div class="brand-card__head">
+                            <span class="brand-card__origin">VanDutch yachts</span>
+                            <h3 class="brand-card__name">Prestige <span class="roman">Marine</span></h3>
+                        </div>
+                        <div class="brand-card__foot">
+                            <span class="brand-card__status">Marine Desk</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </section>
+
+
+    <!-- ============================================================
+         EVENTS — 4 cards, editorial grid
+         ============================================================ -->
+    <section class="section" id="events">
+        <div class="wrap">
+
+            <header class="sec-head">
+                <p class="sec-head__eyebrow eyebrow">§ 06 — The Season</p>
+                <h2 class="sec-head__title display">Where we'll <em>be.</em></h2>
+                <p class="sec-head__aside aside-note">Drives, paddock access, and preview evenings for the house and its clients.</p>
+            </header>
+
+            <ul class="events__grid">
+                <li class="event">
+                    <div class="event__meta">
+                        <span class="event__date">May 04, 2026</span>
+                        <span class="event__sep" aria-hidden="true"></span>
+                        <span class="event__cat">Motorsport</span>
                     </div>
-                    <a href="https://www.google.com/maps/place/Prestige+Imports" target="_blank" rel="noopener" class="cta-card cta-card--ghost" data-fade-up>
-                        <span class="cta-card__text">
-                            <span class="cta-card__title">Leave a Review</span>
-                        </span>
-                        <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
-                    </a>
-                </header>
-
-                <div class="reviews3__track" data-reviews-track>
-                    <article class="review-card3">
-                        <div class="review-card3__stars" aria-label="5 out of 5 stars">
-                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                        </div>
-                        <p class="review-card3__quote">A genuinely first-class experience from first call to delivery. They handled every detail and the car arrived in better condition than I expected.</p>
-                        <div class="review-card3__author">
-                            <span class="review-card3__name">M. Hartwell</span>
-                            <span class="review-card3__date">3 weeks ago</span>
-                        </div>
-                    </article>
-                    <article class="review-card3">
-                        <div class="review-card3__stars" aria-label="5 out of 5 stars">
-                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                        </div>
-                        <p class="review-card3__quote">Discreet, knowledgeable, and refreshingly honest. They sourced exactly what I was looking for and the paperwork was painless.</p>
-                        <div class="review-card3__author">
-                            <span class="review-card3__name">D. Castellanos</span>
-                            <span class="review-card3__date">1 month ago</span>
-                        </div>
-                    </article>
-                    <article class="review-card3">
-                        <div class="review-card3__stars" aria-label="5 out of 5 stars">
-                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                        </div>
-                        <p class="review-card3__quote">Bought my Lotus through Prestige and they made the whole process feel effortless. Door-to-door delivery to the Northeast was flawless.</p>
-                        <div class="review-card3__author">
-                            <span class="review-card3__name">A. Whitford</span>
-                            <span class="review-card3__date">2 months ago</span>
-                        </div>
-                    </article>
-                    <article class="review-card3">
-                        <div class="review-card3__stars" aria-label="5 out of 5 stars">
-                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                        </div>
-                        <p class="review-card3__quote">They sold my Aventador for me, handled the listing privately, and got me a number I didn't think was possible. Real professionals.</p>
-                        <div class="review-card3__author">
-                            <span class="review-card3__name">R. Linden</span>
-                            <span class="review-card3__date">2 months ago</span>
-                        </div>
-                    </article>
-                    <article class="review-card3">
-                        <div class="review-card3__stars" aria-label="5 out of 5 stars">
-                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                        </div>
-                        <p class="review-card3__quote">Service department is on another level — they treat the car the way you would. Trust them with anything in my collection.</p>
-                        <div class="review-card3__author">
-                            <span class="review-card3__name">P. Sloan</span>
-                            <span class="review-card3__date">3 months ago</span>
-                        </div>
-                    </article>
-                    <article class="review-card3">
-                        <div class="review-card3__stars" aria-label="5 out of 5 stars">
-                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                        </div>
-                        <p class="review-card3__quote">Second purchase with them. The first was a Karma, this time a Pagani. Same level of care, same quiet competence. Hard to find elsewhere.</p>
-                        <div class="review-card3__author">
-                            <span class="review-card3__name">J. Okafor</span>
-                            <span class="review-card3__date">4 months ago</span>
-                        </div>
-                    </article>
-                    <article class="review-card3">
-                        <div class="review-card3__stars" aria-label="5 out of 5 stars">
-                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                        </div>
-                        <p class="review-card3__quote">I've worked with most of the major exotic dealers on the East Coast. Prestige stands apart — no pressure, no theatrics, just exceptional inventory and follow-through.</p>
-                        <div class="review-card3__author">
-                            <span class="review-card3__name">E. Voss</span>
-                            <span class="review-card3__date">5 months ago</span>
-                        </div>
-                    </article>
-                </div>
-
-                <!-- Pagination — small hairline circles, champagne pill on active -->
-                <nav class="reviews3__pagination" data-reviews-pagination aria-label="Reviews">
-                    <button type="button" class="reviews3__dot is-active" data-card="0" aria-label="Review 1"></button>
-                    <button type="button" class="reviews3__dot" data-card="1" aria-label="Review 2"></button>
-                    <button type="button" class="reviews3__dot" data-card="2" aria-label="Review 3"></button>
-                    <button type="button" class="reviews3__dot" data-card="3" aria-label="Review 4"></button>
-                    <button type="button" class="reviews3__dot" data-card="4" aria-label="Review 5"></button>
-                    <button type="button" class="reviews3__dot" data-card="5" aria-label="Review 6"></button>
-                    <button type="button" class="reviews3__dot" data-card="6" aria-label="Review 7"></button>
-                </nav>
-
-            </div>
-        </section>
-
-
-        <!-- ============================================================
-             ABOUT — bg image, heavy overlay, champagne dropcap
-             ============================================================ -->
-        <section class="about3" id="about" aria-labelledby="about3-heading">
-            <div class="about3__bg" data-parallax-bg></div>
-            <div class="about3__overlay"></div>
-            <div class="about3__year" aria-hidden="true">1977</div>
-
-            <div class="container about3__inner">
-
-                <header class="about3__header" data-reveal-stagger>
-                    <span class="eyebrow" data-fade-up>The Prestige Difference</span>
-                    <h2 class="section3__title" id="about3-heading" data-fade-up>
-                        A different kind of dealership.
-                        <em>Since 1977.</em>
-                    </h2>
-                    <div class="hairline" data-fade-up></div>
-                </header>
-
-                <div class="about3__body">
-                    <div class="about3__manifesto" data-reveal-stagger>
-                        <p class="about3__para about3__para--lead" data-fade-up><span class="about3__dropcap">A</span> second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Four premium franchises — Lamborghini, Pagani, Lotus, and Karma — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
-                        <p class="about3__para" data-fade-up>We don't just sell cars. We provide lifestyles — from acquisition and nationwide delivery through long-term ownership support. For clients who also prefer the water, we offer VanDutch luxury marine alongside our automotive portfolio.</p>
-                        <a href="#" class="about3__readmore" data-fade-up>
-                            <span>Our Story</span>
-                            <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
-                        </a>
+                    <h3 class="event__title">Formula 1 Miami Grand Prix</h3>
+                    <p class="event__text">Paddock hospitality for Prestige clients. Friday-Sunday access, with a private Thursday preview at the showroom.</p>
+                    <p class="event__loc">Hard Rock Stadium · Miami Gardens</p>
+                </li>
+                <li class="event">
+                    <div class="event__meta">
+                        <span class="event__date">April 15, 2026</span>
+                        <span class="event__sep" aria-hidden="true"></span>
+                        <span class="event__cat">Concours</span>
                     </div>
+                    <h3 class="event__title">Moda Miami Concours d'Elegance</h3>
+                    <p class="event__text">House entries across Lamborghini, Pagani, and Lotus. Judges' Circle reception Saturday evening.</p>
+                    <p class="event__loc">Downtown Miami · Biscayne</p>
+                </li>
+                <li class="event">
+                    <div class="event__meta">
+                        <span class="event__date">May 22, 2026</span>
+                        <span class="event__sep" aria-hidden="true"></span>
+                        <span class="event__cat">Launch</span>
+                    </div>
+                    <h3 class="event__title">Lamborghini Temerario Preview Night</h3>
+                    <p class="event__text">First East Coast viewing of the Temerario, hosted at the showroom for invited clients.</p>
+                    <p class="event__loc">By invitation · North Miami Beach</p>
+                </li>
+                <li class="event">
+                    <div class="event__meta">
+                        <span class="event__date">June 10, 2026</span>
+                        <span class="event__sep" aria-hidden="true"></span>
+                        <span class="event__cat">Private</span>
+                    </div>
+                    <h3 class="event__title">Pagani Utopia Roadster — Private Showing</h3>
+                    <p class="event__text">An evening with the Roadster ahead of its public debut, paired with dinner and Modena guests.</p>
+                    <p class="event__loc">By invitation only</p>
+                </li>
+            </ul>
 
-                    <aside class="about3__sidebar" data-reveal-stagger aria-label="At a glance">
-                        <ul class="about3__stats" data-fade-up>
-                            <li>
-                                <span class="about3__stat-label">Established</span>
-                                <span class="about3__stat-value">1977</span>
-                            </li>
-                            <li>
-                                <span class="about3__stat-label">Ownership</span>
-                                <span class="about3__stat-value">Family · 2nd Gen</span>
-                            </li>
-                            <li>
-                                <span class="about3__stat-label">Franchises</span>
-                                <span class="about3__stat-value">4 Luxury Marques</span>
-                            </li>
-                            <li>
-                                <span class="about3__stat-label">Reach</span>
-                                <span class="about3__stat-value">Nationwide</span>
-                            </li>
-                        </ul>
-                        <a href="#" class="cta-card cta-card--ghost" data-fade-up>
-                            <span class="cta-card__text">
-                                <span class="cta-card__title">About the House</span>
-                            </span>
-                            <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
-                        </a>
-                    </aside>
-                </div>
+        </div>
+    </section>
 
+
+    <!-- ============================================================
+         LETTER FROM THE HOUSE
+         ============================================================ -->
+    <section class="section" id="about">
+        <div class="wrap">
+
+            <header class="sec-head">
+                <p class="sec-head__eyebrow eyebrow">§ 07 — The House</p>
+                <h2 class="sec-head__title display">A letter <em>from the floor.</em></h2>
+                <p class="sec-head__aside aside-note">On curation, transport, and the quiet work behind a significant sale.</p>
+            </header>
+
+            <div class="letter__inner">
+                <p class="letter__body">
+                    <span class="letter__dropcap">W</span>e've been selling exceptional motor cars out of South Florida since 1977 — a second-generation, family-owned house representing Lamborghini, Pagani, Lotus, and Karma, with a pre-owned floor that has included Ferrari, Bugatti, Rolls-Royce, and Bentley, and a marine desk for VanDutch. We are, in our own words, not in the business of selling cars but of providing lifestyles. Clients find us from Washington, Texas, New York, Wisconsin — wherever the right car requires the right house.
+                </p>
+                <p class="letter__signoff">— Signed, The Nuccio Family · Second Generation · Proprietors</p>
+
+                <ul class="stat-row">
+                    <li class="stat">
+                        <span class="stat__label">Established</span>
+                        <span class="stat__value">1977</span>
+                    </li>
+                    <li class="stat">
+                        <span class="stat__label">Ownership</span>
+                        <span class="stat__value">Family · 2nd Gen</span>
+                    </li>
+                    <li class="stat">
+                        <span class="stat__label">Franchises</span>
+                        <span class="stat__value">4 Authorized</span>
+                    </li>
+                    <li class="stat">
+                        <span class="stat__label">Reach</span>
+                        <span class="stat__value">Nationwide</span>
+                    </li>
+                </ul>
             </div>
-        </section>
+
+        </div>
+    </section>
 
 
-        <!-- ============================================================
-             FINAL CTA
-             ============================================================ -->
-        <section class="final-cta3" aria-labelledby="final3-heading">
-            <div class="container final-cta3__inner" data-reveal-stagger>
-                <span class="eyebrow" data-fade-up>Begin</span>
-                <h2 class="final-cta3__heading" id="final3-heading" data-fade-up>
-                    Two ways in.
-                    <em>One name.</em>
-                </h2>
-                <p class="final-cta3__intro" data-fade-up>Browse curated inventory, or speak with a specialist about a more tailored conversation.</p>
-                <div class="final-cta3__actions" data-fade-up>
-                    <a href="#inventory" class="cta-card cta-card--solid">
-                        <span class="cta-card__text">
-                            <span class="cta-card__eyebrow">Inventory</span>
-                            <span class="cta-card__title">Browse the Collection</span>
-                        </span>
-                        <span class="cta-card__arrow"><i class="ph-thin ph-arrow-up-right" aria-hidden="true"></i></span>
-                    </a>
-                    <a href="tel:+13059531000" class="cta-card">
-                        <span class="cta-card__text">
-                            <span class="cta-card__eyebrow">Direct Line</span>
-                            <span class="cta-card__title">Speak with a Specialist</span>
-                            <span class="cta-card__meta">+1 (305) 953-1000</span>
-                        </span>
-                        <span class="cta-card__arrow"><i class="ph-thin ph-phone" aria-hidden="true"></i></span>
-                    </a>
+    <!-- ============================================================
+         SINGLE REVIEW — pull quote + Google rating
+         ============================================================ -->
+    <section class="section" aria-label="Client review">
+        <div class="wrap">
+            <div class="review">
+                <blockquote class="review__quote">I've worked with most of the major exotic dealers on the East Coast. Prestige stands apart — no pressure, no theatrics, just exceptional inventory and follow-through.</blockquote>
+                <p class="review__attr">E. Voss · Collector · 5 months ago</p>
+                <div class="review__rating">
+                    <span class="review__rating-text"><span class="star">★</span> <strong>4.9 average</strong> across 200+ reviews on Google</span>
+                    <a href="#" class="text-link">Read all reviews →</a>
                 </div>
             </div>
-        </section>
-
-    </main>
+        </div>
+    </section>
 
 
     <!-- ============================================================
          FOOTER
          ============================================================ -->
-    <footer class="footer3">
-        <div class="container footer3__inner">
+    <footer class="footer" id="contact">
+        <div class="footer__inner">
 
-            <div class="footer3__brand">
-                <a href="index_3.html" class="footer3__logo" aria-label="Prestige Imports — Home">
-                    <img src="assets/images/logo.svg" alt="Prestige Imports">
-                </a>
-                <p class="footer3__tagline">A second-generation, family-owned house for luxury, exotic, and collector automobiles. South Florida, since 1977.</p>
-            </div>
+            <h2 class="footer__wordmark">Prestige <em>Imports</em><span class="outline">.</span></h2>
 
-            <div class="footer3__rule" aria-hidden="true"></div>
+            <div class="footer__cols">
 
-            <div class="footer3__cols">
-
-                <div class="footer3__col">
-                    <h3 class="footer3__col-title">Inventory</h3>
-                    <ul class="footer3__links">
-                        <li><a href="#inventory">All Inventory</a></li>
-                        <li><a href="#inventory">New</a></li>
-                        <li><a href="#inventory">Pre-Owned</a></li>
-                        <li><a href="#inventory">Sold</a></li>
+                <div class="footer__col">
+                    <h3 class="footer__col-title">Showroom</h3>
+                    <ul class="footer__list">
+                        <li>14780 Biscayne Blvd</li>
+                        <li>North Miami Beach, FL 33181</li>
+                        <li><a href="tel:+13059531000">+1 (305) 953-1000</a></li>
                     </ul>
                 </div>
 
-                <div class="footer3__col">
-                    <h3 class="footer3__col-title">Visit</h3>
-                    <address class="footer3__address">
-                        <p>14780 Biscayne Blvd<br>North Miami, FL 33181</p>
-                        <p><a href="tel:+13059531000">+1 (305) 953-1000</a></p>
-                    </address>
-                    <p class="footer3__hours">
-                        <span>Mon — Sat &middot; 9–6</span>
-                        <span>Sun &middot; By appointment</span>
-                    </p>
-                </div>
-
-                <div class="footer3__col">
-                    <h3 class="footer3__col-title">Service</h3>
-                    <ul class="footer3__links">
-                        <li><a href="#service">About Service</a></li>
-                        <li><a href="#service">Schedule Appointment</a></li>
-                        <li><a href="#service">Parts</a></li>
-                        <li><a href="#sell">Sell Your Vehicle</a></li>
+                <div class="footer__col">
+                    <h3 class="footer__col-title">Hours</h3>
+                    <ul class="footer__list">
+                        <li>Mon — Fri · 9–7</li>
+                        <li>Sat · 10–6</li>
+                        <li>Sun · By appointment</li>
                     </ul>
                 </div>
 
-                <div class="footer3__col">
-                    <h3 class="footer3__col-title">Connect</h3>
-                    <ul class="footer3__links">
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#about">Our Team</a></li>
-                        <li><a href="#about">Heritage</a></li>
-                        <li><a href="#">Contact</a></li>
+                <div class="footer__col">
+                    <h3 class="footer__col-title">Houses</h3>
+                    <ul class="footer__list">
+                        <li><a href="https://www.lamborghinimiami.com" target="_blank" rel="noopener">Lamborghini Miami</a></li>
+                        <li><a href="#">Pagani Miami</a></li>
+                        <li><a href="https://www.lotusmiami.com" target="_blank" rel="noopener">Lotus Miami</a></li>
+                        <li><a href="#">Karma Miami</a></li>
+                        <li><a href="#">Prestige Marine</a></li>
                     </ul>
-                    <ul class="footer3__social" aria-label="Social media">
-                        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="ph-thin ph-instagram-logo"></i></a></li>
-                        <li><a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="ph-thin ph-facebook-logo"></i></a></li>
-                        <li><a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube"><i class="ph-thin ph-youtube-logo"></i></a></li>
-                        <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ph-thin ph-linkedin-logo"></i></a></li>
+                </div>
+
+                <div class="footer__col">
+                    <h3 class="footer__col-title">Desks</h3>
+                    <ul class="footer__list">
+                        <li><a href="#sell">Acquisition</a></li>
+                        <li><a href="#service">Service &amp; Parts</a></li>
+                        <li><a href="#service">Certified Collision &amp; Paint</a></li>
+                        <li><a href="#events">Press &amp; Events</a></li>
                     </ul>
                 </div>
 
             </div>
 
-            <div class="footer3__rule" aria-hidden="true"></div>
-
-            <div class="footer3__bottom">
-                <p class="footer3__copy">&copy; <span data-footer-year></span> Prestige Imports. All rights reserved.</p>
-                <ul class="footer3__legal">
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Sitemap</a></li>
+            <div class="footer__bottom">
+                <p class="footer__copy">© <span data-year></span> Prestige Imports, Inc. — Est. 1977 · Family-owned, second generation</p>
+                <ul class="footer__legal">
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">Do Not Sell My Information</a></li>
                 </ul>
             </div>
 
@@ -877,10 +1845,36 @@
     </footer>
 
 
-    <!-- GSAP + ScrollTrigger -->
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="assets/js/home-v3.js" defer></script>
+    <script>
+    (() => {
+        // Sticky masthead — adds .is-scrolled when user scrolls
+        const mast = document.querySelector('[data-mast]');
+        if (mast) {
+            const update = () => mast.classList.toggle('is-scrolled', window.scrollY > 24);
+            window.addEventListener('scroll', update, { passive: true });
+            update();
+        }
+
+        // Footer year
+        document.querySelectorAll('[data-year]').forEach(el => {
+            el.textContent = new Date().getFullYear();
+        });
+
+        // Smooth scroll for in-page anchors, accounting for sticky masthead
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const id = a.getAttribute('href');
+                if (!id || id === '#') return;
+                const target = document.querySelector(id);
+                if (!target) return;
+                e.preventDefault();
+                const offset = (mast?.offsetHeight || 0) + 8;
+                const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top, behavior: 'smooth' });
+            });
+        });
+    })();
+    </script>
 
 </body>
 </html>
