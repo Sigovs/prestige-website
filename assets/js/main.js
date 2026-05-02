@@ -185,6 +185,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const slides = slidesHost ? Array.from(slidesHost.querySelectorAll('.hero__slide')) : [];
         if (!slides.length) return;
 
+        // Pagination dots + prev/next nav buttons + per-slide videos
+        // (all optional — present only if the markup includes them).
+        const dots    = Array.from(host.querySelectorAll('[data-slide-to]'));
+        const videos  = Array.from(host.querySelectorAll('[data-slide-video]'));
+        const prevBtn = host.querySelector('[data-hero-prev]');
+        const nextBtn = host.querySelector('[data-hero-next]');
+
         let activeSlideIdx = 0;
         host.dataset.activeSlide = '0';
         const setActiveSlide = idx => {
@@ -193,9 +200,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 s.classList.toggle('is-active', i === idx);
                 s.classList.toggle('is-passed', i < idx);
             });
+            dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+            // Swap which video plays — only the active one is visible
+            // (CSS handles crossfade); pause inactive ones to save CPU.
+            videos.forEach((v, i) => {
+                v.classList.toggle('is-active', i === idx);
+                if (i === idx) {
+                    v.play().catch(() => {});
+                } else {
+                    try { v.pause(); } catch {}
+                }
+            });
             host.dataset.activeSlide = String(idx);
             activeSlideIdx = idx;
         };
+
+        // Click → smooth-scroll the page so the existing scrub logic
+        // lands on slide N. Center of slide N's range = (N + 0.5) / count.
+        const scrollToSlide = (idx) => {
+            const heroTop = host.getBoundingClientRect().top + window.scrollY;
+            const heroHeight = host.offsetHeight;
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const total = heroHeight - vh;
+            if (total <= 0) return;
+            const progress = (idx + 0.5) / slides.length;
+            const targetY = heroTop + progress * total;
+            window.scrollTo({
+                top: Math.max(0, targetY),
+                behavior: 'smooth',
+            });
+        };
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => scrollToSlide(i));
+        });
+        prevBtn?.addEventListener('click', () => {
+            scrollToSlide(Math.max(0, activeSlideIdx - 1));
+        });
+        nextBtn?.addEventListener('click', () => {
+            scrollToSlide(Math.min(slides.length - 1, activeSlideIdx + 1));
+        });
 
         let rafId = null;
         const tick = () => {

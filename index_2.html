@@ -39,7 +39,13 @@
         <section class="hero" data-scrub-video aria-label="Prestige Imports">
         <div class="hero__sticky">
             <div class="hero__bg" aria-hidden="true">
-                <video class="hero__video" autoplay muted loop playsinline preload="auto" disableremoteplayback>
+                <video class="hero__video is-active" data-slide-video="0" autoplay muted loop playsinline preload="auto" disableremoteplayback>
+                    <source src="assets/videos/hero3.mp4" type="video/mp4">
+                </video>
+                <video class="hero__video" data-slide-video="1" muted loop playsinline preload="auto" disableremoteplayback>
+                    <source src="assets/videos/slider2.mp4" type="video/mp4">
+                </video>
+                <video class="hero__video" data-slide-video="2" muted loop playsinline preload="auto" disableremoteplayback>
                     <source src="assets/videos/hero2.mp4" type="video/mp4">
                 </video>
             </div>
@@ -78,6 +84,20 @@
                             <span class="hero__headline-secondary">Five marques. One house.</span>
                         </h1>
                         <p class="hero__intro">Prestige Imports is the South Florida authorized dealer for Lamborghini, Pagani, Lotus, Karma, and Czinger — five distinguished marques represented under one roof.</p>
+                    </article>
+
+                    <article class="hero__slide" data-slide-index="2">
+                        <h1 class="hero__headline">
+                            <span class="hero__headline-primary">Past the keys.</span>
+                            <span class="hero__headline-secondary">The relationship begins.</span>
+                        </h1>
+                        <p class="hero__intro">Concierge support that extends past the transaction — pickup, delivery, enclosed transport, restoration, and coverage. The right vehicle deserves the right experience.</p>
+                        <div class="hero__actions">
+                            <a href="#sell" class="hero__cta-link">
+                                <span>Sell Your Exotic Car</span>
+                                <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </article>
 
                 </div>
@@ -126,6 +146,32 @@
                     </a>
                 </li>
             </ul>
+
+            <!-- Slide pagination — bottom-left, numerals + hairlines -->
+            <nav class="hero__pagination" data-hero-pagination aria-label="Hero slides">
+                <button type="button" class="hero__dot is-active" data-slide-to="0" aria-label="Slide 1">
+                    <span class="hero__dot-num">01</span>
+                    <span class="hero__dot-line" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="hero__dot" data-slide-to="1" aria-label="Slide 2">
+                    <span class="hero__dot-num">02</span>
+                    <span class="hero__dot-line" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="hero__dot" data-slide-to="2" aria-label="Slide 3">
+                    <span class="hero__dot-num">03</span>
+                    <span class="hero__dot-line" aria-hidden="true"></span>
+                </button>
+            </nav>
+
+            <!-- Slide nav — small prev/next buttons, right edge mid-height -->
+            <div class="hero__nav" data-hero-nav>
+                <button type="button" class="hero__nav-btn" data-hero-prev aria-label="Previous slide">
+                    <i class="ph-thin ph-arrow-left" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="hero__nav-btn" data-hero-next aria-label="Next slide">
+                    <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
         </section>
 
@@ -246,6 +292,87 @@
         </section>
 
 
+        <!-- ============================================================
+             EXPLORE OUR BRANDS — five-marque directory between
+             Inventory and Sell. Light surface continues from inventory.
+             ============================================================ -->
+        <section class="section section--brands" id="brands" aria-labelledby="brands-heading" data-reveal>
+            <div class="container">
+                <header class="brands__header">
+                    <span class="eyebrow-stamp">Authorized House</span>
+                    <h2 class="brands__heading" id="brands-heading">
+                        <span class="brands__heading-primary">Explore Our Brands</span>
+                        <span class="brands__heading-secondary">Five Marques. One Floor.</span>
+                    </h2>
+                    <p class="brands__intro">South Florida's authorized dealer for Lamborghini, Pagani, Lotus, Karma, and Czinger — represented under one roof.</p>
+                </header>
+
+                <ul class="brands__grid" aria-label="Authorized marques">
+                    <li class="brand-card">
+                        <a href="#inventory" class="brand-card__link">
+                            <div class="brand-card__media">
+                                <img src="assets/images/lambo_logo.svg" alt="Lamborghini">
+                            </div>
+                            <h3 class="brand-card__name">Lamborghini</h3>
+                            <span class="brand-card__cta">
+                                <span>View Inventory</span>
+                                <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="brand-card">
+                        <a href="#inventory" class="brand-card__link">
+                            <div class="brand-card__media">
+                                <img src="assets/images/pagani%20_logo.svg" alt="Pagani">
+                            </div>
+                            <h3 class="brand-card__name">Pagani</h3>
+                            <span class="brand-card__cta">
+                                <span>View Inventory</span>
+                                <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="brand-card">
+                        <a href="#inventory" class="brand-card__link">
+                            <div class="brand-card__media">
+                                <img src="assets/images/Lotus.svg" alt="Lotus">
+                            </div>
+                            <h3 class="brand-card__name">Lotus</h3>
+                            <span class="brand-card__cta">
+                                <span>View Inventory</span>
+                                <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="brand-card">
+                        <a href="#inventory" class="brand-card__link">
+                            <div class="brand-card__media">
+                                <img src="assets/images/karma_logo.svg" alt="Karma">
+                            </div>
+                            <h3 class="brand-card__name">Karma</h3>
+                            <span class="brand-card__cta">
+                                <span>View Inventory</span>
+                                <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="brand-card">
+                        <a href="#inventory" class="brand-card__link">
+                            <div class="brand-card__media">
+                                <img src="assets/images/czinger_logo.svg" alt="Czinger">
+                            </div>
+                            <h3 class="brand-card__name">Czinger</h3>
+                            <span class="brand-card__cta">
+                                <span>View Inventory</span>
+                                <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+
         <!-- SELL YOUR VEHICLE — sticky video, band + text slide up on scroll -->
         <section class="section section--sell" id="sell" aria-labelledby="sell-heading">
             <div class="sell__sticky">
@@ -264,7 +391,7 @@
                             </h2>
                             <p class="sell__intro">Prestige Imports offers a refined, discreet acquisition experience for owners of premium vehicles. Receive a market evaluation from specialists who understand high-end inventory.</p>
                         </div>
-                        <a href="sell-your-car.html" class="sell__cta">
+                        <a href="#sell" class="sell__cta">
                             <span>Request a private valuation</span>
                             <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
                         </a>
@@ -327,10 +454,16 @@
                             </li>
                         </ul>
 
-                        <a href="#" class="services__cta">
-                            <span>Schedule appointment</span>
-                            <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
-                        </a>
+                        <div class="services__ctas">
+                            <a href="#" class="services__cta">
+                                <span>Schedule appointment</span>
+                                <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                            </a>
+                            <a href="tel:+13059531000" class="services__cta services__cta--ghost">
+                                <span>Speak with a specialist</span>
+                                <i class="ph-thin ph-phone" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="services__media" aria-hidden="true">
@@ -609,9 +742,15 @@
                             </li>
                         </ul>
 
-                        <a href="#" class="diff__cta">
-                            <span>See More</span>
-                        </a>
+                        <div class="diff__ctas">
+                            <a href="#" class="diff__cta">
+                                <span>See More</span>
+                            </a>
+                            <a href="tel:+13059531000" class="diff__cta diff__cta--ghost">
+                                <i class="ph-thin ph-phone" aria-hidden="true"></i>
+                                <span>Contact Us</span>
+                            </a>
+                        </div>
                     </aside>
                 </div>
 

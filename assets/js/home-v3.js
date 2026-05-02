@@ -68,10 +68,13 @@
 
 
         // If GSAP is missing, just make everything visible and bail on motion.
+        // Slider controllers still wire up so prev/next + pagination work.
         if (!hasGSAP || reducedMotion) {
             showAllReveals();
+            initHeroDeck(document.querySelector('.hero3'));
             initEventsSwap();
             initReviewsDrag();
+            initReviewsPagination();
             initSmoothScroll();
             initNavActive();
             return;
@@ -83,8 +86,11 @@
            ────────────────────────────────────────────────────── */
         const heroRoot = document.querySelector('.hero3');
         if (heroRoot) {
-            const heroItems = heroRoot.querySelectorAll('[data-fade-up]');
-            if (heroItems.length) {
+            // Only fade in the currently-active slide's items on load.
+            // Other slides start invisible and reveal via the deck swap.
+            const activeSlide = heroRoot.querySelector('.hero3__slide.is-active');
+            const heroItems = activeSlide?.querySelectorAll('[data-fade-up]');
+            if (heroItems?.length) {
                 gsap.fromTo(heroItems,
                     { y: 40, opacity: 0 },
                     {
@@ -97,9 +103,14 @@
                     }
                 );
             }
+            // Inactive slides — instantly land their items at final
+            // state so when their slide becomes active, only the slide
+            // crossfade plays (no second stagger).
+            heroRoot.querySelectorAll('.hero3__slide:not(.is-active) [data-fade-up]')
+                .forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
 
-            // Contact pills + scroll indicator fade in slightly later
-            const heroChrome = heroRoot.querySelectorAll('.hero3__contact, .hero3__scroll');
+            // Contact pills + scroll indicator + pagination fade in later
+            const heroChrome = heroRoot.querySelectorAll('.hero3__contact, .hero3__scroll, .hero3__pagination');
             if (heroChrome.length) {
                 gsap.fromTo(heroChrome,
                     { opacity: 0, y: 12 },
@@ -108,11 +119,10 @@
             }
 
             if (hasST) {
-                // Hero video soft parallax — pushes ~10% of its height as the
-                // hero scrolls out of view. Subtle, not a "huge zoom-out".
-                const video = heroRoot.querySelector('[data-hero-video]');
-                if (video) {
-                    gsap.to(video, {
+                // Soft parallax on the bg container (covers both videos).
+                const bg = heroRoot.querySelector('.hero3__bg');
+                if (bg) {
+                    gsap.to(bg, {
                         yPercent: 10,
                         scale: 1.04,
                         ease: 'none',
@@ -125,6 +135,9 @@
                     });
                 }
             }
+
+            // Wire up the slide deck — auto-advance + click pagination
+            initHeroDeck(heroRoot);
         }
 
 
@@ -288,13 +301,126 @@
 
 
         /* ──────────────────────────────────────────────────────
-           10–13. Interactions (always run, regardless of GSAP)
+           10–14. Interactions (always run, regardless of GSAP)
            ────────────────────────────────────────────────────── */
         initEventsSwap();
         initReviewsDrag();
+        initReviewsPagination();
         initSmoothScroll();
         initNavActive();
     });
+
+
+    /* ============================================================
+       Hero deck — auto-rotate slides + click pagination
+       ============================================================ */
+    function initHeroDeck(heroRoot) {
+        const slides = Array.from(heroRoot.querySelectorAll('.hero3__slide'));
+        const videos = Array.from(heroRoot.querySelectorAll('[data-slide-video]'));
+        const dots   = Array.from(heroRoot.querySelectorAll('[data-slide-to]'));
+        if (slides.length < 2) return;
+
+        let active = 0;
+        let timer = null;
+        const ROTATE_MS = 8000;
+        const PAUSE_AFTER_INTERACT = 14000;
+
+        const setActive = (idx) => {
+            if (idx === active) return;
+            active = idx;
+            slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+            videos.forEach((v, i) => {
+                v.classList.toggle('is-active', i === idx);
+                if (i === idx) {
+                    v.play().catch(() => {});
+                } else {
+                    try { v.pause(); } catch {}
+                }
+            });
+            dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+        };
+
+        const advance = () => setActive((active + 1) % slides.length);
+        const stop  = () => { if (timer) { clearInterval(timer); timer = null; } };
+        const start = () => { stop(); if (!reducedMotion) timer = setInterval(advance, ROTATE_MS); };
+
+        const onUserStep = () => { stop(); window.setTimeout(start, PAUSE_AFTER_INTERACT); };
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => { setActive(i); onUserStep(); });
+        });
+
+        // Prev / next buttons on the right edge
+        const prevBtn = heroRoot.querySelector('[data-hero-prev]');
+        const nextBtn = heroRoot.querySelector('[data-hero-next]');
+        const prev = () => setActive((active - 1 + slides.length) % slides.length);
+        const next = () => setActive((active + 1) % slides.length);
+        prevBtn?.addEventListener('click', () => { prev(); onUserStep(); });
+        nextBtn?.addEventListener('click', () => { next(); onUserStep(); });
+
+        // Pause when tab is hidden, resume when visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stop();
+            else start();
+        });
+
+        start();
+    }
+
+
+    /* ============================================================
+       Reviews pagination — sync dots with track scroll, click to jump
+       ============================================================ */
+    function initReviewsPagination() {
+        const track = document.querySelector('[data-reviews-track]');
+        const pag   = document.querySelector('[data-reviews-pagination]');
+        if (!track || !pag) return;
+        const dots  = Array.from(pag.querySelectorAll('[data-card]'));
+        const cards = Array.from(track.children);
+        if (!dots.length || !cards.length) return;
+
+        let rafPending = false;
+        const updateActive = () => {
+            rafPending = false;
+            const trackRect = track.getBoundingClientRect();
+            const center = trackRect.left + trackRect.width / 2;
+            let bestIdx = 0;
+            let bestDist = Infinity;
+            cards.forEach((c, i) => {
+                const r = c.getBoundingClientRect();
+                const cardCenter = r.left + r.width / 2;
+                const dist = Math.abs(cardCenter - center);
+                if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+            });
+            dots.forEach((d, i) => d.classList.toggle('is-active', i === bestIdx));
+        };
+
+        const onScroll = () => {
+            if (rafPending) return;
+            rafPending = true;
+            requestAnimationFrame(updateActive);
+        };
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                const card = cards[i];
+                if (!card) return;
+                // Scroll so the chosen card sits at the track's left
+                // padding (matches scroll-padding-left in CSS).
+                const trackRect = track.getBoundingClientRect();
+                const cardRect  = card.getBoundingClientRect();
+                const offset = (cardRect.left - trackRect.left) + track.scrollLeft - 20;
+                track.scrollTo({
+                    left: Math.max(0, offset),
+                    behavior: reducedMotion ? 'auto' : 'smooth',
+                });
+            });
+        });
+
+        track.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        updateActive();
+    }
 
 
     /* ============================================================
