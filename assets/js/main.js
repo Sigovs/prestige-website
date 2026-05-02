@@ -72,28 +72,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (sellSection) {
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let revealed = false;
         let rafPending = false;
+        let wasInView = false;
 
-        // Sell panel (white band + text/CTA together) scroll-scrubs upward
-        // at 1:1 with page scroll while sticky is engaged. Video bg stays
-        // sticky in place underneath. Section 4 emerges from below at the
-        // same rate so band and section 4 cross paths in lockstep.
+        // Track in/out transitions explicitly. On the OUT→IN edge we
+        // remove the class, force a reflow, then re-add it — that's
+        // what guarantees the CSS keyframe animation truly restarts
+        // (the browser otherwise caches state when the same animation
+        // rule reappears within an animation frame).
         const update = () => {
             rafPending = false;
             const rect = sellSection.getBoundingClientRect();
+            const vh = window.innerHeight;
 
-            // One-shot trigger when sticky engages (band rise + text fade-in)
-            if (!revealed && rect.top <= 0) {
+            const inView = rect.top <= vh && rect.bottom > 0;
+
+            if (inView && !wasInView) {
+                // Entering view — restart entrance animations
+                sellSection.classList.remove('is-visible');
+                void sellSection.offsetWidth; // force reflow
                 sellSection.classList.add('is-visible');
-                revealed = true;
+            } else if (!inView && wasInView) {
+                // Leaving view — clear so next entry can replay
+                sellSection.classList.remove('is-visible');
             }
+            wasInView = inView;
 
             if (reducedMotion || !sellPanel) return;
 
-            // rect.top: 0 at pin start → -100vh at pin release. Cap translation
-            // at one viewport-height so panel doesn't drift beyond after release.
-            const vh = window.innerHeight;
+            // rect.top: 0 at pin start → -100vh at pin release. Cap
+            // translation at one viewport-height so panel doesn't drift
+            // beyond after release.
             const scrolled = Math.max(0, -rect.top);
             const translateY = -Math.min(scrolled, vh);
             sellPanel.style.transform = `translateY(${translateY}px)`;
@@ -116,16 +125,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // the user sees them appear sooner rather than waiting for the
     // section to fully pin.
     document.querySelectorAll('.section--services, .section--events').forEach(section => {
-        let revealed = false;
+        // Toggle pattern: is-visible is on whenever the section is in
+        // its "active" range (half-emerged from below, not yet fully
+        // scrolled past). Re-fires the staircase reveal on every
+        // re-entry instead of one-shot.
         const trigger = () => {
-            if (revealed) return;
             const rect = section.getBoundingClientRect();
             const halfEmerged = window.innerHeight * 0.5;
-            if (rect.top <= halfEmerged) {
-                section.classList.add('is-visible');
-                revealed = true;
-                window.removeEventListener('scroll', trigger);
-            }
+            const inView = rect.top <= halfEmerged && rect.bottom > 0;
+            section.classList.toggle('is-visible', inView);
         };
         window.addEventListener('scroll', trigger, { passive: true });
         trigger();
@@ -480,16 +488,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Generic scroll-reveal -------------------------------------------
-    // Any element with [data-reveal] gets .is-visible when it enters view.
+    // Any element with [data-reveal] gets .is-visible while it's in view
+    // and loses it when it leaves — the entrance animation re-fires
+    // every time the element re-enters the viewport.
     const revealEls = document.querySelectorAll('[data-reveal]');
 
     if (revealEls.length && 'IntersectionObserver' in window) {
         const revealObserver = new IntersectionObserver(entries => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    revealObserver.unobserve(entry.target);
-                }
+                entry.target.classList.toggle('is-visible', entry.isIntersecting);
             });
         }, { threshold: 0.15 });
 
