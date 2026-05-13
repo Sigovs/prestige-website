@@ -26,12 +26,12 @@
             <nav class="site-header__nav" aria-label="Site navigation">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="#inventory" class="nav-link">Inventory</a>
-                <a href="sell-your-car.html" class="nav-link">Sell Your Vehicle</a>
+                <a href="#sell" class="nav-link">Sell Your Vehicle</a>
                 <a href="#" class="nav-link">Service</a>
-                <a href="https://www.prestigeimports.store/" class="nav-link" target="_blank" rel="noopener">Store</a>
+                <a href="#" class="nav-link">Store</a>
                 <a href="#" class="nav-link">Research</a>
                 <a href="#about" class="nav-link">About</a>
-                <a href="sell-your-car.html" class="btn btn--outline-sm">Get an Offer</a>
+                <a href="#sell" class="btn btn--outline-sm">Get an Offer</a>
             </nav>
         </div>
     </header>
@@ -64,7 +64,7 @@
 
                     <div class="hero__actions">
                         <a href="#inventory" class="btn btn--primary">View Inventory</a>
-                        <a href="sell-your-car.html" class="btn btn--ghost">Sell Your Vehicle</a>
+                        <a href="#sell" class="btn btn--ghost">Sell Your Vehicle</a>
                     </div>
 
                     <div class="hero__meta" aria-label="Contact">
@@ -106,7 +106,7 @@
                     </li>
                     <li>
                         <a href="#" class="brand-card" aria-label="Lotus Miami">
-                            <img class="brand-card__logo" src="assets/images/Lotus.svg" alt="Lotus" loading="lazy">
+                            <img class="brand-card__logo" src="assets/images/lotus_logo.png" alt="Lotus" loading="lazy">
                             <span class="brand-card__sub">Miami</span>
                         </a>
                     </li>
@@ -194,7 +194,7 @@
                     <li>
                         <a href="#" class="vehicle-card">
                             <div class="vehicle-card__media">
-                                <img src="assets/images/2023%20Lamborghini%20Hurac%C3%A1n%20STO.webp" alt="2023 Lamborghini Huracán STO" loading="lazy">
+                                <img src="assets/images/2023_Lamborghini_Huracan_STO_1.jpg" alt="2023 Lamborghini Huracán STO" loading="lazy">
                             </div>
                             <div class="vehicle-card__body">
                                 <h3 class="vehicle-card__name">2023 Lamborghini Huracán STO</h3>
@@ -246,7 +246,7 @@
 
 
         <!-- 03 — SELL YOUR VEHICLE (bridge to sell-your-car.html) -->
-        <section class="section section--sell-bridge" aria-labelledby="sell-heading">
+        <section class="section section--sell-bridge" id="sell" aria-labelledby="sell-heading">
             <div class="container">
                 <div class="sell-bridge" data-reveal>
 
@@ -255,7 +255,7 @@
                         <h2 class="sell-bridge__heading" id="sell-heading">Selling a Luxury or Exotic Vehicle?</h2>
                         <p class="sell-bridge__body">Prestige Imports offers a refined, discreet acquisition experience for owners of premium vehicles. Receive a market evaluation from specialists who understand high-end inventory.</p>
                         <p class="sell-bridge__note">Direct purchase · Brokerage also available on select vehicles</p>
-                        <a href="sell-your-car.html" class="btn btn--primary">Get an Offer</a>
+                        <a href="#sell" class="btn btn--primary">Get an Offer</a>
                     </div>
 
                     <div class="sell-bridge__photo" aria-hidden="true">
@@ -396,7 +396,7 @@
                     </div>
 
                     <div class="difference__body">
-                        <p class="difference__para difference__para--dropcap"><span class="difference__dropcap">A</span> second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Four premium franchises — Lamborghini, Pagani, Lotus, and Karma — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
+                        <p class="difference__para difference__para--dropcap"><span class="difference__dropcap">A</span> second-generation family business, Prestige Imports has served South Florida's luxury automotive community since 1977 — and earned a reputation as one of America's premier exotic retailers. Five premium franchises — Lamborghini, Pagani, Lotus, Karma, and Czinger — sit alongside a curated inventory of pre-owned exotics including Ferrari, Bentley, Mercedes, Porsche, Rolls-Royce, and Bugatti.</p>
                         <p class="difference__para">We don't just sell cars. We provide lifestyles — from acquisition and nationwide delivery through long-term ownership support. For clients who also prefer the water, we offer VanDutch luxury marine alongside our automotive portfolio.</p>
 
                         <div class="difference__meta">
@@ -410,7 +410,7 @@
                             </div>
                             <div>
                                 <div class="difference__stat-label">Franchises</div>
-                                <div class="difference__stat-value">4 Luxury Marques</div>
+                                <div class="difference__stat-value">5 Luxury Marques</div>
                             </div>
                             <div>
                                 <div class="difference__stat-label">Reach</div>
@@ -432,7 +432,7 @@
                 <p class="final-cta__body">Browse curated inventory, request a discreet offer on your vehicle, or connect with our team for a more tailored conversation.</p>
                 <div class="final-cta__actions">
                     <a href="#inventory" class="btn btn--primary btn--lg">View Inventory</a>
-                    <a href="sell-your-car.html" class="btn btn--ghost btn--lg">Sell Your Car</a>
+                    <a href="#sell" class="btn btn--ghost btn--lg">Sell Your Car</a>
                 </div>
             </div>
         </section>
@@ -446,14 +446,32 @@
             <nav class="site-footer__nav" aria-label="Footer navigation">
                 <a href="#inventory" class="nav-link">Inventory</a>
                 <a href="#services" class="nav-link">Services</a>
-                <a href="sell-your-car.html" class="nav-link">Sell</a>
+                <a href="#sell" class="nav-link">Sell</a>
             </nav>
             <p class="site-footer__copy">&copy; <span id="footer-year"></span> Prestige Imports.</p>
         </div>
     </footer>
 
+    <a href="#top" id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="ph ph-arrow-up" aria-hidden="true"></i>
+    </a>
+
     <script>
         document.getElementById('footer-year').textContent = new Date().getFullYear();
+        (function () {
+            var btn = document.getElementById('back-to-top');
+            if (!btn) return;
+            var toggle = function () {
+                if (window.scrollY > 400) btn.classList.add('is-visible');
+                else btn.classList.remove('is-visible');
+            };
+            window.addEventListener('scroll', toggle, { passive: true });
+            toggle();
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        })();
     </script>
     <script src="assets/js/main.js" defer></script>
 
