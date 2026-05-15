@@ -281,11 +281,11 @@ body.page-inventory .site-header:not(.is-scrolled) .site-nav__link.is-active {
 .site-nav .srp-drop__trigger::after { display: none; }
 /* Caret nudges down a hair so it visually centers against caps */
 .site-nav .srp-drop__caret { font-size: 11px; line-height: 1; }
-/* Panel sits a touch lower so it clears the .site-header's height
-   change between unscrolled (107) and scrolled (76). 24px gap reads
-   clean in both states. */
-.site-nav .srp-drop__panel {
-    top: calc(100% + 24px);
+/* The mega-menu panel is full-width fixed, flush below the header.
+   Track the header's height change between unscrolled (107) and
+   scrolled (76) so it stays glued to the header edge. */
+body:has(.site-header.is-scrolled) .srp-drop__panel {
+    top: 76px;
 }
 
 
@@ -3989,14 +3989,20 @@ body { font-weight: 400; }
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 62px;
-    padding: 10px;
-    background-color: #fff;
+    height: 92px;
+    padding: 8px;
+    background-color: transparent;       /* no white fill — logo sits on the card panel */
     border: 1px solid var(--rule);
+    cursor: pointer;
+    transition: border-color 0.3s var(--ease);
+}
+/* Hover — border darkens for a quiet affordance */
+.vehicle-card__trust-item:hover {
+    border-color: var(--rule-strong);
 }
 .vehicle-card__trust-item img {
     max-width: 100%;
-    max-height: 40px;
+    max-height: 67px;            /* +40% then +20% over the original 40px */
     width: auto;
     object-fit: contain;
 }
@@ -4264,19 +4270,32 @@ body { font-weight: 400; }
 .srp-drop[open] .srp-drop__caret { transform: rotate(180deg); }
 
 .srp-drop__panel {
-    position: absolute;
-    top: calc(100% + 18px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 560px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--header-h);
     background-color: #fff;
-    border: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
     box-shadow: var(--pop);
-    padding: var(--sp-4);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--sp-4) var(--sp-5);
     z-index: 210;
+}
+/* Slide-down + fade on open. <details> renders the panel only when
+   [open], so the animation fires fresh each time the menu opens. */
+.srp-drop[open] .srp-drop__panel {
+    animation: srp-drop-in 0.42s var(--ease);
+}
+@keyframes srp-drop-in {
+    from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.srp-drop__inner {
+    width: min(92%, var(--container-max));
+    margin: 0 auto;
+    padding: var(--sp-4) 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: var(--sp-5);
+    align-items: start;
 }
 .srp-drop__col-title {
     font-family: var(--font-sans);
@@ -4316,19 +4335,14 @@ body { font-weight: 400; }
     color: var(--ink-muted);
     font-variant-numeric: tabular-nums;
 }
-.srp-drop__sep {
-    grid-column: 1 / -1;
-    height: 1px;
-    background-color: var(--rule);
+.srp-drop__cta {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    padding-left: var(--sp-5);
+    border-left: 1px solid var(--rule);
 }
-.srp-drop__note {
-    grid-column: 1 / -1;
-    font-family: var(--font-sans);
-    font-size: 12px;
-    color: var(--ink-muted);
-    margin: 0;
-    line-height: 1.5;
-}
+.srp-drop__cta .btn { white-space: nowrap; }
 
 /* ── Header search ───────────────────────────────────────── */
 .srp-search {
@@ -4370,13 +4384,17 @@ body { font-weight: 400; }
     .srp-nav { gap: var(--sp-3); }
     .srp-search__input { width: 150px; }
     .srp-nav__link { display: none; }    /* keep only Inventory dropdown + search */
-    .srp-drop__panel {
-        position: fixed;
-        left: 4%;
-        right: 4%;
-        width: auto;
-        transform: none;
-        grid-template-columns: 1fr;
+    .srp-drop__inner {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sp-3) var(--sp-4);
+        padding: var(--sp-3) 0;
+    }
+    .srp-drop__cta {
+        grid-column: 1 / -1;
+        border-left: none;
+        border-top: 1px solid var(--rule);
+        padding-left: 0;
+        padding-top: var(--sp-3);
     }
 }
 @media (max-width: 480px) {
