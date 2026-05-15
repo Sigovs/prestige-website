@@ -1124,12 +1124,16 @@
                 <p class="ds-block__label">Section junctions — stacked-page rule</p>
                 <p class="t-body" style="max-width:64ch; margin-bottom:var(--sp-3);">For stacked content pages (SRP / inventory), every gap between two consecutive sections — the <b>junction</b> — is a single value: <code>--sp-5</code> (56px). One scale step, used everywhere. No raw px, no exceptions.</p>
                 <ul class="t-body" style="max-width:64ch; margin:0 0 var(--sp-3); padding-left:1.1em;">
-                    <li><b>Top-ownership.</b> Each section owns its <i>leading</i> gap: <code>padding-top: var(--sp-5)</code>, <code>padding-bottom: 0</code>. Adjacent sections never both contribute — so every junction is exactly one <code>--sp-5</code>, never a sum of two paddings.</li>
-                    <li><b>Borders hug content.</b> A section's own bottom hairline sits flush against its content (<code>padding-bottom: 0</code>); the 56px lives <i>after</i> the rule, owned by the next section.</li>
-                    <li><b>Internal insets ≠ junctions.</b> Padding <i>inside</i> a component (e.g. the filter-bar's row-to-border inset) is not a junction — it uses a smaller step (<code>--sp-3</code>) and is exempt from the 56px rule.</li>
+                    <li><b>Top-ownership.</b> Each section owns its <i>leading</i> gap: <code>padding-top: var(--sp-5)</code>. Adjacent sections never both contribute — so every junction is exactly one <code>--sp-5</code>, never a sum of two paddings.</li>
+                    <li><b>Borderless section → <code>padding-bottom: 0</code>.</b> The 56px junction lives entirely in the next section's <code>padding-top</code>.</li>
+                    <li><b>Bordered section → <code>padding-bottom: var(--sp-3)</code>.</b> When a section (or component) carries a bottom hairline, its content — pills, chips — must never touch the divider. It gets a <code>--sp-3</code> (24px) internal bottom inset. The 56px junction still lives <i>after</i> the rule, owned by the next section.</li>
+                    <li><b>Internal insets ≠ junctions.</b> Padding <i>inside</i> a component (filter-bar row-to-chips, chips-to-border, brand-strip pills-to-divider) is not a junction — it uses the smaller <code>--sp-3</code> step and is exempt from the 56px rule.</li>
                 </ul>
-                <div class="code"><pre>  <span class="c">/* every section, stacked page */</span>
-  <span class="k">padding</span>: <span class="k">var(--sp-5)</span> 0 0;   <span class="c">/* 56 top · 0 bottom → junction = 56 */</span></pre></div>
+                <div class="code"><pre>  <span class="c">/* borderless stacked section */</span>
+  <span class="k">padding</span>: <span class="k">var(--sp-5)</span> 0 0;            <span class="c">/* junction = 56 (next section) */</span>
+
+  <span class="c">/* section / component with a bottom divider */</span>
+  <span class="k">padding</span>: <span class="k">var(--sp-5)</span> 0 <span class="k">var(--sp-3)</span>;   <span class="c">/* 24 inset so content clears the rule */</span></pre></div>
             </div>
         </div>
     </section>

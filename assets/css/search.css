@@ -60,7 +60,7 @@ body.page-inventory {
 .brand-strip {
     width: min(94%, var(--container-wide));
     margin: 0 auto;
-    padding: var(--sp-5) 0 0;     /* section rhythm — junction = --sp-5 (56) */
+    padding: var(--sp-5) 0 var(--sp-3);   /* top: junction (56) · bottom: --sp-3 inset so pills clear the divider */
     border-bottom: 1px solid var(--rule);
 }
 .brand-strip__label {
@@ -145,6 +145,7 @@ body.page-inventory {
     z-index: 100;
     background-color: var(--bg);
     border-bottom: 1px solid var(--rule);
+    padding-bottom: var(--sp-3);   /* component inset — content never touches the border */
     transition: top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 /* When the header shrinks on scroll (107 → 76), pull the filter-bar
@@ -156,7 +157,7 @@ body:has(.site-header.is-scrolled) .filter-bar {
 .filter-bar__inner {
     width: min(94%, var(--container-wide));
     margin: 0 auto;
-    padding: var(--sp-5) 0 var(--sp-3);   /* top: section junction (56) · bottom: inset to chips/border (24) */
+    padding: var(--sp-5) 0 0;             /* top: section junction (56); chips own the gap below */
     display: flex;
     align-items: center;
     gap: 10px;
@@ -390,7 +391,7 @@ body:has(.site-header.is-scrolled) .filter-bar {
 .filter-chips {
     width: min(94%, var(--container-wide));
     margin: 0 auto;
-    padding: 0;                    /* gap above = filter-bar__inner inset; border hugs the chips */
+    padding: var(--sp-3) 0 0;      /* --sp-3 gap from the dropdown row; --sp-3 to the border via .filter-bar */
     display: flex;
     align-items: center;
     gap: 8px;
@@ -421,7 +422,10 @@ body:has(.site-header.is-scrolled) .filter-bar {
     transition: color 0.2s var(--ease);
 }
 .chip:hover .chip__x { color: #fff; }
-/* No active filters → hide the orphan "Clear all" button */
+/* No active filters → collapse the chips row (the filter-bar's own
+   --sp-3 bottom inset still keeps the dropdowns off the border) and
+   hide the orphan "Clear all" button. */
+.filter-chips:not(:has(.chip)) { padding-top: 0; }
 .filter-chips:not(:has(.chip)) .chip-clear { display: none; }
 .chip-clear {
     font-family: var(--font-sans);
