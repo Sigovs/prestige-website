@@ -3894,131 +3894,111 @@ body { font-weight: 400; }
 }
 
 /* Base .vehicle-card carries the F6F6F6 panel + 5px radius + the
-   hover lift (declared earlier in this file, applied to BOTH
-   homepage and SRP — same motion everywhere). The --extended
-   modifier only adds more generous body padding for the richer
-   SRP content. */
+   hover lift. The --extended modifier adds generous padding + the
+   richer SRP body: title · 3-spec row · detail rows · price ·
+   CTAs · trust logos. Title + spec row are identical to the
+   homepage short card (.vehicle-card__name + .vehicle-card__specs). */
 .vehicle-card--extended .vehicle-card__body {
-    padding: 22px 20px;
-    gap: 14px;
+    padding: 24px 22px;
+    gap: 18px;
 }
 
-/* Heading link — wraps stock# + title, kept text-decoration-free */
+/* Heading link — wraps the title, decoration-free */
 .vehicle-card__heading-link {
     display: block;
     text-decoration: none;
     color: inherit;
 }
 
-/* Stock + meta line — small uppercase tracking, sits above the title */
-.vehicle-card__stock {
-    font-family: var(--font-sans);
-    font-size: 10.5px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    margin: 0;
-    line-height: 1;
-}
-
-/* Title gets a touch larger in extended */
-/* Card name uses the .t-h4 scale step (18px) on both card variants —
-   no per-variant size override. */
-
-/* Engine / drivetrain — single truncated line */
-.vehicle-card__engine {
-    font-family: var(--font-sans);
-    font-size: 12.5px;
-    font-weight: 400;
-    line-height: 1.45;
-    color: var(--ink-soft);
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* Color description — text only (no swatches) */
-.vehicle-card__color {
-    font-family: var(--font-sans);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.45;
-    color: var(--ink-muted);
-    margin: 0;
-}
-.vehicle-card__color b {
-    color: var(--ink-soft);
-    font-weight: 500;
-}
-
-/* Trust chips — hairline pills in monochrome (no vendor colours) */
-.vehicle-card__chips {
+/* Detail rows — label : value pairs (Exterior / Interior / Engine / Stock) */
+.vehicle-card__details {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-direction: column;
+    gap: 11px;
 }
-.vehicle-card__chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 9px;
-    border: 1px solid var(--rule-strong);
-    background-color: transparent;
+.vehicle-card__details li {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 16px;
+    align-items: baseline;
+}
+.vehicle-card__detail-label {
     font-family: var(--font-sans);
-    font-size: 9.5px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    line-height: 1;
-    white-space: nowrap;
+    font-size: 13px;                 /* = t-small */
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--ink-muted);
+}
+.vehicle-card__detail-value {
+    font-family: var(--font-sans);
+    font-size: 13px;                 /* = t-small */
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--ink);
 }
 
-/* Price block — "Sale Price" label + large figure */
+/* Price block — "Sale Price" label + figure, hairline above */
 .vehicle-card__price-block {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 12px;
-    padding-top: 6px;
-    margin-top: 2px;
+    padding-top: 18px;
     border-top: 1px solid var(--rule);
 }
 .vehicle-card__price-label {
     font-family: var(--font-sans);
-    font-size: 12px;                 /* = t-eyebrow / t-caption ramp size */
+    font-size: 12px;                 /* = t-eyebrow / t-caption */
     font-weight: 500;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ink-muted);
 }
+/* .vehicle-card__price size/weight/family come from the TYPE SCALE
+   (.t-h3 join, 22px). Here just colour + tabular figures. */
 .vehicle-card__price {
-    font-family: var(--font-display);
-    font-size: clamp(20px, 1.9vw, 26px);   /* = t-h2 ramp size */
-    font-weight: 700;
-    letter-spacing: -0.02em;
     color: var(--ink);
-    line-height: 1;
     font-variant-numeric: tabular-nums;
 }
 
-/* CTAs — stacked, full-width inside the card */
+/* CTA group — INQUIRE + SEE PAYMENT stacked; START BUYING is a
+   separate full-width .btn below the trust logos. */
 .vehicle-card__ctas {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: 4px;
 }
-.vehicle-card__ctas .btn {
+.vehicle-card__ctas .btn,
+.vehicle-card__cta-full {
     width: 100%;
-    padding: 14px 18px;             /* slightly compact inside the card */
+    padding: 14px 18px;
+}
+
+/* Trust logos — three white tiles carrying the real vendor marks
+   (CARFAX · AutoCheck · iPacket). Shown in colour, deliberately —
+   they read as third-party verification, not brand chrome. */
+.vehicle-card__trust {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+.vehicle-card__trust-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 62px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid var(--rule);
+}
+.vehicle-card__trust-item img {
+    max-width: 100%;
+    max-height: 40px;
+    width: auto;
+    object-fit: contain;
 }
 
 
