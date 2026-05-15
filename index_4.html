@@ -8,22 +8,83 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/thin/style.css">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
-    <link rel="stylesheet" href="assets/css/home-v2.css">
+    <link rel="stylesheet" href="assets/css/home-v4.css">
+
 </head>
 <body class="page-home-v2">
 
     <header class="site-header">
         <div class="site-header__inner">
             <a href="index_2.html" class="logo" aria-label="Prestige Imports — Home">
-                <img src="assets/images/logo.svg" alt="Prestige Imports">
+                <img src="assets/images/prestige_logo.svg" alt="Prestige Imports">
             </a>
             <nav class="site-nav" aria-label="Primary">
-                <a href="#inventory" class="site-nav__link">Inventory</a>
+
+                <details class="srp-drop">
+                    <summary class="srp-drop__trigger site-nav__link">
+                        <span>Inventory</span>
+                        <i class="ph ph-caret-down srp-drop__caret" aria-hidden="true"></i>
+                    </summary>
+                    <div class="srp-drop__panel">
+
+                        <div class="srp-drop__col">
+                            <p class="srp-drop__col-title">Shop</p>
+                            <ul class="srp-drop__list">
+                                <li><a class="srp-drop__item" href="inventory.html"><span>View All</span><span class="srp-drop__count">149</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?cond=new"><span>New</span><span class="srp-drop__count">61</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?cond=preowned"><span>Pre-Owned</span><span class="srp-drop__count">88</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?sort=new-arrivals"><span>New Arrivals</span><span class="srp-drop__count">14</span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="srp-drop__col">
+                            <p class="srp-drop__col-title">By Type</p>
+                            <ul class="srp-drop__list">
+                                <li><a class="srp-drop__item" href="inventory.html?body=coupe"><span>Coupe</span><span class="srp-drop__count">62</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?body=convertible"><span>Convertible</span><span class="srp-drop__count">31</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?body=suv"><span>SUV</span><span class="srp-drop__count">28</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?body=sedan"><span>Sedan</span><span class="srp-drop__count">14</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?body=hyper"><span>Hyper / Exotic</span><span class="srp-drop__count">9</span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="srp-drop__sep" aria-hidden="true"></div>
+
+                        <div class="srp-drop__col">
+                            <p class="srp-drop__col-title">By Marque (House)</p>
+                            <ul class="srp-drop__list">
+                                <li><a class="srp-drop__item" href="inventory.html?make=lamborghini"><span>Lamborghini</span><span class="srp-drop__count">44</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=pagani"><span>Pagani</span><span class="srp-drop__count">3</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=lotus"><span>Lotus</span><span class="srp-drop__count">6</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=karma"><span>Karma</span><span class="srp-drop__count">4</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=czinger"><span>Czinger</span><span class="srp-drop__count">2</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=gunther"><span>Gunther</span><span class="srp-drop__count">2</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=eccentrica"><span>Eccentrica</span><span class="srp-drop__count">1</span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="srp-drop__col">
+                            <p class="srp-drop__col-title">Pre-Owned Marques</p>
+                            <ul class="srp-drop__list">
+                                <li><a class="srp-drop__item" href="inventory.html?make=porsche"><span>Porsche</span><span class="srp-drop__count">32</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=mercedes-benz"><span>Mercedes-Benz</span><span class="srp-drop__count">15</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=ferrari"><span>Ferrari</span><span class="srp-drop__count">7</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=mclaren"><span>McLaren</span><span class="srp-drop__count">6</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?make=bentley"><span>Bentley</span><span class="srp-drop__count">5</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory.html?all-makes"><span>All makes →</span><span class="srp-drop__count"></span></a></li>
+                            </ul>
+                        </div>
+
+                        <p class="srp-drop__note">Prestige Marine (luxury yachts &amp; tenders) — <a href="#">view marine inventory →</a></p>
+
+                    </div>
+                </details>
+
                 <a href="#sell" class="site-nav__link">Sell Your Vehicle</a>
                 <a href="#service" class="site-nav__link">Service</a>
                 <a href="#store" class="site-nav__link">Store</a>
@@ -107,40 +168,63 @@
             <ul class="hero__brands" aria-label="Authorized marques">
                 <li class="hero__brand">
                     <a href="#inventory" class="hero__brand-link" aria-label="View Pagani inventory">
-                        <img src="assets/images/pagani%20_logo.svg" alt="Pagani">
+                        <img src="assets/images/Pagani_logo.svg" alt="Pagani">
                         <span class="hero__brand-sub">
+                            <span class="hero__brand-sub-city">Miami</span>
                             <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
                 </li>
                 <li class="hero__brand">
                     <a href="#inventory" class="hero__brand-link" aria-label="View Lamborghini inventory">
-                        <img src="assets/images/lambo_logo.svg" alt="Lamborghini">
+                        <img src="assets/images/Lamborghini_logo.svg" alt="Lamborghini">
                         <span class="hero__brand-sub">
+                            <span class="hero__brand-sub-city">Miami</span>
                             <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
                 </li>
                 <li class="hero__brand">
                     <a href="#inventory" class="hero__brand-link" aria-label="View Lotus inventory">
-                        <img src="assets/images/lotus_logo.png" alt="Lotus">
+                        <img src="assets/images/lotus_logo.svg" alt="Lotus">
                         <span class="hero__brand-sub">
+                            <span class="hero__brand-sub-city">Miami</span>
                             <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
                 </li>
                 <li class="hero__brand">
                     <a href="#inventory" class="hero__brand-link" aria-label="View Karma inventory">
-                        <img src="assets/images/karma_logo.svg" alt="Karma">
+                        <img src="assets/images/Karma_logo.svg" alt="Karma">
                         <span class="hero__brand-sub">
+                            <span class="hero__brand-sub-city">Miami</span>
                             <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
                 </li>
                 <li class="hero__brand">
                     <a href="#inventory" class="hero__brand-link" aria-label="View Czinger inventory">
-                        <img src="assets/images/czinger_logo.svg" alt="Czinger">
+                        <img src="assets/images/Czinger_logo.svg" alt="Czinger">
                         <span class="hero__brand-sub">
+                            <span class="hero__brand-sub-city">Miami</span>
+                            <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
+                        </span>
+                    </a>
+                </li>
+                <li class="hero__brand">
+                    <a href="#inventory" class="hero__brand-link" aria-label="View Gunther inventory">
+                        <img src="assets/images/gunther_logo.svg" alt="Gunther">
+                        <span class="hero__brand-sub">
+                            <span class="hero__brand-sub-city">Miami</span>
+                            <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
+                        </span>
+                    </a>
+                </li>
+                <li class="hero__brand">
+                    <a href="#inventory" class="hero__brand-link" aria-label="View Eccentrica inventory">
+                        <img src="assets/images/eccentrica_logo.svg" alt="Eccentrica">
+                        <span class="hero__brand-sub">
+                            <span class="hero__brand-sub-city">Miami</span>
                             <span class="hero__brand-sub-hover">View Inventory <i class="ph-thin ph-caret-right" aria-hidden="true"></i></span>
                         </span>
                     </a>
@@ -189,7 +273,7 @@
                         </h2>
                         <p class="inventory__intro">New Lamborghini, Pagani, Lotus, Karma, and Czinger — factory-new inventory from the marques we represent as an authorized dealer.</p>
                     </div>
-                    <a href="#" class="inventory__cta">
+                    <a href="#" class="btn">
                         <span>Explore the collection</span>
                         <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
                     </a>
@@ -306,30 +390,19 @@
                     <span class="eyebrow-stamp">Authorized House</span>
                     <h2 class="brands__heading" id="brands-heading">
                         <span class="brands__heading-primary">Explore Our Brands</span>
-                        <span class="brands__heading-secondary">Five Marques. One Floor.</span>
+                        <span class="brands__heading-secondary">Seven Marques. One Floor.</span>
                     </h2>
-                    <p class="brands__intro">South Florida's authorized dealer for Lamborghini, Pagani, Lotus, Karma, and Czinger — represented under one roof.</p>
+                    <p class="brands__intro">South Florida's authorized house for Lamborghini, Pagani, Lotus, Karma, Czinger, Gunther, and Eccentrica — represented under one roof.</p>
                 </header>
 
                 <ul class="brands__grid" aria-label="Authorized marques">
                     <li class="brand-card">
                         <a href="#inventory" class="brand-card__link">
                             <div class="brand-card__media">
-                                <img src="assets/images/lambo_logo.svg" alt="Lamborghini">
-                            </div>
-                            <h3 class="brand-card__name">Lamborghini</h3>
-                            <span class="brand-card__cta">
-                                <span>View Inventory</span>
-                                <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="brand-card">
-                        <a href="#inventory" class="brand-card__link">
-                            <div class="brand-card__media">
-                                <img src="assets/images/pagani%20_logo.svg" alt="Pagani">
+                                <img src="assets/images/Pagani_logo.svg" alt="Pagani">
                             </div>
                             <h3 class="brand-card__name">Pagani</h3>
+                            <span class="brand-card__city">Miami</span>
                             <span class="brand-card__cta">
                                 <span>View Inventory</span>
                                 <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
@@ -339,9 +412,23 @@
                     <li class="brand-card">
                         <a href="#inventory" class="brand-card__link">
                             <div class="brand-card__media">
-                                <img src="assets/images/lotus_logo.png" alt="Lotus">
+                                <img src="assets/images/Lamborghini_logo.svg" alt="Lamborghini">
+                            </div>
+                            <h3 class="brand-card__name">Lamborghini</h3>
+                            <span class="brand-card__city">Miami</span>
+                            <span class="brand-card__cta">
+                                <span>View Inventory</span>
+                                <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="brand-card">
+                        <a href="#inventory" class="brand-card__link">
+                            <div class="brand-card__media">
+                                <img src="assets/images/lotus_logo.svg" alt="Lotus">
                             </div>
                             <h3 class="brand-card__name">Lotus</h3>
+                            <span class="brand-card__city">Miami</span>
                             <span class="brand-card__cta">
                                 <span>View Inventory</span>
                                 <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
@@ -351,9 +438,10 @@
                     <li class="brand-card">
                         <a href="#inventory" class="brand-card__link">
                             <div class="brand-card__media">
-                                <img src="assets/images/karma_logo.svg" alt="Karma">
+                                <img src="assets/images/Karma_logo.svg" alt="Karma">
                             </div>
                             <h3 class="brand-card__name">Karma</h3>
+                            <span class="brand-card__city">Miami</span>
                             <span class="brand-card__cta">
                                 <span>View Inventory</span>
                                 <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
@@ -363,9 +451,36 @@
                     <li class="brand-card">
                         <a href="#inventory" class="brand-card__link">
                             <div class="brand-card__media">
-                                <img src="assets/images/czinger_logo.svg" alt="Czinger">
+                                <img src="assets/images/Czinger_logo.svg" alt="Czinger">
                             </div>
                             <h3 class="brand-card__name">Czinger</h3>
+                            <span class="brand-card__city">Miami</span>
+                            <span class="brand-card__cta">
+                                <span>View Inventory</span>
+                                <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="brand-card">
+                        <a href="#inventory" class="brand-card__link">
+                            <div class="brand-card__media">
+                                <img src="assets/images/gunther_logo.svg" alt="Gunther">
+                            </div>
+                            <h3 class="brand-card__name">Gunther</h3>
+                            <span class="brand-card__city">Miami</span>
+                            <span class="brand-card__cta">
+                                <span>View Inventory</span>
+                                <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="brand-card">
+                        <a href="#inventory" class="brand-card__link">
+                            <div class="brand-card__media">
+                                <img src="assets/images/eccentrica_logo.svg" alt="Eccentrica">
+                            </div>
+                            <h3 class="brand-card__name">Eccentrica</h3>
+                            <span class="brand-card__city">Miami</span>
                             <span class="brand-card__cta">
                                 <span>View Inventory</span>
                                 <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
@@ -395,7 +510,7 @@
                             </h2>
                             <p class="sell__intro">Prestige Imports offers a refined, discreet acquisition experience for owners of premium vehicles. Receive a market evaluation from specialists who understand high-end inventory.</p>
                         </div>
-                        <a href="#sell" class="sell__cta">
+                        <a href="#sell" class="btn btn--on-dark sell__cta">
                             <span>Request a private valuation</span>
                             <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
                         </a>
@@ -459,11 +574,11 @@
                         </ul>
 
                         <div class="services__ctas">
-                            <a href="#" class="services__cta">
+                            <a href="#" class="btn btn--solid services__cta">
                                 <span>Schedule appointment</span>
                                 <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
                             </a>
-                            <a href="tel:+18332906287" class="services__cta services__cta--ghost">
+                            <a href="tel:+18332906287" class="btn services__cta">
                                 <span>Speak with a specialist</span>
                                 <i class="ph-thin ph-phone" aria-hidden="true"></i>
                             </a>
@@ -747,10 +862,10 @@
                         </ul>
 
                         <div class="diff__ctas">
-                            <a href="#" class="diff__cta">
+                            <a href="#" class="btn btn--on-dark">
                                 <span>See More</span>
                             </a>
-                            <a href="tel:+18332906287" class="diff__cta diff__cta--ghost">
+                            <a href="tel:+18332906287" class="btn btn--on-dark btn--ghost">
                                 <i class="ph-thin ph-phone" aria-hidden="true"></i>
                                 <span>Contact Us</span>
                             </a>
@@ -773,7 +888,7 @@
 
             <div class="site-footer__brand">
                 <a href="index_2.html" class="site-footer__logo" aria-label="Prestige Imports — Home">
-                    <img src="assets/images/logo.svg" alt="Prestige Imports">
+                    <img src="assets/images/prestige_logo.svg" alt="Prestige Imports">
                 </a>
                 <p class="site-footer__tagline">A second-generation, family-owned dealership for luxury, exotic, and collector automobiles. South Florida, since 1977.</p>
             </div>
@@ -885,5 +1000,6 @@
         })();
     </script>
     <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/search.js" defer></script>
 </body>
 </html>
