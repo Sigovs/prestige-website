@@ -7,7 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
         *, *::before, *::after { box-sizing: border-box; }
@@ -28,10 +28,11 @@
             --rule:        rgba(28, 28, 28, 0.12);
             --rule-strong: rgba(28, 28, 28, 0.24);
 
-            /* ── Type — Continental (as applied in index_4) ── */
+            /* ── Type — Continental (the only design-system fonts) ── */
             --ff-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             --ff-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --ff-mono:    'JetBrains Mono', 'SF Mono', 'Menlo', monospace;
+            /* Code/token readouts — OS-native monospace, no web font loaded */
+            --ff-mono:    ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
             /* ── Spacing scale ── */
             --sp-1: 8px;
