@@ -22,7 +22,7 @@ body.page-inventory {
 .srp-intro {
     width: min(94%, var(--container-wide));
     margin: 0 auto;
-    padding: var(--sp-6) 0 var(--sp-2);    /* tighter bottom now that the lead is gone */
+    padding: var(--sp-5) 0 0;     /* section rhythm — every junction = --sp-5 (56) */
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -60,7 +60,7 @@ body.page-inventory {
 .brand-strip {
     width: min(94%, var(--container-wide));
     margin: 0 auto;
-    padding: var(--sp-3) 0 var(--sp-5);
+    padding: var(--sp-5) 0 0;     /* section rhythm — junction = --sp-5 (56) */
     border-bottom: 1px solid var(--rule);
 }
 .brand-strip__label {
@@ -156,7 +156,7 @@ body:has(.site-header.is-scrolled) .filter-bar {
 .filter-bar__inner {
     width: min(94%, var(--container-wide));
     margin: 0 auto;
-    padding: 30px 0 0;             /* 30px top, 0 bottom — chips below define their own gap */
+    padding: var(--sp-5) 0 var(--sp-3);   /* top: section junction (56) · bottom: inset to chips/border (24) */
     display: flex;
     align-items: center;
     gap: 10px;
@@ -390,7 +390,7 @@ body:has(.site-header.is-scrolled) .filter-bar {
 .filter-chips {
     width: min(94%, var(--container-wide));
     margin: 0 auto;
-    padding: 17px 0 30px;          /* tighter top (close to filters), 30 bottom = clear below */
+    padding: 0;                    /* gap above = filter-bar__inner inset; border hugs the chips */
     display: flex;
     align-items: center;
     gap: 8px;
@@ -421,6 +421,8 @@ body:has(.site-header.is-scrolled) .filter-bar {
     transition: color 0.2s var(--ease);
 }
 .chip:hover .chip__x { color: #fff; }
+/* No active filters → hide the orphan "Clear all" button */
+.filter-chips:not(:has(.chip)) .chip-clear { display: none; }
 .chip-clear {
     font-family: var(--font-sans);
     font-size: 12px;
@@ -505,7 +507,6 @@ body:has(.site-header.is-scrolled) .filter-bar {
    ============================================================ */
 @media (max-width: 1100px) {
     .srp-grid { grid-template-columns: repeat(2, 1fr); }
-    .srp-drop__panel { width: 460px; }
     .filter__panel--all { min-width: 480px; grid-template-columns: 1fr 1fr; }
 }
 
@@ -515,16 +516,7 @@ body:has(.site-header.is-scrolled) .filter-bar {
     .srp-search__input { width: 150px; }
     /* secondary nav links collapse — keep Inventory dropdown + search */
     .srp-nav__link { display: none; }
-    .srp-intro { padding-top: var(--sp-5); }
     .srp-grid { grid-template-columns: 1fr; }
-    .srp-drop__panel {
-        position: fixed;
-        left: 4%;
-        right: 4%;
-        width: auto;
-        transform: none;
-        grid-template-columns: 1fr;
-    }
     .filter__panel--all {
         position: fixed;
         left: 4%;

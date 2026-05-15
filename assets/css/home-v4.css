@@ -15,10 +15,10 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 :root {
-    /* Surfaces — cool gray (Figma exact) */
-    --bg:        #dadada;
-    --bg-soft:   #c8c8c8;
-    --bg-deep:   #b8b8b8;
+    /* Surfaces — light neutral gray (modern, airy) */
+    --bg:        #F4F4F4;
+    --bg-soft:   #EAEAEA;
+    --bg-deep:   #DEDEDE;
     --cream:     #edeae4;   /* warm cream for text on dark surfaces */
 
     /* Ink — Figma exact */
@@ -3884,7 +3884,7 @@ body { font-weight: 400; }
    ════════════════════════════════════════════════════════════ */
 
 :root {
-    --surface-card: #F6F6F6;            /* unified card panel — homepage + SRP */
+    --surface-card: #fff;               /* unified card panel — homepage + SRP */
     /* Soft diffused elevation — bigger blur, lower alpha = gentler shadow */
     --card-lift:    0 24px 56px -20px rgba(28, 28, 28, 0.18);
     /* Smoother easing — ease-out-expo (gentler tail than --ease's quint).
@@ -3994,15 +3994,17 @@ body { font-weight: 400; }
     background-color: transparent;       /* no white fill — logo sits on the card panel */
     border: 1px solid var(--rule);
     cursor: pointer;
-    transition: border-color 0.3s var(--ease);
+    transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
 }
-/* Hover — border darkens for a quiet affordance */
+/* Hover — a soft gray fill lifts the tile off the white card panel
+   + the border darkens */
 .vehicle-card__trust-item:hover {
+    background-color: var(--bg);
     border-color: var(--rule-strong);
 }
 .vehicle-card__trust-item img {
     max-width: 100%;
-    max-height: 67px;            /* +40% then +20% over the original 40px */
+    max-height: 47px;            /* 67px − 30% */
     width: auto;
     object-fit: contain;
 }

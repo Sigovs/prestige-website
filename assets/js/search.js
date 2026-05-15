@@ -142,65 +142,100 @@
 
 
     /* ──────────────────────────────────────────────────────────
-       4. Filter chip removal — click chip → fade + remove + shuffle
+       4–6. Filter options ⇄ active chips ⇄ trigger badges
+       Selecting any option (Make / Model / Year / Price / …)
+       spawns a chip in the filter-chips row; unchecking the box —
+       or removing the chip — clears it both ways. Per-filter
+       "Clear" and the "Clear all" button drop the matching chips.
+       Pre-checked options seed their chips on load.
        ────────────────────────────────────────────────────────── */
-    function bindChipRemoval(scope) {
-        (scope || document).querySelectorAll('.filter-chips .chip').forEach(function (chip) {
-            if (chip.dataset.bound) return;
-            chip.dataset.bound = '1';
-            chip.addEventListener('click', function (e) {
-                e.preventDefault();
-                chip.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-                chip.style.opacity    = '0';
-                chip.style.transform  = 'translateX(-6px)';
-                setTimeout(function () { chip.remove(); }, 230);
-                reshuffleDebounced();
-            });
+    var chipsBox    = document.querySelector('.filter-chips');
+    var clearAllBtn = chipsBox ? chipsBox.querySelector('.chip-clear') : null;
+    var inputByKey  = {};
+
+    /* Readable label for an option — its text minus the count badge */
+    function optionLabel(input) {
+        var opt = input.closest('.filter__option');
+        if (!opt) return 'Filter';
+        var clone = opt.cloneNode(true);
+        var cnt = clone.querySelector('.filter__option-count');
+        if (cnt) cnt.remove();
+        return clone.textContent.trim();
+    }
+
+    function fadeRemove(el) {
+        el.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+        el.style.opacity    = '0';
+        el.style.transform  = 'translateX(-6px)';
+        setTimeout(function () { el.remove(); }, 230);
+    }
+
+    function chipFor(key) {
+        return chipsBox
+            ? chipsBox.querySelector('.chip[data-for="' + key + '"]')
+            : null;
+    }
+
+    function addChip(input) {
+        if (!chipsBox) return;
+        var key = input.dataset.chipKey;
+        if (chipFor(key)) return;
+
+        var chip = document.createElement('a');
+        chip.className = 'chip';
+        chip.href = '#';
+        chip.dataset.for = key;
+        var txt = document.createElement('span');
+        txt.textContent = optionLabel(input);
+        var x = document.createElement('span');
+        x.className = 'chip__x';
+        x.setAttribute('aria-hidden', 'true');
+        x.textContent = '✕';
+        chip.appendChild(txt);
+        chip.appendChild(x);
+
+        if (clearAllBtn) chipsBox.insertBefore(chip, clearAllBtn);
+        else             chipsBox.appendChild(chip);
+
+        /* slide + fade in */
+        chip.style.opacity   = '0';
+        chip.style.transform = 'translateX(-6px)';
+        requestAnimationFrame(function () {
+            chip.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+            chip.style.opacity    = '1';
+            chip.style.transform  = 'translateX(0)';
+            setTimeout(function () {
+                chip.style.transition = '';
+                chip.style.transform  = '';
+            }, 300);
         });
     }
-    bindChipRemoval();
 
+    var filters = document.querySelectorAll('.filter-bar .filter');
 
-    /* ──────────────────────────────────────────────────────────
-       5. "Clear all" chips
-       ────────────────────────────────────────────────────────── */
-    document.querySelectorAll('.chip-clear').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var chips = btn.parentElement.querySelectorAll('.chip');
-            chips.forEach(function (c) {
-                c.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-                c.style.opacity    = '0';
-                c.style.transform  = 'translateX(-6px)';
-            });
-            setTimeout(function () {
-                chips.forEach(function (c) { c.remove(); });
-            }, 230);
-            reshuffleDebounced();
-        });
-    });
-
-
-    /* ──────────────────────────────────────────────────────────
-       6. Filter trigger count badge + reshuffle on checkbox change
-       ────────────────────────────────────────────────────────── */
-    document.querySelectorAll('.filter-bar .filter').forEach(function (f) {
-        var labelEl = f.querySelector('.filter__trigger > span:first-child');
+    function updateBadge(filterEl) {
+        var labelEl = filterEl.querySelector('.filter__trigger > span:first-child');
         if (!labelEl) return;
-        var originalLabel = labelEl.textContent;
+        var count = filterEl.querySelectorAll('.filter__option input:checked').length;
+        labelEl.textContent = count > 0
+            ? filterEl.dataset.baseLabel + ' (' + count + ')'
+            : filterEl.dataset.baseLabel;
+        filterEl.classList.toggle('filter--has-value', count > 0);
+    }
+
+    filters.forEach(function (f, fi) {
+        var labelEl = f.querySelector('.filter__trigger > span:first-child');
+        f.dataset.baseLabel = labelEl ? labelEl.textContent.trim() : '';
         var inputs = f.querySelectorAll('.filter__option input[type="checkbox"]');
 
-        function update() {
-            var count = f.querySelectorAll('.filter__option input:checked').length;
-            labelEl.textContent = count > 0
-                ? originalLabel + ' (' + count + ')'
-                : originalLabel;
-            if (count > 0) f.classList.add('filter--has-value');
-            else           f.classList.remove('filter--has-value');
-        }
-
-        inputs.forEach(function (input) {
+        inputs.forEach(function (input, oi) {
+            var key = 'f' + fi + '-' + oi;
+            input.dataset.chipKey = key;
+            inputByKey[key] = input;
             input.addEventListener('change', function () {
-                update();
+                if (input.checked) addChip(input);
+                else { var c = chipFor(key); if (c) fadeRemove(c); }
+                updateBadge(f);
                 reshuffleDebounced();
             });
         });
@@ -208,13 +243,50 @@
         var clearBtn = f.querySelector('.filter__clear');
         if (clearBtn) {
             clearBtn.addEventListener('click', function () {
-                inputs.forEach(function (i) { i.checked = false; });
-                update();
+                inputs.forEach(function (input) {
+                    if (!input.checked) return;
+                    input.checked = false;
+                    var c = chipFor(input.dataset.chipKey);
+                    if (c) fadeRemove(c);
+                });
+                updateBadge(f);
                 reshuffleDebounced();
             });
         }
 
-        update();  /* initialize for any pre-checked filters */
+        updateBadge(f);
+    });
+
+    /* Chip clicks (delegated) — remove chip ⇒ uncheck its option.
+       "Clear all" drops every chip + unchecks every option. */
+    if (chipsBox) {
+        chipsBox.addEventListener('click', function (e) {
+            if (e.target.closest('.chip-clear')) {
+                Object.keys(inputByKey).forEach(function (k) {
+                    inputByKey[k].checked = false;
+                });
+                filters.forEach(updateBadge);
+                chipsBox.querySelectorAll('.chip').forEach(fadeRemove);
+                reshuffleDebounced();
+                return;
+            }
+            var chip = e.target.closest('.chip');
+            if (!chip) return;
+            e.preventDefault();
+            var input = inputByKey[chip.dataset.for];
+            if (input) {
+                input.checked = false;
+                var f = input.closest('.filter');
+                if (f) updateBadge(f);
+            }
+            fadeRemove(chip);
+            reshuffleDebounced();
+        });
+    }
+
+    /* Seed chips for options that start checked */
+    Object.keys(inputByKey).forEach(function (k) {
+        if (inputByKey[k].checked) addChip(inputByKey[k]);
     });
 
 
