@@ -1,0 +1,345 @@
+/* ============================================================
+   PRESTIGE IMPORTS — VEHICLE DETAIL PAGE (vehicle-detail.html)
+   Page-specific layer. Loads on top of home-v4.css and reuses
+   its design system: Continental type (.t-*), .btn component,
+   --sp spacing scale, surface + rule tokens, .vehicle-card__trust
+   tiles, and the .site-header / .site-footer chrome.
+   Section rhythm follows the stacked-page junction rule:
+   every section junction = --sp-5 (56px), top-ownership.
+   ============================================================ */
+
+.vdp {
+    padding-top: var(--header-h);     /* clear the fixed header */
+    padding-bottom: var(--sp-7);
+}
+
+/* Shared centered wrapper for every VDP block */
+.breadcrumb,
+.vdp-hero,
+.vdp-section {
+    width: min(92%, var(--container-max));
+    margin: 0 auto;
+}
+
+
+/* ── BREADCRUMB ──────────────────────────────────────────── */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: var(--sp-5) 0 var(--sp-3);   /* 56 below header · 24 to the hero */
+    font-family: var(--font-sans);
+    font-size: 13px;
+}
+.breadcrumb a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s var(--ease);
+}
+.breadcrumb a:hover { color: var(--ink); }
+.breadcrumb__sep { color: var(--rule-strong); }
+.breadcrumb__current { color: var(--ink); }
+
+
+/* ── HERO — gallery (left) + sticky info panel (right) ───── */
+.vdp-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.62fr) minmax(330px, 1fr);
+    gap: var(--sp-5);
+    align-items: start;
+}
+
+/* Main photo */
+.vdp-gallery__main {
+    display: block;
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+.vdp-gallery__main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s var(--card-ease, cubic-bezier(0.16,1,0.3,1));
+}
+.vdp-gallery__main:hover img { transform: scale(1.03); }
+.vdp-gallery__count {
+    position: absolute;
+    left: var(--sp-2);
+    bottom: var(--sp-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    background-color: var(--ink);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+.vdp-gallery__count i { font-size: 15px; }
+
+
+/* ── INFO PANEL — sticky card, height-matched to the photo ── */
+.vdp-panel {
+    position: sticky;
+    top: 96px;                        /* clears the scrolled (76px) header */
+    align-self: stretch;              /* match the photo's height in the hero row */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+/* Each block is inset --sp-3 and divided by a hairline */
+.vdp-panel__head,
+.vdp-panel__price,
+.vdp-specs,
+.vdp-panel__ctas {
+    padding: var(--sp-3);
+}
+.vdp-panel__price,
+.vdp-specs,
+.vdp-panel__ctas {
+    border-top: 1px solid var(--rule);
+}
+
+.vdp-panel__title { color: var(--ink); }
+
+.vdp-panel__price {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.vdp-panel__price .t-eyebrow { color: var(--ink-muted); }
+.vdp-panel__price-value {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+/* Spec table — label / value rows, hairline between */
+.vdp-specs {
+    list-style: none;
+    margin: 0;
+}
+.vdp-specs li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding: var(--sp-1) 0;
+}
+.vdp-specs li + li { border-top: 1px solid var(--rule); }
+.vdp-specs__label {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink-muted);
+    flex-shrink: 0;
+}
+.vdp-specs__value {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--ink);
+    text-align: right;
+}
+
+.vdp-panel__ctas {
+    margin-top: auto;                 /* anchor the CTA to the bottom edge */
+}
+.vdp-panel__ctas .btn {
+    width: 100%;
+    justify-content: center;
+}
+
+
+/* ── ACTION BAR — full-width: reports · actions · buy ────── */
+.vdp-actionbar {
+    width: min(92%, var(--container-max));
+    margin: 0 auto;
+    padding-top: var(--sp-5);         /* section junction from the hero */
+}
+.vdp-actionbar__bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sp-3) var(--sp-4);
+    padding: var(--sp-3);
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+.vdp-actionbar__trust {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+}
+.vdp-actionbar__trust img {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+}
+/* Actions + buy group push to the right edge of the bar */
+.vdp-actionbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+.vdp-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+    transition: color 0.2s var(--ease);
+}
+.vdp-action:hover { color: var(--ink); }
+.vdp-action i { font-size: 17px; }
+.vdp-actionbar__buy {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* ── CONTENT SECTIONS — About / Options / Photos ─────────── */
+.vdp-section {
+    padding-top: var(--sp-5);         /* section junction = --sp-5 (56) */
+}
+/* Anchor target (#photos) clears the fixed header when jumped to */
+.vdp-section--photos { scroll-margin-top: calc(var(--header-h) + var(--sp-3)); }
+.vdp-section__title {
+    color: var(--ink);
+    padding-bottom: var(--sp-3);
+    margin-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--rule);
+}
+
+
+/* ── ABOUT — editorial prose, full section width ─────────── */
+.vdp-prose p { color: var(--ink-soft); }
+.vdp-prose .t-body { margin: 0 0 var(--sp-2); }
+.vdp-prose__lead {
+    color: var(--ink);
+    margin: 0 0 var(--sp-3);
+}
+.vdp-prose__sub {
+    color: var(--ink);
+    margin: var(--sp-4) 0 var(--sp-2);
+}
+.vdp-prose__disclaimer {
+    color: var(--ink-muted);
+    margin: var(--sp-4) 0 0;
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--rule);
+    line-height: 1.6;
+}
+
+
+/* ── OPTIONS — the section title IS the accordion trigger ── */
+.vdp-accordion__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding-bottom: var(--sp-3);
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    list-style: none;
+}
+.vdp-accordion__trigger::-webkit-details-marker { display: none; }
+.vdp-accordion__trigger h2 { color: var(--ink); }
+.vdp-accordion__caret {
+    font-size: 18px;
+    color: var(--ink-muted);
+    transition: transform 0.3s var(--ease);
+}
+.vdp-accordion[open] .vdp-accordion__caret { transform: rotate(180deg); }
+
+.vdp-options {
+    list-style: none;
+    margin: 0;
+    padding: var(--sp-4) 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0 var(--sp-5);
+}
+.vdp-options li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: var(--sp-1) 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--rule);
+}
+.vdp-options li::before {
+    content: "";
+    flex-shrink: 0;
+    width: 5px;
+    height: 5px;
+    background-color: var(--ink);
+    transform: translateY(-2px);
+}
+
+
+/* ── PHOTOS — grid ───────────────────────────────────────── */
+.vdp-photos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-2);
+}
+.vdp-photos__item {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+.vdp-photos__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s var(--card-ease, cubic-bezier(0.16,1,0.3,1));
+}
+.vdp-photos__item:hover img { transform: scale(1.04); }
+
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 960px) {
+    .vdp-hero {
+        grid-template-columns: 1fr;
+        gap: var(--sp-4);
+    }
+    .vdp-panel {
+        position: static;             /* no sticky once stacked */
+    }
+}
+
+@media (max-width: 760px) {
+    /* Action bar stacks: trust row, then actions, then buy */
+    .vdp-actionbar__actions { margin-left: 0; }
+    .vdp-actionbar__buy { width: 100%; }
+    .vdp-actionbar__buy .btn { flex: 1; justify-content: center; }
+}
+
+@media (max-width: 720px) {
+    .vdp-photos { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 460px) {
+    .vdp-photos { grid-template-columns: 1fr; }
+    .vdp-actionbar__actions { flex-wrap: wrap; }
+}

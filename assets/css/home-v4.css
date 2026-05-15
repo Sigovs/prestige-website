@@ -231,25 +231,32 @@ input, textarea, select { font-size: inherit; }
 .site-nav__link.is-active::after { transform: scaleX(1); }
 .site-nav__link.is-active { color: #ffffff; }
 
-/* ── Inventory page: when the header is transparent (not scrolled),
-   invert the colors so dark ink reads against the light page bg.
-   On scroll, .is-scrolled flips it back to the standard white-on-ink. */
-body.page-inventory .site-header:not(.is-scrolled) {
+/* ── Light pages (inventory SRP, vehicle detail): when the header is
+   transparent (not scrolled), invert the colors so dark ink reads
+   against the light page bg. On scroll, .is-scrolled flips it back
+   to the standard white-on-ink. */
+body.page-inventory .site-header:not(.is-scrolled),
+body.page-vdp .site-header:not(.is-scrolled) {
     border-bottom-color: rgba(28, 28, 28, 0.12);
 }
-body.page-inventory .site-header:not(.is-scrolled) .logo img {
+body.page-inventory .site-header:not(.is-scrolled) .logo img,
+body.page-vdp .site-header:not(.is-scrolled) .logo img {
     filter: brightness(0);                  /* ink logo, not cream */
 }
-body.page-inventory .site-header:not(.is-scrolled) .site-nav__link {
+body.page-inventory .site-header:not(.is-scrolled) .site-nav__link,
+body.page-vdp .site-header:not(.is-scrolled) .site-nav__link {
     color: rgba(28, 28, 28, 0.58);
 }
-body.page-inventory .site-header:not(.is-scrolled) .site-nav__link:hover {
+body.page-inventory .site-header:not(.is-scrolled) .site-nav__link:hover,
+body.page-vdp .site-header:not(.is-scrolled) .site-nav__link:hover {
     color: var(--ink);
 }
-body.page-inventory .site-header:not(.is-scrolled) .site-nav__link::after {
+body.page-inventory .site-header:not(.is-scrolled) .site-nav__link::after,
+body.page-vdp .site-header:not(.is-scrolled) .site-nav__link::after {
     background-color: var(--ink);
 }
-body.page-inventory .site-header:not(.is-scrolled) .site-nav__link.is-active {
+body.page-inventory .site-header:not(.is-scrolled) .site-nav__link.is-active,
+body.page-vdp .site-header:not(.is-scrolled) .site-nav__link.is-active {
     color: var(--ink);
 }
 
