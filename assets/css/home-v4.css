@@ -99,7 +99,11 @@ img { max-width: 100%; display: block; }
 
 a { color: inherit; text-decoration: none; }
 
-button { font-family: inherit; }
+/* Form controls don't inherit the page font by default — force them
+   onto the design-system stack so no browser UI font ever leaks in. */
+button, input, textarea, select { font-family: inherit; }
+input, textarea, select { font-size: inherit; }
+::placeholder { font-family: inherit; }
 
 .container {
     width: min(92%, var(--container-max));
@@ -3919,10 +3923,8 @@ body { font-weight: 400; }
 }
 
 /* Title gets a touch larger in extended */
-.vehicle-card--extended .vehicle-card__name {
-    font-size: 17px;
-    letter-spacing: -0.015em;
-}
+/* Card name uses the .t-h4 scale step (18px) on both card variants —
+   no per-variant size override. */
 
 /* Engine / drivetrain — single truncated line */
 .vehicle-card__engine {
@@ -3991,7 +3993,7 @@ body { font-weight: 400; }
 }
 .vehicle-card__price-label {
     font-family: var(--font-sans);
-    font-size: 11px;
+    font-size: 12px;                 /* = t-eyebrow / t-caption ramp size */
     font-weight: 500;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -3999,7 +4001,7 @@ body { font-weight: 400; }
 }
 .vehicle-card__price {
     font-family: var(--font-display);
-    font-size: 22px;
+    font-size: clamp(20px, 1.9vw, 26px);   /* = t-h2 ramp size */
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--ink);
@@ -4021,50 +4023,131 @@ body { font-weight: 400; }
 
 
 /* ════════════════════════════════════════════════════════════
-   TYPE RAMP — reusable utility classes (Continental).
-   The single source of truth for the type scale. index_4's
-   per-section heading selectors mirror these values; new pages
-   should apply the .t-* classes directly instead of re-declaring.
+   TYPE SCALE — Continental.  THE single source of truth.
+   Ten steps, monotonic. Every heading / body / label on the
+   site must use one of these — never an off-scale px value.
 
-   IMPORTANT — every .t-* class resets margin to 0. Spacing
-   between text elements is the parent's job, not the element's.
-   See the HEADING STACK rule just below.
+      STEP        FAMILY  SIZE                    USE
+      .t-display  PJS-700 clamp(48,5.4vw,80)      hero headline
+      .t-h1       PJS-700 clamp(36,3.4vw,50)      section heading
+      .t-h2       PJS-600 clamp(26,2.4vw,34)      large standalone heading
+      .t-h3       PJS-600 22px                    card / panel heading · price
+      .t-h4       PJS-600 18px                    card title · small heading
+      .t-lead     Inter-400 17px                  intro paragraph
+      .t-body     Inter-400 15px                  default body
+      .t-small    Inter-400 13px                  compact / secondary text
+      .t-caption  Inter-400 12px                  fine print
+      .t-eyebrow  Inter-500 12px upper 0.16em     label / eyebrow
+
+   Every .t-* resets margin:0 — spacing is the parent's job
+   (see HEADING STACK below). New pages: apply .t-* directly.
+   index_4 / inventory selectors are joined onto these rules so
+   there is exactly one set of numbers.
    ════════════════════════════════════════════════════════════ */
 .t-display,
-.t-h1, .t-h2, .t-h3,
-.t-eyebrow,
+.t-h1, .t-h2, .t-h3, .t-h4,
+.t-eyebrow, .t-micro,
 .t-lead, .t-body, .t-small, .t-caption {
     margin: 0;
 }
 
-.t-display {
+/* ── Display ── */
+.t-display,
+.hero__headline-primary {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: clamp(48px, 5.4vw, 80px);
     line-height: 1.0;
     letter-spacing: -0.025em;
 }
-.t-h1 {
+
+/* ── H1 — section heading ── */
+.t-h1,
+.inventory__heading-primary,
+.brands__heading-primary,
+.sell__heading-primary,
+.services__heading-primary,
+.events__heading-primary,
+.diff__heading-primary {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: clamp(36px, 3.4vw, 50px);
     line-height: 1.05;
     letter-spacing: -0.025em;
 }
+
+/* ── H2 — large standalone heading ── */
 .t-h2 {
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(20px, 1.9vw, 26px);
-    line-height: 1.3;
+    font-weight: 600;
+    font-size: clamp(26px, 2.4vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+/* ── H3 — card / panel heading, price ── */
+.t-h3,
+.vehicle-card__price {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.25;
     letter-spacing: -0.015em;
 }
-.t-h3 {
+
+/* ── H4 — card title, small heading ── */
+.t-h4,
+.vehicle-card__name {
     font-family: var(--font-display);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 18px;
     line-height: 1.3;
     letter-spacing: -0.015em;
 }
+
+/* ── Lead — intro paragraph ── */
+.t-lead,
+.diff__para--lead {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.65;
+}
+
+/* ── Body — default ── */
+.t-body,
+.hero__intro,
+.inventory__intro,
+.brands__intro,
+.sell__intro,
+.services__intro-text,
+.events__intro-text,
+.diff__para {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+/* ── Small — compact / secondary ── */
+.t-small {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+}
+
+/* ── Caption — fine print ── */
+.t-caption {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+}
+
+/* ── Eyebrow — label ── */
 .t-eyebrow {
     font-family: var(--font-sans);
     font-weight: 500;
@@ -4074,30 +4157,17 @@ body { font-weight: 400; }
     text-transform: uppercase;
     color: var(--ink-soft);
 }
-.t-lead {
+
+/* ── Micro — smallest tier, for tiny tracked UI labels only
+   (filter group titles, chip text, stat labels). 11px is the
+   floor — nothing on the site goes below it. ── */
+.t-micro {
     font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 1.65;
-}
-.t-body {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 1.65;
-}
-.t-small {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-}
-.t-caption {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 1.5;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--ink-muted);
 }
 

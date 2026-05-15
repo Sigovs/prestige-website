@@ -65,7 +65,7 @@ body.page-inventory {
 }
 .brand-strip__label {
     font-family: var(--font-sans);
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -231,7 +231,7 @@ body:has(.site-header.is-scrolled) .filter-bar {
 }
 .filter__group-title {
     font-family: var(--font-sans);
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -254,7 +254,7 @@ body:has(.site-header.is-scrolled) .filter-bar {
     gap: 10px;
     padding: 8px 8px;
     font-family: var(--font-sans);
-    font-size: 14px;
+    font-size: 13px;
     color: var(--ink);
     cursor: pointer;
     transition: background-color 0.2s var(--ease);
@@ -376,7 +376,7 @@ body:has(.site-header.is-scrolled) .filter-bar {
     display: block;
     padding: 9px 12px;
     font-family: var(--font-sans);
-    font-size: 14px;
+    font-size: 13px;
     color: var(--ink);
     text-decoration: none;
     transition: background-color 0.2s var(--ease);
@@ -472,7 +472,7 @@ body:has(.site-header.is-scrolled) .filter-bar {
     height: 42px;
     padding: 0 6px;
     font-family: var(--font-sans);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--ink);
     text-decoration: none;
