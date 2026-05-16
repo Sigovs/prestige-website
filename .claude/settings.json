@@ -5,7 +5,16 @@
       "Bash(claude mcp *)",
       "WebFetch(domain:www.prestigeimports.com)",
       "Bash(git -C /Users/alex/Desktop/WORK/PRESTIGE/prestige-website diff sell-your-car.html assets/css/sell-your-car.css)",
-      "mcp__figma__get_design_context"
+      "mcp__figma__get_design_context",
+      "Bash(git mv *)",
+      "Bash(cd \"c:\\\\____WORK\\\\PRESTIGE\\\\prestige-website\" && mv vehicle-detail.html vehicle-inventory.html)",
+      "Bash(git commit -m ' *)",
+      "Bash(git pull *)",
+      "Bash(git stash *)",
+      "Bash(echo \"EXIT: $?\")"
+    ],
+    "additionalDirectories": [
+      "c:\\____WORK\\PRESTIGE\\prestige-website"
     ]
   }
 }

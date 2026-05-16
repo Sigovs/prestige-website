@@ -15,7 +15,7 @@
 
 /* Shared centered wrapper for every VDP block */
 .breadcrumb,
-.vdp-hero,
+.vdp-summary,
 .vdp-section {
     width: min(92%, var(--container-max));
     margin: 0 auto;
@@ -42,18 +42,24 @@
 .breadcrumb__current { color: var(--ink); }
 
 
-/* ── HERO — gallery (left) + sticky info panel (right) ───── */
-.vdp-hero {
+/* ── SUMMARY — gallery · info panel · action bar ──
+   Layout grid that aligns the three panels and lets the action bar
+   span both columns. Each panel is its own bordered card; the grid
+   gap puts breathing room between them. */
+.vdp-summary {
     display: grid;
     grid-template-columns: minmax(0, 1.62fr) minmax(330px, 1fr);
-    gap: var(--sp-5);
-    align-items: start;
+    gap: var(--sp-3);
 }
 
-/* Main photo */
+/* Main photo — fills its cell, height-matched to the info panel */
 .vdp-gallery__main {
     display: block;
     position: relative;
+    width: 100%;
+    height: 100%;
+    /* Both dimensions are definite in the grid, so aspect-ratio is inert
+       here; it only governs height when the layout stacks (1-col mobile). */
     aspect-ratio: 3 / 2;
     overflow: hidden;
     background-color: var(--surface-card);
@@ -85,11 +91,8 @@
 .vdp-gallery__count i { font-size: 15px; }
 
 
-/* ── INFO PANEL — sticky card, height-matched to the photo ── */
+/* ── INFO PANEL — second column of the summary container ── */
 .vdp-panel {
-    position: sticky;
-    top: 96px;                        /* clears the scrolled (76px) header */
-    align-self: stretch;              /* match the photo's height in the hero row */
     display: flex;
     flex-direction: column;
     background-color: var(--surface-card);
@@ -156,13 +159,9 @@
 }
 
 
-/* ── ACTION BAR — full-width: reports · actions · buy ────── */
-.vdp-actionbar {
-    width: min(92%, var(--container-max));
-    margin: 0 auto;
-    padding-top: var(--sp-5);         /* section junction from the hero */
-}
-.vdp-actionbar__bar {
+/* ── ACTION BAR — third panel, spans both grid columns ───── */
+.vdp-summary__bar {
+    grid-column: 1 / -1;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -196,13 +195,18 @@
     background: none;
     border: none;
     cursor: pointer;
+    /* Save/Share/Text — same type treatment as the SRP card actions
+       (.vehicle-card__action): 10px uppercase micro-label. */
     font-family: var(--font-sans);
-    font-size: 13px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--ink-soft);
     transition: color 0.2s var(--ease);
 }
 .vdp-action:hover { color: var(--ink); }
-.vdp-action i { font-size: 17px; }
+.vdp-action i { font-size: 15px; }
 .vdp-actionbar__buy {
     display: flex;
     align-items: center;
@@ -319,13 +323,7 @@
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 960px) {
-    .vdp-hero {
-        grid-template-columns: 1fr;
-        gap: var(--sp-4);
-    }
-    .vdp-panel {
-        position: static;             /* no sticky once stacked */
-    }
+    .vdp-summary { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 760px) {

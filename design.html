@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/thin/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
     <style>
         *, *::before, *::after { box-sizing: border-box; }
 
@@ -1275,11 +1278,86 @@
         </div>
     </section>
 
-    <!-- ════════════════ 06 · BUTTONS ════════════════ -->
+    <!-- ════════════════ 06 · ICONOGRAPHY ════════════════ -->
     <section class="ds-section">
         <div class="wrap">
             <div class="ds-section__head">
-                <p class="ds-section__num">06 — Components</p>
+                <p class="ds-section__num">06 — Foundations</p>
+                <div>
+                    <h2 class="ds-section__title">Iconography</h2>
+                    <p class="ds-section__desc">One icon library, <b>one weight</b>. All icons are <a href="https://phosphoricons.com/" target="_blank" rel="noopener">Phosphor Icons</a> (web font, v2.1.1) at the <b>Thin</b> weight (<code>ph-thin</code>). The thin stroke matches the editorial, hairline-bordered feel of the system — a heavier weight reads as a different design language. Icons inherit text <code>color</code> and sit inline next to a <code>&lt;span&gt;</code> label.</p>
+                </div>
+            </div>
+
+            <div class="ds-block">
+                <p class="ds-block__label">Weight — Thin (<code>ph-thin</code>) is the single standard</p>
+                <div class="swatch-grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                    <div class="swatch">
+                        <div class="swatch__body" style="padding:20px 18px; display:flex; align-items:center; gap:12px;">
+                            <i class="ph-thin ph-heart" style="font-size:28px;" aria-hidden="true"></i>
+                            <span class="swatch__name" style="margin:0;">ph-thin ph-heart</span>
+                        </div>
+                    </div>
+                    <div class="swatch">
+                        <div class="swatch__body" style="padding:20px 18px; display:flex; align-items:center; gap:12px;">
+                            <i class="ph-thin ph-share-network" style="font-size:28px;" aria-hidden="true"></i>
+                            <span class="swatch__name" style="margin:0;">ph-thin ph-share-network</span>
+                        </div>
+                    </div>
+                    <div class="swatch">
+                        <div class="swatch__body" style="padding:20px 18px; display:flex; align-items:center; gap:12px;">
+                            <i class="ph-thin ph-chat-circle" style="font-size:28px;" aria-hidden="true"></i>
+                            <span class="swatch__name" style="margin:0;">ph-thin ph-chat-circle</span>
+                        </div>
+                    </div>
+                    <div class="swatch">
+                        <div class="swatch__body" style="padding:20px 18px; display:flex; align-items:center; gap:12px;">
+                            <i class="ph-thin ph-caret-right" style="font-size:28px;" aria-hidden="true"></i>
+                            <span class="swatch__name" style="margin:0;">ph-thin ph-caret-right</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="demo-note"><b>Rule:</b> every icon uses the <code>ph-thin</code> class. Never use <code>ph</code> (regular), <code>ph-bold</code>, or <code>ph-light</code> for UI or content icons — a single weight keeps the whole site visually consistent. The <b>only</b> exception is the filled rating star (<code>ph-fill ph-star</code>), which needs a solid shape to read as a rating.</p>
+            </div>
+
+            <div class="ds-block">
+                <p class="ds-block__label">Action icons — one glyph per action, site-wide</p>
+                <div class="swatch-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div class="swatch">
+                        <div class="swatch__body" style="padding:20px 18px; display:flex; align-items:center; gap:12px;">
+                            <i class="ph-thin ph-bookmark-simple" style="font-size:28px;" aria-hidden="true"></i>
+                            <span class="swatch__name" style="margin:0;">Save · ph-bookmark-simple</span>
+                        </div>
+                    </div>
+                    <div class="swatch">
+                        <div class="swatch__body" style="padding:20px 18px; display:flex; align-items:center; gap:12px;">
+                            <i class="ph-thin ph-envelope-simple" style="font-size:28px;" aria-hidden="true"></i>
+                            <span class="swatch__name" style="margin:0;">Share · ph-envelope-simple</span>
+                        </div>
+                    </div>
+                    <div class="swatch">
+                        <div class="swatch__body" style="padding:20px 18px; display:flex; align-items:center; gap:12px;">
+                            <i class="ph-thin ph-chat-circle" style="font-size:28px;" aria-hidden="true"></i>
+                            <span class="swatch__name" style="margin:0;">Text · ph-chat-circle</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="demo-note"><b>Rule:</b> Save / Share / Text use the <b>same three glyphs everywhere</b> they appear — vehicle-card hover actions (<code>.vehicle-card__actions</code>, built in <code>main.js</code>) and the VDP action bar (<code>.vdp-action</code>). Save = <code>ph-bookmark-simple</code>, Share = <code>ph-envelope-simple</code>, Text = <code>ph-chat-circle</code>. Don't substitute <code>ph-heart</code> for Save (reads as a "like", not a saved item) or <code>ph-share-network</code> for Share — the action is "email this", not "share to network".</p>
+            </div>
+
+            <div class="ds-block">
+                <p class="ds-block__label">Size &amp; markup</p>
+                <p class="t-body" style="max-width:64ch; margin-bottom:var(--sp-3);">Default icon size is <b>16px</b> — it matches spec-row icons (<code>.vehicle-card__specs .spec i</code>) and hero contact icons (<code>.hero__contact-link i</code>). Icons are decorative and always carry <code>aria-hidden="true"</code>; the adjacent <code>&lt;span&gt;</code> carries the accessible label.</p>
+                <p class="demo-note">Standard markup: <code>&lt;i class="ph-thin ph-bookmark-simple" aria-hidden="true"&gt;&lt;/i&gt;&lt;span&gt;Save&lt;/span&gt;</code> — icon 16px, <code>gap</code> 6px to the label, icon inherits <code>color</code>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════ 07 · BUTTONS ════════════════ -->
+    <section class="ds-section">
+        <div class="wrap">
+            <div class="ds-section__head">
+                <p class="ds-section__num">07 — Components</p>
                 <div>
                     <h2 class="ds-section__title">Buttons &amp; CTAs</h2>
                     <p class="ds-section__desc">One signature pattern — the <b>boutique CTA</b>: 1px border, uppercase 11px/0.22em label, an ink (or cream) panel that slides in from the left on hover. It currently exists as 5+ near-identical copies (<code>.inventory__cta</code>, <code>.sell__cta</code>, <code>.services__cta</code>, <code>.diff__cta</code> …). It should be <b>one <code>.btn</code> component with modifiers</b>.</p>
@@ -1321,11 +1399,11 @@
         </div>
     </section>
 
-    <!-- ════════════════ 07 · CARDS ════════════════ -->
+    <!-- ════════════════ 08 · CARDS ════════════════ -->
     <section class="ds-section">
         <div class="wrap">
             <div class="ds-section__head">
-                <p class="ds-section__num">07 — Components</p>
+                <p class="ds-section__num">08 — Components</p>
                 <div>
                     <h2 class="ds-section__title">Cards &amp; content blocks</h2>
                     <p class="ds-section__desc">Five distinct card types across the page, plus one variant. They share a family resemblance (flat, hairline-bordered, restrained) but each was built independently — radius, padding, and title treatment drift between them.</p>
@@ -1436,11 +1514,11 @@
         </div>
     </section>
 
-    <!-- ════════════════ 08 · SECTION PATTERNS ════════════════ -->
+    <!-- ════════════════ 09 · SECTION PATTERNS ════════════════ -->
     <section class="ds-section">
         <div class="wrap">
             <div class="ds-section__head">
-                <p class="ds-section__num">08 — Patterns</p>
+                <p class="ds-section__num">09 — Patterns</p>
                 <div>
                     <h2 class="ds-section__title">Section patterns</h2>
                     <p class="ds-section__desc">Four recurring layout shells. Dark and light surfaces alternate down the page; the split and centered patterns are the two content layouts that repeat.</p>
@@ -1488,11 +1566,11 @@
         </div>
     </section>
 
-    <!-- ════════════════ 09 · INCONSISTENCIES ════════════════ -->
+    <!-- ════════════════ 10 · INCONSISTENCIES ════════════════ -->
     <section class="ds-section">
         <div class="wrap">
             <div class="ds-section__head">
-                <p class="ds-section__num">09 — Audit</p>
+                <p class="ds-section__num">10 — Audit</p>
                 <div>
                     <h2 class="ds-section__title">Inconsistencies found</h2>
                     <p class="ds-section__desc">What's currently fighting the system. None of these are broken — they're drift. Each one is a candidate to become a single reusable rule.</p>
@@ -1584,11 +1662,11 @@
         </div>
     </section>
 
-    <!-- ════════════════ 10 · RECOMMENDATIONS ════════════════ -->
+    <!-- ════════════════ 11 · RECOMMENDATIONS ════════════════ -->
     <section class="ds-section">
         <div class="wrap">
             <div class="ds-section__head">
-                <p class="ds-section__num">10 — Next steps</p>
+                <p class="ds-section__num">11 — Next steps</p>
                 <div>
                     <h2 class="ds-section__title">What to standardize</h2>
                     <p class="ds-section__desc">Before building the next pages, lock these down so every new page inherits the system instead of re-patching it. Ordered by leverage.</p>
