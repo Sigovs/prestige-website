@@ -162,13 +162,24 @@
 /* ── ACTION BAR — third panel, spans both grid columns ───── */
 .vdp-summary__bar {
     grid-column: 1 / -1;
+    /* Same column template as the summary grid: reports + save/share fill
+       column 1, the buy group lands in column 2 — so it lines up in width
+       with the INQUIRE button in the info panel above. */
+    display: grid;
+    grid-template-columns: minmax(0, 1.62fr) minmax(330px, 1fr);
+    gap: var(--sp-3);
+    align-items: center;
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+/* Padding lives on the cells, not the bar — so the bar's internal grid
+   keeps the same column lines as the summary grid (buy group = panel width). */
+.vdp-summary__bar-main {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: var(--sp-3) var(--sp-4);
     padding: var(--sp-3);
-    background-color: var(--surface-card);
-    border: 1px solid var(--rule);
 }
 .vdp-actionbar__trust {
     display: flex;
@@ -209,8 +220,12 @@
 .vdp-action i { font-size: 15px; }
 .vdp-actionbar__buy {
     display: flex;
-    align-items: center;
     gap: 8px;
+    padding: var(--sp-3);
+}
+.vdp-actionbar__buy .btn {
+    flex: 1;                          /* the two buttons split column 2 evenly */
+    justify-content: center;
 }
 
 
@@ -327,10 +342,9 @@
 }
 
 @media (max-width: 760px) {
-    /* Action bar stacks: trust row, then actions, then buy */
+    /* Action bar collapses to one column — reports/actions, then buy */
+    .vdp-summary__bar { grid-template-columns: 1fr; }
     .vdp-actionbar__actions { margin-left: 0; }
-    .vdp-actionbar__buy { width: 100%; }
-    .vdp-actionbar__buy .btn { flex: 1; justify-content: center; }
 }
 
 @media (max-width: 720px) {
