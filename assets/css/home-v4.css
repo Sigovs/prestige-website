@@ -1208,6 +1208,13 @@ body.menu-open {
 .vehicle-card__action[data-active="true"] {
     color: var(--cream);
 }
+/* Photo is a second link to the VDP — a mouse convenience that sits
+   under the status badge / quick-action overlays. */
+.vehicle-card__media-link {
+    position: absolute;
+    inset: 0;
+    display: block;
+}
 .vehicle-card__media img {
     display: block;
     width: 100%;

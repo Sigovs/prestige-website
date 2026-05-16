@@ -18,6 +18,7 @@
 
     <script src="assets/js/main.js" defer></script>
     <script src="assets/js/search.js" defer></script>
+    <script src="assets/js/vdp.js" defer></script>
 </head>
 <body class="page-vdp">
 
@@ -269,7 +270,181 @@
                 </div>
             </details>
 
+            <!-- ═══════════ FINANCE CALCULATOR ═══════════ -->
+            <details class="vdp-accordion">
+                <summary class="vdp-accordion__trigger">
+                    <h2 class="t-h3 vdp-accordion__title" id="finance-heading">Finance Calculator</h2>
+                    <span class="vdp-accordion__chip" aria-hidden="true"><i class="ph-thin ph-caret-down"></i></span>
+                </summary>
+                <div class="vdp-accordion__body">
+                    <form class="vdp-calc" autocomplete="off">
+                        <div class="vdp-calc__grid">
+
+                            <div class="vdp-calc__field">
+                                <label class="vdp-calc__label" for="calc-price">Vehicle Price&nbsp;($)</label>
+                                <input class="vdp-calc__input" id="calc-price" name="price" type="text" inputmode="decimal" placeholder="e.g. 431,950">
+                            </div>
+
+                            <div class="vdp-calc__field">
+                                <label class="vdp-calc__label" for="calc-down">Down Payment&nbsp;($)</label>
+                                <input class="vdp-calc__input" id="calc-down" name="down" type="text" inputmode="decimal" placeholder="e.g. 50,000">
+                            </div>
+
+                            <div class="vdp-calc__field vdp-calc__field--output">
+                                <span class="vdp-calc__label">Loan Amount&nbsp;($)</span>
+                                <output class="vdp-calc__output" id="calc-loan">0.00</output>
+                            </div>
+
+                            <div class="vdp-calc__field">
+                                <label class="vdp-calc__label" for="calc-apr">APR&nbsp;(%)</label>
+                                <input class="vdp-calc__input" id="calc-apr" name="apr" type="text" inputmode="decimal" placeholder="e.g. 6.99">
+                            </div>
+
+                            <div class="vdp-calc__field vdp-calc__field--select">
+                                <label class="vdp-calc__label" for="calc-term">Loan Length (Months)</label>
+                                <select class="vdp-calc__input vdp-calc__select" id="calc-term" name="term">
+                                    <option value="36">36</option>
+                                    <option value="48">48</option>
+                                    <option value="60" selected>60</option>
+                                    <option value="72">72</option>
+                                    <option value="84">84</option>
+                                </select>
+                                <i class="ph-thin ph-caret-down vdp-calc__chevron" aria-hidden="true"></i>
+                            </div>
+
+                            <div class="vdp-calc__field vdp-calc__field--output vdp-calc__field--result">
+                                <span class="vdp-calc__label">Monthly Payment&nbsp;($)</span>
+                                <output class="vdp-calc__output" id="calc-monthly">0.00</output>
+                            </div>
+
+                        </div>
+
+                        <div class="vdp-calc__actions">
+                            <button type="reset" class="btn">Clear Form</button>
+                            <button type="submit" class="btn btn--solid">Calculate Payments <span>→</span></button>
+                        </div>
+
+                        <p class="vdp-calc__note">Estimate only — not a financing offer. Contact Prestige Imports for current rates and terms.</p>
+                    </form>
+                </div>
+            </details>
+
         </div>
+
+
+        <!-- ═══════════ RELATED VEHICLES ═══════════ -->
+        <section class="vdp-related" aria-labelledby="related-heading">
+
+            <div class="vdp-related__head">
+                <h2 class="t-h3 vdp-related__title" id="related-heading">Related Vehicles Matching Your Search</h2>
+                <div class="vdp-related__nav">
+                    <button type="button" class="vdp-related__arrow" data-related-prev aria-label="Previous vehicles">
+                        <i class="ph-thin ph-caret-left" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="vdp-related__arrow" data-related-next aria-label="Next vehicles">
+                        <i class="ph-thin ph-caret-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <ul class="vdp-related__track" data-related-track aria-label="Related vehicles">
+                <li>
+                    <a href="vehicle-inventory.html" class="vehicle-card">
+                        <div class="vehicle-card__media">
+                            <img src="assets/images/2024%20Lamborghini%20Revuelto.jpg" alt="2024 Lamborghini Revuelto" loading="lazy">
+                        </div>
+                        <div class="vehicle-card__body">
+                            <h3 class="vehicle-card__name">2024 Lamborghini Revuelto</h3>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>120 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>645,000</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="vehicle-inventory.html" class="vehicle-card">
+                        <div class="vehicle-card__media">
+                            <img src="assets/images/2024%20Pagani%20Utopia.webp" alt="2024 Pagani Utopia" loading="lazy">
+                        </div>
+                        <div class="vehicle-card__body">
+                            <h3 class="vehicle-card__name">2024 Pagani Utopia</h3>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>85 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>2,900,000</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Manual</span></li>
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="vehicle-inventory.html" class="vehicle-card">
+                        <div class="vehicle-card__media">
+                            <img src="assets/images/2024%20Czinger%2021C.webp" alt="2024 Czinger 21C" loading="lazy">
+                        </div>
+                        <div class="vehicle-card__body">
+                            <h3 class="vehicle-card__name">2024 Czinger 21C</h3>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>60 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>2,000,000</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="vehicle-inventory.html" class="vehicle-card">
+                        <div class="vehicle-card__media">
+                            <img src="assets/images/2023_Lamborghini_Huracan_STO_1.jpg" alt="2023 Lamborghini Huracán STO" loading="lazy">
+                        </div>
+                        <div class="vehicle-card__body">
+                            <h3 class="vehicle-card__name">2023 Lamborghini Huracán STO</h3>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>1,800 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>412,000</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="vehicle-inventory.html" class="vehicle-card">
+                        <div class="vehicle-card__media">
+                            <img src="assets/images/Karma%20GS-6.avif" alt="2024 Karma GS-6" loading="lazy">
+                        </div>
+                        <div class="vehicle-card__body">
+                            <h3 class="vehicle-card__name">2024 Karma GS-6</h3>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>45 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>96,000</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="vehicle-inventory.html" class="vehicle-card">
+                        <div class="vehicle-card__media">
+                            <img src="assets/images/2024%20Lotus%20Emira%20First%20Edition.avif" alt="2024 Lotus Emira First Edition" loading="lazy">
+                        </div>
+                        <div class="vehicle-card__body">
+                            <h3 class="vehicle-card__name">2024 Lotus Emira First Edition</h3>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>450 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-currency-dollar" aria-hidden="true"></i><span>108,500</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Manual</span></li>
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="vdp-related__foot">
+                <a class="btn" href="inventory.html"><span>View All</span></a>
+            </div>
+
+        </section>
 
     </main>
 
