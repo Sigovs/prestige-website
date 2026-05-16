@@ -124,6 +124,14 @@
                         <i class="ph-thin ph-images" aria-hidden="true"></i> 7 Photos
                     </span>
                 </a>
+
+                <!-- Prev / next — fade in on hover over the photo -->
+                <button type="button" class="vdp-gallery__nav vdp-gallery__nav--prev" aria-label="Previous photo">
+                    <i class="ph-thin ph-arrow-left" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="vdp-gallery__nav vdp-gallery__nav--next" aria-label="Next photo">
+                    <i class="ph-thin ph-arrow-right" aria-hidden="true"></i>
+                </button>
             </div>
 
             <aside class="vdp-panel" aria-label="Pricing and details">
@@ -187,11 +195,16 @@
         </section>
 
 
-        <!-- ═══════════ ABOUT ═══════════ -->
-        <section class="vdp-section" aria-labelledby="about-heading">
-            <h2 class="t-h3 vdp-section__title" id="about-heading">About This Vehicle</h2>
+        <!-- ═══════════ SECTIONS — About · Options · Photos, collapsible cards ═══════════ -->
+        <div class="vdp-sections">
 
-            <div class="vdp-prose">
+            <details class="vdp-accordion" open>
+                <summary class="vdp-accordion__trigger">
+                    <h2 class="t-h3 vdp-accordion__title" id="about-heading">About This Vehicle</h2>
+                    <span class="vdp-accordion__chip" aria-hidden="true"><i class="ph-thin ph-caret-down"></i></span>
+                </summary>
+                <div class="vdp-accordion__body">
+                    <div class="vdp-prose">
                 <p class="t-lead vdp-prose__lead">Unleash the ultimate track-bred supercar.</p>
 
                 <p class="t-body">Prestige Imports presents an extraordinary opportunity to own the pinnacle of Lamborghini engineering: a 2022 Lamborghini Huracán STO with just 5,737 miles. Stock #CD2577, VIN ZHWUA6ZX6NLA19976.</p>
@@ -211,18 +224,17 @@
                 <p class="t-body">This Huracán STO comes with an AutoCheck Clean report, providing complete peace of mind. With ultra-low mileage and meticulous care, this is your chance to experience Lamborghini's most extreme creation.</p>
 
                 <p class="t-small vdp-prose__disclaimer">Contact Prestige Imports today to schedule your private viewing of this exceptional supercar. All pricing and details provided are believed to be accurate, but we do not warrant or guarantee such accuracy. Prices shown may vary from region to region, as will incentives, and are subject to change. New vehicles offered may be eligible for manufacturer incentives which may change at any time and are subject to incentive qualification criteria and requirements. Manufacturer incentive data and vehicle features information is provided by third parties and believed to be accurate as of the time of publication. Vehicle information is based upon standard equipment and may vary from vehicle to vehicle. Please contact the dealership.</p>
-            </div>
-        </section>
+                    </div>
+                </div>
+            </details>
 
-
-        <!-- ═══════════ OPTIONS ═══════════ -->
-        <section class="vdp-section" aria-labelledby="options-heading">
-            <details class="vdp-accordion" open>
+            <details class="vdp-accordion">
                 <summary class="vdp-accordion__trigger">
-                    <h2 class="t-h3" id="options-heading">Options &amp; Equipment</h2>
-                    <i class="ph-thin ph-caret-down vdp-accordion__caret" aria-hidden="true"></i>
+                    <h2 class="t-h3 vdp-accordion__title" id="options-heading">Options &amp; Equipment</h2>
+                    <span class="vdp-accordion__chip" aria-hidden="true"><i class="ph-thin ph-caret-down"></i></span>
                 </summary>
-                <ul class="vdp-options">
+                <div class="vdp-accordion__body">
+                    <ul class="vdp-options">
                     <li>Carbon-fiber engine bonnet</li>
                     <li>Carbon-fiber roof</li>
                     <li>Sportivo Alcantara racing seats</li>
@@ -235,16 +247,17 @@
                     <li>Front &amp; rear parking sensors</li>
                     <li>Rear-view camera</li>
                     <li>Dual-zone automatic climate control</li>
-                </ul>
+                    </ul>
+                </div>
             </details>
-        </section>
 
-
-        <!-- ═══════════ PHOTOS ═══════════ -->
-        <section class="vdp-section vdp-section--photos" id="photos" aria-labelledby="photos-heading">
-            <h2 class="t-h3 vdp-section__title" id="photos-heading">Photos</h2>
-
-            <ul class="vdp-photos">
+            <details class="vdp-accordion vdp-accordion--photos" id="photos" open>
+                <summary class="vdp-accordion__trigger">
+                    <h2 class="t-h3 vdp-accordion__title" id="photos-heading">Photos</h2>
+                    <span class="vdp-accordion__chip" aria-hidden="true"><i class="ph-thin ph-caret-down"></i></span>
+                </summary>
+                <div class="vdp-accordion__body">
+                    <ul class="vdp-photos">
                 <li class="vdp-photos__item"><img src="assets/images/vdp1.jpg" alt="2022 Lamborghini Huracán STO — front three-quarter" loading="lazy"></li>
                 <li class="vdp-photos__item"><img src="assets/images/vdp2.png" alt="2022 Lamborghini Huracán STO — rear three-quarter" loading="lazy"></li>
                 <li class="vdp-photos__item"><img src="assets/images/vdp3.png" alt="2022 Lamborghini Huracán STO — rear" loading="lazy"></li>
@@ -252,8 +265,11 @@
                 <li class="vdp-photos__item"><img src="assets/images/vdp5.png" alt="2022 Lamborghini Huracán STO — side profile rear" loading="lazy"></li>
                 <li class="vdp-photos__item"><img src="assets/images/vdp6.png" alt="2022 Lamborghini Huracán STO — front" loading="lazy"></li>
                 <li class="vdp-photos__item"><img src="assets/images/vdp7.png" alt="2022 Lamborghini Huracán STO — detail" loading="lazy"></li>
-            </ul>
-        </section>
+                    </ul>
+                </div>
+            </details>
+
+        </div>
 
     </main>
 
