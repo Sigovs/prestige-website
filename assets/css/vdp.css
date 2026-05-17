@@ -305,6 +305,22 @@
    --ink, so it reads as a section header, not a solid CTA) */
 .vdp-accordion[open] .vdp-accordion__trigger { background-color: var(--ink-muted); }
 
+/* Icon + title group — left side of the trigger */
+.vdp-accordion__label {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    min-width: 0;
+}
+/* Small section icon — thin weight; follows the title's open/closed colour */
+.vdp-accordion__icon {
+    flex-shrink: 0;
+    font-size: 20px;
+    color: var(--ink-muted);
+    transition: color 0.2s var(--ease);
+}
+.vdp-accordion[open] .vdp-accordion__icon { color: #fff; }
+
 /* Title — muted when closed; white on the dark header when open */
 .vdp-accordion__title {
     margin: 0;
