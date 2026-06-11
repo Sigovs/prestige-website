@@ -568,6 +568,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    // --- Services: hover card → slide media image (carousel) ------------
+    // Three-state model: default (offscreen per data-direction), is-active
+    // (in frame), is-exiting (offscreen on the OPPOSITE side of incoming).
+    // Outgoing's exit direction is set per-swap so both incoming and out-
+    // going move together in one direction — incoming covers half the frame
+    // while outgoing covers the other half, no gap. After exit completes we
+    // strip is-exiting and data-exit-to; the image snaps back to default
+    // silently (default state has no transition).
+    document.querySelectorAll('[data-services-media]').forEach(media => {
+        const section = media.closest('.section--services');
+        const cards = section?.querySelectorAll('.service[data-service]') ?? [];
+        const SLIDE_MS = 750;
+        const activate = key => {
+            const incoming = media.querySelector(`.services__media-image[data-service="${key}"]`);
+            if (!incoming || incoming.classList.contains('is-active')) return;
+            // Outgoing exits to the SIDE OPPOSITE the incoming's entry side
+            // so both translate in the same direction across the frame.
+            const exitTo = incoming.dataset.direction === 'from-right' ? 'left' : 'right';
+            const outgoing = media.querySelector('.services__media-image.is-active');
+            if (outgoing) {
+                outgoing.dataset.exitTo = exitTo;
+                outgoing.classList.remove('is-active');
+                outgoing.classList.add('is-exiting');
+                window.setTimeout(() => {
+                    outgoing.classList.remove('is-exiting');
+                    delete outgoing.dataset.exitTo;
+                }, SLIDE_MS);
+            }
+            // Make sure incoming starts from its default offscreen side
+            // before is-active is committed — prevents the image from
+            // sliding in from a stale is-exiting position.
+            incoming.classList.remove('is-exiting');
+            delete incoming.dataset.exitTo;
+            // Force reflow so the snap-to-default + is-active commit cleanly.
+            void incoming.offsetWidth;
+            incoming.classList.add('is-active');
+        };
+        cards.forEach(card => {
+            card.addEventListener('pointerenter', () => activate(card.dataset.service));
+            card.addEventListener('focusin',      () => activate(card.dataset.service));
+        });
+    });
+
+
     // --- Events list → featured card preview / swap -------------------------
     const eventsFeatured = document.querySelector('.event-featured');
     const eventsMedia = eventsFeatured?.querySelector('.event-featured__media');

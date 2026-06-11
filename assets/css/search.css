@@ -55,7 +55,7 @@ body.page-inventory {
 }
 
 /* ============================================================
-   BRAND STRIP — authorized marques first, then other makes.
+   BRAND STRIP — authorized brands first, then other makes.
    ============================================================ */
 .brand-strip {
     width: min(94%, var(--container-wide));
@@ -107,7 +107,7 @@ body.page-inventory {
     font-variant-numeric: tabular-nums;
     transition: color 0.25s var(--ease);
 }
-/* House marque — small filled dot marks the 7 authorized brands */
+/* House brand — small filled dot marks the 7 authorized brands */
 .brand-pill__dot {
     width: 5px;
     height: 5px;

@@ -1299,7 +1299,7 @@ body.menu-open {
 
 
 /* ============================================================
-   EXPLORE OUR BRANDS — five-marque directory between Inventory
+   EXPLORE OUR BRANDS — five-brand directory between Inventory
    and Sell. Light surface continues from inventory. 5-col grid
    with hairline separators, hover lifts the logo.
    ============================================================ */
@@ -1396,7 +1396,7 @@ body.menu-open {
     transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
-/* Compact / tall-aspect marques — bumped up so they visually match
+/* Compact / tall-aspect brands — bumped up so they visually match
    the wider wordmarks of Karma and Czinger at the same height. */
 .brand-card__media img[alt="Lamborghini"],
 .brand-card__media img[alt="Pagani"],
@@ -3730,7 +3730,7 @@ body { font-weight: 400; }
 }
 
 /* ─────────────────────────────────────────────
-   Brands grid — 7 marques (was 5).
+   Brands grid — 7 brands (was 5).
    Desktop: single row of 7. Tablet: 4+3. Mobile: 2 cols.
    Hairlines reset per breakpoint.
    ───────────────────────────────────────────── */
