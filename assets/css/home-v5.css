@@ -2743,6 +2743,15 @@ body.menu-open {
     color: #f5b800;
 }
 
+.review-card__stars {
+    display: block;
+    color: #f5b800;
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-top: -4px;
+}
+
 .review-card__text {
     margin: 0;
     font-family: var(--font-sans);
