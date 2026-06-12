@@ -1,0 +1,524 @@
+/* ============================================================
+   PRESTIGE IMPORTS — SEARCH RESULTS PAGE  (inventory.html)
+   Page-specific layer. Loads ON TOP of home-v4.css — reuses its
+   tokens, .btn component, .t-* type ramp, .vehicle-card and
+   .site-footer. Nothing here redefines the design system; it
+   only adds the SRP-specific furniture:
+     compact header · page intro · brand strip · filter bar ·
+     filter chips · results grid · pagination.
+   ============================================================ */
+
+
+body.page-inventory {
+    background-color: var(--bg);
+}
+
+/* ============================================================
+   PAGE INTRO — eyebrow + heading + result count
+   ============================================================ */
+.srp-main {
+    padding-top: var(--header-h);
+}
+.srp-intro {
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    padding: var(--sp-5) 0 0;     /* section rhythm — every junction = --sp-5 (56) */
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--sp-5);
+    flex-wrap: wrap;
+}
+.srp-intro__text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;                    /* matches the v4 stack-gap pattern (.brands__header) */
+    max-width: var(--w-standard);
+}
+.srp-intro__lead {
+    margin: 0;
+    color: var(--ink-soft);
+    max-width: 58ch;
+}
+.srp-intro__count {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    color: var(--ink-soft);
+    white-space: nowrap;
+}
+.srp-intro__count b {
+    font-weight: 700;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   FILTER BAR — horizontal row of <details> dropdowns + sort.
+   ============================================================ */
+.filter-bar {
+    position: sticky;
+    top: var(--header-h);          /* 107 — matches the unscrolled header height */
+    z-index: 100;
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: var(--sp-3);   /* component inset — content never touches the border */
+    transition: top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* When the header shrinks on scroll (107 → 76), pull the filter-bar
+   up to stay flush below it. :has() lets the bar read the sibling
+   header's state without JS. */
+body:has(.site-header.is-scrolled) .filter-bar {
+    top: 76px;
+}
+.filter-bar__inner {
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    padding: var(--sp-5) 0 0;             /* top: section junction (56); chips own the gap below */
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);                     /* 16 — design-system spacing between filter pills */
+    flex-wrap: wrap;
+}
+.filter-bar__spacer { flex: 1; }
+
+/* Each filter = a <details>; <summary> is the pill trigger */
+.filter {
+    position: relative;
+}
+.filter__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    background-color: #fff;
+    border: 1px solid var(--rule-strong);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    list-style: none;
+    white-space: nowrap;
+    line-height: 1;
+    transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease);
+}
+.filter__trigger::-webkit-details-marker { display: none; }
+.filter__trigger:hover { border-color: var(--ink); }
+.filter[open] .filter__trigger {
+    border-color: var(--ink);
+    background-color: var(--ink);
+    color: var(--bg);
+}
+/* Has selected options — search.js adds .filter--has-value.
+   Stronger ink border + faint ink-tint so the trigger reads as
+   "engaged" even when the dropdown is closed. */
+.filter--has-value .filter__trigger {
+    border-color: var(--ink);
+    background-color: rgba(28, 28, 28, 0.06);
+}
+.filter--has-value[open] .filter__trigger {
+    background-color: var(--ink);
+}
+.filter__caret {
+    font-size: 11px;
+    transition: transform 0.3s var(--ease);
+}
+.filter[open] .filter__caret { transform: rotate(180deg); }
+
+/* ── All filters — toggle is a normal pill in the row (.filter--all);
+   its panel (.filter-all) lives below the row as a sibling and is
+   revealed in normal flow when the toggle is open, so it PUSHES the
+   chips + results down (accordion, not a popup). Even columns span
+   the container width. ─────────────────────────────────────────── */
+.filter-all {
+    display: grid;
+    grid-template-rows: 0fr;          /* collapsed — animates to 1fr on open */
+    margin-top: 0;
+    transition:
+        grid-template-rows 0.42s var(--ease),
+        margin-top 0.42s var(--ease);
+}
+.filter-bar:has(.filter--all[open]) .filter-all {
+    grid-template-rows: 1fr;
+    margin-top: var(--sp-3);          /* gap so the panel doesn't stick to the pills */
+}
+.filter-all__body {
+    overflow: hidden;
+    min-height: 0;
+    background-color: var(--bg-soft);
+}
+@media (prefers-reduced-motion: reduce) {
+    .filter-all { transition: none; }
+}
+.filter-all__grid {
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    padding: var(--sp-5) 0 var(--sp-4);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sp-4) clamp(24px, 3vw, 56px);
+}
+.filter-all__foot {
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    padding: var(--sp-3) 0 var(--sp-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid var(--rule);
+}
+@media (max-width: 900px) {
+    .filter-all__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Dropdown panel */
+.filter__panel {
+    position: absolute;
+    top: calc(100% + var(--sp-2));
+    left: 0;
+    min-width: 240px;
+    background-color: #fff;
+    border: 1px solid var(--rule);
+    box-shadow: var(--srp-pop);
+    padding: var(--sp-3);
+    z-index: 120;
+}
+.filter__panel--wide { min-width: 320px; }
+/* "All filters" opens a broad multi-column panel */
+.filter__panel--all {
+    min-width: 640px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--sp-3) var(--sp-4);
+}
+.filter__group-title {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 10px;
+}
+.filter__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    max-height: 280px;
+    overflow-y: auto;
+}
+.filter__option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease);
+}
+.filter__option:hover { background-color: rgba(28, 28, 28, 0.05); }
+.filter__option input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid var(--rule-strong);
+    flex-shrink: 0;
+    display: inline-grid;
+    place-content: center;
+    cursor: pointer;
+}
+.filter__option input::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background-color: var(--ink);
+    transform: scale(0);
+    transition: transform 0.15s var(--ease);
+}
+.filter__option input:checked { border-color: var(--ink); }
+.filter__option input:checked::before { transform: scale(1); }
+.filter__option-count {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Range filter (Price / Year) — two inputs */
+.filter__range {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.filter__range input {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 0;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink);
+    background-color: var(--bg);
+}
+.filter__range input:focus { outline: none; border-color: var(--ink); }
+.filter__range span {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--ink-muted);
+}
+.filter__panel-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: var(--sp-3);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--rule);
+    grid-column: 1 / -1;
+}
+.filter__clear {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* Sort — sits at the far right of the bar */
+.sort {
+    position: relative;
+}
+.sort__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    background-color: transparent;
+    border: 1px solid var(--rule-strong);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    list-style: none;
+    white-space: nowrap;
+    line-height: 1;
+    transition: border-color 0.25s var(--ease);
+}
+.sort__trigger::-webkit-details-marker { display: none; }
+.sort__trigger:hover { border-color: var(--ink); }
+.sort__label { color: var(--ink-muted); }
+.sort__value { color: var(--ink); }
+.sort__caret { font-size: 11px; transition: transform 0.3s var(--ease); }
+.sort[open] .sort__caret { transform: rotate(180deg); }
+.sort__panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    background-color: #fff;
+    border: 1px solid var(--rule);
+    box-shadow: var(--srp-pop);
+    padding: 6px;
+    z-index: 120;
+}
+.sort__option {
+    display: block;
+    padding: 9px 12px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 0.2s var(--ease);
+}
+.sort__option:hover { background-color: rgba(28, 28, 28, 0.05); }
+.sort__option--active { font-weight: 600; }
+
+/* ============================================================
+   FILTER CHIPS — active filters
+   ============================================================ */
+.filter-chips {
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    padding: var(--sp-3) 0 0;      /* --sp-3 gap from the dropdown row; --sp-3 to the border via .filter-bar */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 8px 7px 12px;
+    background-color: var(--ink);
+    color: var(--bg);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-decoration: none;
+}
+.chip__x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.2s var(--ease);
+}
+.chip:hover .chip__x { color: #fff; }
+/* No active filters → collapse the chips row (the filter-bar's own
+   --sp-3 bottom inset still keeps the dropdowns off the border) and
+   hide the orphan "Clear all" button. */
+.filter-chips:not(:has(.chip)) { padding-top: 0; }
+.filter-chips:not(:has(.chip)) .chip-clear { display: none; }
+.chip-clear {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-left: 4px;
+}
+
+/* ============================================================
+   RESULTS GRID — reuses .vehicle-card from home-v4.css
+   ============================================================ */
+.srp-results {
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    padding: var(--sp-5) 0 var(--sp-7);
+}
+.srp-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-5) var(--sp-4);
+}
+
+/* "Prestige Certified" tag — shown on select pre-owned cards, pinned
+   to the photo. Deliberately the only coloured chrome in the SRP;
+   kept deep + restrained (not a neon dealership badge). */
+.vehicle-card__cert {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 11px;
+    background-color: #234b3a;
+    color: var(--cream);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    border-radius: 3px;
+}
+.vehicle-card__cert i { font-size: 14px; line-height: 1; }
+
+/* ============================================================
+   PAGINATION
+   ============================================================ */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: var(--sp-7);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--rule);
+}
+.pagination__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 6px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    border: 1px solid transparent;
+    font-variant-numeric: tabular-nums;
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.pagination__link:hover { border-color: var(--rule-strong); }
+.pagination__link--active {
+    background-color: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+}
+.pagination__link--nav { letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; }
+.pagination__link--disabled {
+    color: var(--ink-muted);
+    pointer-events: none;
+}
+.pagination__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 42px;
+    color: var(--ink-muted);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+    .srp-grid { grid-template-columns: repeat(2, 1fr); }
+    .filter__panel--all { min-width: 480px; grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 760px) {
+    .srp-header__inner { gap: var(--sp-3); }
+    .srp-nav { gap: var(--sp-3); }
+    .srp-search__input { width: 150px; }
+    /* secondary nav links collapse — keep Inventory dropdown + search */
+    .srp-nav__link { display: none; }
+    .srp-grid { grid-template-columns: 1fr; }
+    .filter__panel--all {
+        position: fixed;
+        left: 4%;
+        right: 4%;
+        min-width: 0;
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .srp-search { display: none; }
+    .filter-bar__inner { gap: 8px; }
+}

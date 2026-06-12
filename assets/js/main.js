@@ -812,6 +812,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.stopPropagation();
             }
         }, true);
+
+        // Pagination dots: one per viewport-width page, active follows scroll.
+        const reviewsDots = document.querySelector('[data-reviews-dots]');
+        if (reviewsDots) {
+            let dots = [];
+            const pageCount = () =>
+                Math.max(1, Math.ceil(reviewsTrack.scrollWidth / reviewsTrack.clientWidth));
+            const activePage = () =>
+                Math.round(reviewsTrack.scrollLeft / reviewsTrack.clientWidth);
+
+            const buildDots = () => {
+                const n = pageCount();
+                if (n === dots.length) { syncDots(); return; }
+                reviewsDots.textContent = '';
+                dots = Array.from({ length: n }, (_, i) => {
+                    const dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.className = 'reviews__dot';
+                    dot.setAttribute('role', 'tab');
+                    dot.setAttribute('aria-label', 'Reviews page ' + (i + 1));
+                    dot.addEventListener('click', () => {
+                        reviewsTrack.scrollTo({
+                            left: i * reviewsTrack.clientWidth,
+                            behavior: 'smooth'
+                        });
+                    });
+                    reviewsDots.appendChild(dot);
+                    return dot;
+                });
+                syncDots();
+            };
+
+            const syncDots = () => {
+                const active = activePage();
+                dots.forEach((dot, i) => dot.classList.toggle('is-active', i === active));
+            };
+
+            reviewsTrack.addEventListener('scroll', syncDots, { passive: true });
+            window.addEventListener('resize', buildDots);
+            buildDots();
+        }
     }
 
 

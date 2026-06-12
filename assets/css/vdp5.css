@@ -1,0 +1,739 @@
+/* ============================================================
+   PRESTIGE IMPORTS — VEHICLE DETAIL PAGE (vehicle-inventory.html)
+   Page-specific layer. Loads on top of home-v4.css and reuses
+   its design system: Continental type (.t-*), .btn component,
+   --sp spacing scale, surface + rule tokens, .vehicle-card__trust
+   tiles, and the .site-header / .site-footer chrome.
+   Section rhythm follows the stacked-page junction rule:
+   every section junction = --sp-5 (56px), top-ownership.
+   ============================================================ */
+
+.vdp {
+    padding-top: var(--header-h);     /* clear the fixed header */
+    padding-bottom: var(--sp-7);
+    /* lets the accordions animate height between 0 and auto */
+    interpolate-size: allow-keywords;
+}
+
+/* Shared centered wrapper for every VDP block */
+.breadcrumb,
+.vdp-summary,
+.vdp-sections {
+    width: min(92%, var(--container-max));
+    margin: 0 auto;
+}
+
+
+/* ── BREADCRUMB ──────────────────────────────────────────── */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: var(--sp-5) 0 var(--sp-3);   /* 56 below header · 24 to the hero */
+    font-family: var(--font-sans);
+    font-size: 13px;
+}
+.breadcrumb a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s var(--ease);
+}
+.breadcrumb a:hover { color: var(--ink); }
+.breadcrumb__sep { color: var(--rule-strong); }
+.breadcrumb__current { color: var(--ink); }
+
+
+/* ── SUMMARY — gallery · info panel · action bar ──
+   Layout grid that aligns the three panels and lets the action bar
+   span both columns. Each panel is its own bordered card; the grid
+   gap puts breathing room between them. */
+.vdp-summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1.62fr) minmax(330px, 1fr);
+    gap: var(--sp-3);
+}
+
+/* The media cell is the positioning context for the photo overlays */
+.vdp-summary__media { position: relative; }
+
+/* Main photo — fills its cell, height-matched to the info panel */
+.vdp-gallery__main {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Both dimensions are definite in the grid, so aspect-ratio is inert
+       here; it only governs height when the layout stacks (1-col mobile). */
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+.vdp-gallery__main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s var(--card-ease, cubic-bezier(0.16,1,0.3,1));
+}
+.vdp-gallery__main:hover img { transform: scale(1.03); }
+.vdp-gallery__count {
+    position: absolute;
+    left: var(--sp-2);
+    bottom: var(--sp-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    background-color: var(--ink);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+.vdp-gallery__count i { font-size: 15px; }
+
+/* Gallery prev/next — white circle, black arrow; fades in on photo hover */
+.vdp-gallery__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background-color: #fff;
+    color: var(--ink);
+    box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.25s var(--ease),
+                box-shadow 0.2s var(--ease),
+                transform 0.2s var(--ease);
+}
+.vdp-gallery__nav i { font-size: 17px; line-height: 1; }
+.vdp-gallery__nav--prev { left: var(--sp-2); }
+.vdp-gallery__nav--next { right: var(--sp-2); }
+/* Reveal on photo hover, or on keyboard focus */
+.vdp-summary__media:hover .vdp-gallery__nav,
+.vdp-gallery__nav:focus-visible { opacity: 1; }
+.vdp-gallery__nav:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 10px 26px -4px rgba(0, 0, 0, 0.55);
+}
+.vdp-gallery__nav:active { transform: translateY(-50%) scale(0.97); }
+
+
+/* ── INFO PANEL — second column of the summary container ── */
+.vdp-panel {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+/* Each block is inset --sp-3 and divided by a hairline */
+.vdp-panel__head,
+.vdp-panel__price,
+.vdp-specs,
+.vdp-panel__ctas {
+    padding: var(--sp-3);
+}
+.vdp-panel__price,
+.vdp-specs,
+.vdp-panel__ctas {
+    border-top: 1px solid var(--rule);
+}
+
+.vdp-panel__title { color: var(--ink); }
+
+.vdp-panel__price {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.vdp-panel__price .t-eyebrow { color: var(--ink-muted); }
+.vdp-panel__price-value {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+/* Spec table — label / value rows, hairline between */
+.vdp-specs {
+    list-style: none;
+    margin: 0;
+}
+.vdp-specs li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding: var(--sp-1) 0;
+}
+.vdp-specs li + li { border-top: 1px solid var(--rule); }
+.vdp-specs__label {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink-muted);
+    flex-shrink: 0;
+}
+.vdp-specs__value {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--ink);
+    text-align: right;
+}
+
+.vdp-panel__ctas {
+    margin-top: auto;                 /* anchor the CTA to the bottom edge */
+}
+.vdp-panel__ctas .btn {
+    width: 100%;
+    justify-content: center;
+}
+
+
+/* ── ACTION BAR — third panel, spans both grid columns ───── */
+.vdp-summary__bar {
+    grid-column: 1 / -1;
+    /* The buy group must line up edge-to-edge with the INQUIRE button in
+       the panel above. Column 2 is sized to INQUIRE's exact width so the
+       two buy buttons match its left and right edges:
+       100%  = this bar's content box (container W − 2px border)
+       2.62  = the summary grid fr-ratio (1.62 + 1)
+       22px  = gap (--sp-3) − 2px border  ·  −2px = the bar's two borders.
+       Column 1 (1fr) takes the rest. */
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) calc((100% - 22px) / 2.62 - 2px);
+    gap: var(--sp-3);
+    align-items: center;
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+/* Padding lives on the cells, not the bar — so the bar's internal grid
+   keeps the same column lines as the summary grid (buy group = panel width). */
+.vdp-summary__bar-main {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sp-3) var(--sp-4);
+    padding: var(--sp-3);
+}
+.vdp-actionbar__trust {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+}
+.vdp-actionbar__trust img {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+}
+/* Actions + buy group push to the right edge of the bar */
+.vdp-actionbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+.vdp-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    /* Save/Share/Text — same type treatment as the SRP card actions
+       (.vehicle-card__action): 10px uppercase micro-label. */
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    transition: color 0.2s var(--ease);
+}
+.vdp-action:hover { color: var(--ink); }
+.vdp-action i { font-size: 15px; }
+.vdp-actionbar__buy {
+    display: flex;
+    gap: 8px;
+    padding: var(--sp-3);
+}
+.vdp-actionbar__buy .btn {
+    flex: 1;                          /* the two buttons split column 2 evenly */
+    justify-content: center;
+}
+
+
+/* ── SECTIONS — About · Options · Photos as collapsible cards ──
+   One accordion component. Each section is a bordered card; the
+   trigger row carries a caret chip that inverts on hover / open. */
+.vdp-sections {
+    padding-top: var(--sp-5);         /* junction from the summary block */
+}
+
+.vdp-accordion {
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+.vdp-accordion + .vdp-accordion { margin-top: var(--sp-3); }
+
+/* ── PRESTIGE CERTIFIED — pre-owned reassurance block. Same card
+   chrome as the accordions (surface + hairline), but always open.
+   Editorial: eyebrow → heading → copy → divider-separated highlights.
+   No accent colour, no badges — reuses the existing type ramp + tokens. */
+.vdp-certified {
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px -4px rgba(28, 28, 28, 0.10);
+    padding: clamp(var(--sp-3), 3vw, var(--sp-4));
+    margin-bottom: var(--sp-3);
+}
+.vdp-certified__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-muted);
+    margin-bottom: var(--sp-2);
+}
+.vdp-certified__eyebrow i { font-size: 15px; line-height: 1; }
+/* Mock-up annotation — pale, non-uppercase; flags the pre-owned gate. */
+.vdp-certified__note {
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: rgba(28, 28, 28, 0.3);
+}
+.vdp-certified .t-h2 { margin-bottom: var(--sp-2); }
+.vdp-certified__text {
+    max-width: 70ch;
+    color: var(--ink-soft);
+    margin-bottom: var(--sp-3);
+}
+.vdp-certified__highlights {
+    list-style: none;
+    margin: 0;
+    padding: var(--sp-3) 0 0;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 0;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink);
+}
+.vdp-certified__highlights li {
+    display: inline-flex;
+    align-items: center;
+}
+.vdp-certified__highlights li::after {
+    content: '';
+    width: 1px;
+    height: 13px;
+    margin: 0 var(--sp-3);
+    background-color: var(--rule-strong);
+}
+.vdp-certified__highlights li:last-child::after { display: none; }
+/* Anchor target (#photos) clears the fixed header when jumped to */
+.vdp-accordion--photos { scroll-margin-top: calc(var(--header-h) + var(--sp-3)); }
+
+/* Trigger — the whole summary row is the click target */
+.vdp-accordion__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    cursor: pointer;
+    list-style: none;
+    transition: background-color 0.2s var(--ease);
+}
+.vdp-accordion__trigger::-webkit-details-marker { display: none; }
+.vdp-accordion__trigger:hover { background-color: rgba(28, 28, 28, 0.025); }
+/* Open section — header inverts to a muted grey bar (well softer than
+   --ink, so it reads as a section header, not a solid CTA) */
+.vdp-accordion[open] .vdp-accordion__trigger { background-color: var(--ink-muted); }
+
+/* Icon + title group — left side of the trigger */
+.vdp-accordion__label {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    min-width: 0;
+}
+/* Small section icon — thin weight; follows the title's open/closed colour */
+.vdp-accordion__icon {
+    flex-shrink: 0;
+    font-size: 20px;
+    color: var(--ink-muted);
+    transition: color 0.2s var(--ease);
+}
+.vdp-accordion[open] .vdp-accordion__icon { color: #fff; }
+
+/* Title — muted when closed; white on the dark header when open */
+.vdp-accordion__title {
+    margin: 0;
+    color: var(--ink-muted);
+    transition: color 0.2s var(--ease);
+}
+.vdp-accordion[open] .vdp-accordion__title { color: #fff; }
+
+/* Caret chip — the thin icon stays thin; the chip gives it weight. */
+.vdp-accordion__chip {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    transition: background-color 0.2s var(--ease),
+                border-color 0.2s var(--ease),
+                color 0.2s var(--ease);
+}
+.vdp-accordion__chip i {
+    font-size: 16px;
+    line-height: 1;
+    transition: transform 0.3s var(--ease);
+}
+/* Closed + hover → dark chip on the light header */
+.vdp-accordion__trigger:hover .vdp-accordion__chip {
+    background-color: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+}
+/* Open → header is dark, so the chip flips to white to stay legible */
+.vdp-accordion[open] .vdp-accordion__chip {
+    background-color: #fff;
+    border-color: #fff;
+    color: var(--ink);
+}
+.vdp-accordion[open] .vdp-accordion__chip i { transform: rotate(180deg); }
+
+/* Body — sits below a hairline divider */
+.vdp-accordion__body {
+    padding: var(--sp-4);
+    border-top: 1px solid var(--rule);
+}
+
+/* Smooth open / close — animate the content box height (0 ↔ auto, enabled
+   by interpolate-size on .vdp) with a gentle fade. Browsers without
+   ::details-content support just snap open — a fine fallback. */
+.vdp-accordion::details-content {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: height 0.42s var(--card-ease, cubic-bezier(0.16, 1, 0.3, 1)),
+                opacity 0.3s var(--ease),
+                content-visibility 0.42s;
+    transition-behavior: allow-discrete;
+}
+.vdp-accordion[open]::details-content {
+    height: auto;
+    opacity: 1;
+}
+
+
+/* ── ABOUT — editorial prose, full section width ─────────── */
+.vdp-prose p { color: var(--ink-soft); }
+.vdp-prose .t-body { margin: 0 0 var(--sp-2); }
+.vdp-prose__lead {
+    color: var(--ink);
+    margin: 0 0 var(--sp-3);
+}
+.vdp-prose__sub {
+    color: var(--ink);
+    margin: var(--sp-4) 0 var(--sp-2);
+}
+.vdp-prose__disclaimer {
+    color: var(--ink-muted);
+    margin: var(--sp-4) 0 0;
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--rule);
+    line-height: 1.6;
+}
+
+
+/* ── OPTIONS list — two columns inside the accordion body ──── */
+.vdp-options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0 var(--sp-5);
+}
+.vdp-options li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: var(--sp-1) 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--rule);
+}
+.vdp-options li::before {
+    content: "";
+    flex-shrink: 0;
+    width: 5px;
+    height: 5px;
+    background-color: var(--ink);
+    transform: translateY(-2px);
+}
+
+
+/* ── PHOTOS — grid ───────────────────────────────────────── */
+.vdp-photos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-2);
+}
+.vdp-photos__item {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background-color: var(--surface-card);
+    border: 1px solid var(--rule);
+}
+.vdp-photos__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s var(--card-ease, cubic-bezier(0.16,1,0.3,1));
+}
+.vdp-photos__item:hover img { transform: scale(1.04); }
+
+
+/* ── FINANCE CALCULATOR — form inside the accordion body ──── */
+.vdp-calc {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+}
+.vdp-calc__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-4) var(--sp-5);
+}
+
+/* Field — micro-label stacked above the control */
+.vdp-calc__field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.vdp-calc__label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+/* Underline control — transparent field, hairline bottom rule
+   (same language as the .form__input on sell-your-car). */
+.vdp-calc__input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--rule-strong);
+    border-radius: 0;
+    padding: 9px 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: border-color 0.2s var(--ease);
+}
+.vdp-calc__input::placeholder { color: var(--ink-muted); opacity: 1; }
+.vdp-calc__input:focus { border-bottom-color: var(--ink); }
+.vdp-calc__select { cursor: pointer; padding-right: 26px; }
+.vdp-calc__chevron {
+    position: absolute;
+    right: 2px;
+    bottom: 11px;
+    font-size: 16px;
+    color: var(--ink-muted);
+    pointer-events: none;
+}
+
+/* Output — a derived value shown where an input would sit */
+.vdp-calc__output {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--ink);
+}
+/* Monthly payment — the headline result */
+.vdp-calc__field--result .vdp-calc__output {
+    font-size: 22px;
+    font-weight: 700;
+    border-bottom-color: var(--ink);
+}
+
+/* Actions — right-aligned, mirrors the screenshot's flow */
+.vdp-calc__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--sp-2);
+}
+.vdp-calc__note {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+}
+
+
+/* ── GALLERY — full photo set, lifted out of the accordion into its
+   own section near the foot of the page (above Related). ──────── */
+.vdp-gallery-sec {
+    width: min(92%, var(--container-max));
+    margin: var(--sp-7) auto 0;
+}
+.vdp-gallery-sec__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding-bottom: var(--sp-3);
+    margin-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--rule);
+}
+.vdp-gallery-sec__count {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--ink-muted);
+}
+
+
+/* ── RELATED VEHICLES — card carousel at the foot of the page ── */
+.vdp-related {
+    width: min(92%, var(--container-max));
+    margin: 0 auto;
+    padding-top: var(--sp-5);
+}
+.vdp-related__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-3);
+    padding-bottom: var(--sp-3);
+    margin-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--rule);
+}
+.vdp-related__title { color: var(--ink); }
+.vdp-related__nav {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+.vdp-related__arrow {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease),
+                border-color 0.2s var(--ease),
+                color 0.2s var(--ease);
+}
+.vdp-related__arrow i { font-size: 16px; line-height: 1; }
+.vdp-related__arrow:hover {
+    background-color: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+}
+.vdp-related__arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+    background: none;
+    border-color: var(--rule-strong);
+    color: var(--ink);
+}
+
+/* Track — horizontal scroll-snap row of standard .vehicle-card's */
+.vdp-related__track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: var(--sp-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+.vdp-related__track::-webkit-scrollbar { display: none; }
+.vdp-related__track > li {
+    /* three across on a wide page; never thinner than 260px — past that
+       the carousel just scrolls */
+    flex: 0 0 max(260px, calc((100% - 2 * var(--sp-3)) / 3));
+    scroll-snap-align: start;
+}
+
+.vdp-related__foot {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--sp-4);
+}
+
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 960px) {
+    .vdp-summary { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+    /* Action bar collapses to one column — reports/actions, then buy */
+    .vdp-summary__bar { grid-template-columns: 1fr; }
+    .vdp-actionbar__actions { margin-left: 0; }
+    /* No hover on touch — keep the gallery arrows visible */
+    .vdp-gallery__nav { opacity: 1; }
+}
+
+@media (max-width: 620px) {
+    /* Calculator stacks to one column; CTAs go full-width */
+    .vdp-calc__grid { grid-template-columns: 1fr; }
+    .vdp-calc__actions { flex-direction: column-reverse; }
+    .vdp-calc__actions .btn { width: 100%; }
+}
+
+@media (max-width: 720px) {
+    .vdp-photos { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 460px) {
+    .vdp-photos { grid-template-columns: 1fr; }
+    .vdp-actionbar__actions { flex-wrap: wrap; }
+}
