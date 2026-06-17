@@ -1,0 +1,4675 @@
+/* ============================================================
+   PRESTIGE IMPORTS — v4  (forked from home-v2.css)
+   Monochrome editorial light theme.
+   No accent color. Photography is the only color note.
+
+   Type system: Continental — Plus Jakarta Sans (display) + Inter
+   (body). All three font tokens point at the Continental families;
+   --font-serif is kept as an alias so legacy selectors that still
+   reference it resolve to Plus Jakarta Sans rather than Playfair.
+
+   index_4-specific overrides + audit fixes live in the "INDEX_4
+   SYSTEM LAYER" block at the very end of this file.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+    /* Surfaces — light neutral gray (modern, airy) */
+    --bg:        #F4F4F4;
+    --bg-soft:   #EAEAEA;
+    --bg-deep:   #DEDEDE;
+    --cream:     #edeae4;   /* warm cream for text on dark surfaces */
+
+    /* Ink — Figma exact */
+    --ink:       #1c1c1c;
+    --ink-soft:  #45474B;
+    --ink-muted: #7C7E82;
+
+    /* Header surface */
+    --header-bg: #1c1c1c;
+
+    /* Hairline dividers */
+    --rule:        rgba(28, 28, 28, 0.12);
+    --rule-strong: rgba(28, 28, 28, 0.24);
+
+    /* Typography — Continental */
+    --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif:   'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* Spacing — generous magazine scale */
+    --sp-1: 8px;
+    --sp-2: 16px;
+    --sp-3: 24px;
+    --sp-4: 36px;
+    --sp-5: 56px;
+    --sp-6: 80px;
+    --sp-7: 112px;
+    --sp-8: 160px;
+
+    --section-py: 140px;
+    --header-h:     107px;                       /* homepage .site-header (transparent over video) */
+    --srp-header-h:  72px;                       /* compact .srp-header — inventory and other utility pages */
+
+    /* Motion */
+    --ease:       cubic-bezier(0.22, 1, 0.36, 1);
+
+    /* Elevation — single restrained pop for dropdown panels / popovers */
+    --pop:        0 16px 40px -12px rgba(28, 28, 28, 0.28);
+    --container-max: 1440px;
+    --container-wide: 1684px; /* header uses wider track per Figma */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overscroll-behavior-y: none;
+}
+
+body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    color: var(--ink);
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    position: relative;
+}
+
+/* ── Film grain overlay — subtle, fixed across viewport ─────── */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.085;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 240px 240px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::after { opacity: 0.06; }
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+/* Form controls don't inherit the page font by default — force them
+   onto the design-system stack so no browser UI font ever leaks in. */
+button, input, textarea, select { font-family: inherit; }
+input, textarea, select { font-size: inherit; }
+::placeholder { font-family: inherit; }
+
+.container {
+    width: min(92%, var(--container-max));
+    margin: 0 auto;
+}
+
+
+/* ============================================================
+   TYPOGRAPHY — magazine hierarchy
+   ============================================================ */
+
+.eyebrow {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0;
+}
+
+.display {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: normal;
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0;
+}
+
+.display em {
+    font-style: italic;
+    font-weight: 400;
+}
+
+
+/* ============================================================
+   HEADER — transparent over light bg, hairline on scroll
+   ============================================================ */
+
+.site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;            /* must out-rank .filter-bar (z 100) so dropdown panels layer above */
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    transition:
+        background-color 0.3s ease,
+        backdrop-filter 0.3s ease,
+        -webkit-backdrop-filter 0.3s ease;
+}
+.site-header.is-scrolled {
+    background-color: var(--header-bg);
+}
+
+.site-header__inner {
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    height: var(--header-h);
+    transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.site-header.is-scrolled .site-header__inner {
+    height: 76px; /* compact scrolled height */
+}
+.site-header__inner > .logo { align-self: center; }
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ink);
+    text-decoration: none;
+}
+.logo img {
+    display: block;
+    height: 62px;
+    width: auto;
+    filter: brightness(0) invert(1); /* always cream on dark header */
+    transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.site-header.is-scrolled .logo img {
+    height: 44px;
+}
+
+/* ── Inline nav (Figma: 6 items, right-aligned) ───────── */
+.site-nav {
+    display: flex;
+    align-items: stretch;
+    gap: 30px;
+}
+.site-nav__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.58);
+    text-decoration: none;
+    line-height: 1;
+    white-space: nowrap;
+    transition: color 0.22s ease;
+}
+.site-nav__link:hover { color: rgba(255, 255, 255, 0.95); }
+
+/* Underline sits at the very bottom of the header — matches text width */
+.site-nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.95);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.site-nav__link:hover::after,
+.site-nav__link.is-active::after { transform: scaleX(1); }
+.site-nav__link.is-active { color: #ffffff; }
+
+/* ── Light pages (inventory SRP, vehicle detail): when the header is
+   transparent (not scrolled), invert the colors so dark ink reads
+   against the light page bg. On scroll, .is-scrolled flips it back
+   to the standard white-on-ink. */
+body.page-inventory .site-header:not(.is-scrolled),
+body.page-vdp .site-header:not(.is-scrolled) {
+    border-bottom-color: rgba(28, 28, 28, 0.12);
+}
+body.page-inventory .site-header:not(.is-scrolled) .logo img,
+body.page-vdp .site-header:not(.is-scrolled) .logo img {
+    filter: brightness(0);                  /* ink logo, not cream */
+}
+body.page-inventory .site-header:not(.is-scrolled) .site-nav__link,
+body.page-vdp .site-header:not(.is-scrolled) .site-nav__link {
+    color: rgba(28, 28, 28, 0.58);
+}
+body.page-inventory .site-header:not(.is-scrolled) .site-nav__link:hover,
+body.page-vdp .site-header:not(.is-scrolled) .site-nav__link:hover {
+    color: var(--ink);
+}
+body.page-inventory .site-header:not(.is-scrolled) .site-nav__link::after,
+body.page-vdp .site-header:not(.is-scrolled) .site-nav__link::after {
+    background-color: var(--ink);
+}
+body.page-inventory .site-header:not(.is-scrolled) .site-nav__link.is-active,
+body.page-vdp .site-header:not(.is-scrolled) .site-nav__link.is-active {
+    color: var(--ink);
+}
+
+/* ── Inventory: header shrinks the same way as on homepage on scroll
+   (107 → 76 px). The filter-bar's sticky `top` follows via :has() —
+   see the rule on .filter-bar so it stays flush below the header
+   in both states. */
+
+/* ── INVENTORY dropdown inside .site-nav — match nav link sizing.
+   The trigger summary carries .site-nav__link styling for typography;
+   these rules just glue the caret + dropdown chrome to it. The
+   dropdown panel + items keep their existing styling (it's already
+   ink-on-cream and reads cleanly against any header background). */
+.site-nav .srp-drop {
+    display: inline-flex;
+    align-items: stretch;
+}
+.site-nav .srp-drop__trigger {
+    /* Override the original .srp-header sizing so the trigger
+       inherits .site-nav__link's 14px / no letter-spacing rules. */
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    gap: 6px;
+}
+.site-nav .srp-drop__trigger > span { line-height: 1; }
+/* Hide the underline-after for the dropdown trigger so it doesn't
+   double up with the caret. The hover affordance is the caret rotation. */
+.site-nav .srp-drop__trigger::after { display: none; }
+/* Caret nudges down a hair so it visually centers against caps */
+.site-nav .srp-drop__caret { font-size: 11px; line-height: 1; }
+/* The mega-menu panel is full-width fixed, flush below the header.
+   Track the header's height change between unscrolled (107) and
+   scrolled (76) so it stays glued to the header edge. */
+body:has(.site-header.is-scrolled) .srp-drop__panel {
+    top: 76px;
+}
+
+
+/* ── Full-screen menu overlay ─────────────────────────── */
+.site-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 105;
+    background-color: var(--ink);
+    color: var(--bg);
+    padding: calc(var(--header-h) + var(--sp-5)) 0 var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        clip-path 0.85s cubic-bezier(0.7, 0, 0.15, 1);
+    clip-path: inset(0 0 100% 0);
+}
+.site-menu.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    clip-path: inset(0 0 0 0);
+}
+
+.site-menu__grid {
+    width: min(92%, var(--container-max));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: var(--sp-7);
+    align-items: start;
+    padding-top: var(--sp-5);
+}
+
+.site-menu__caption {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(244, 242, 238, 0.42);
+    margin: 0 0 var(--sp-3);
+}
+
+.site-menu__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.site-menu__link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 22px;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(40px, 5.4vw, 80px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--bg);
+    text-decoration: none;
+    transition:
+        color 0.25s ease,
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 8px 0;
+}
+.site-menu__link em {
+    font-style: italic;
+    font-size: 0.36em;
+    font-weight: 400;
+    color: rgba(244, 242, 238, 0.42);
+    transition: color 0.25s ease;
+    min-width: 1.6em;
+}
+.site-menu__link:hover {
+    transform: translateX(8px);
+}
+.site-menu__link:hover em {
+    color: var(--bg);
+}
+
+.site-menu__col--meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding-top: 8px;
+}
+.site-menu__group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.site-menu__address {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(244, 242, 238, 0.78);
+}
+.site-menu__contact {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--bg);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.site-menu__contact:hover { color: rgba(244, 242, 238, 0.7); }
+
+.site-menu__sign {
+    width: min(92%, var(--container-max));
+    margin: 0 auto;
+    padding-top: var(--sp-3);
+    border-top: 1px solid rgba(244, 242, 238, 0.15);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(244, 242, 238, 0.42);
+}
+
+/* Stagger menu links on open */
+.site-menu .site-menu__link,
+.site-menu .site-menu__caption,
+.site-menu .site-menu__address,
+.site-menu .site-menu__contact {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.25s ease;
+}
+.site-menu.is-open .site-menu__link,
+.site-menu.is-open .site-menu__caption,
+.site-menu.is-open .site-menu__address,
+.site-menu.is-open .site-menu__contact {
+    opacity: 1;
+    transform: none;
+}
+.site-menu.is-open .site-menu__list li:nth-child(1) .site-menu__link { transition-delay: 0.30s; }
+.site-menu.is-open .site-menu__list li:nth-child(2) .site-menu__link { transition-delay: 0.38s; }
+.site-menu.is-open .site-menu__list li:nth-child(3) .site-menu__link { transition-delay: 0.46s; }
+.site-menu.is-open .site-menu__list li:nth-child(4) .site-menu__link { transition-delay: 0.54s; }
+.site-menu.is-open .site-menu__list li:nth-child(5) .site-menu__link { transition-delay: 0.62s; }
+
+.site-menu.is-open .site-menu__col--meta .site-menu__group:nth-child(1) > * { transition-delay: 0.50s; }
+.site-menu.is-open .site-menu__col--meta .site-menu__group:nth-child(2) > * { transition-delay: 0.60s; }
+.site-menu.is-open .site-menu__col--meta .site-menu__group:nth-child(3) > * { transition-delay: 0.70s; }
+
+/* Lock body scroll when menu is open */
+body.menu-open {
+    overflow: hidden;
+}
+
+
+/* ============================================================
+   HERO — editorial magazine spread
+   ============================================================ */
+
+/* Hero pinned to viewport — page does not scroll.
+   Wheel/touch on hero is captured by JS and drives video.currentTime. */
+/* Hero is a tall scroll-runway. Inside, .hero__sticky pins to the viewport
+   while the user scrolls through it — slides advance based on scroll progress.
+   Runway tuned so hero releases just after slide 2 (with brand logos) appears. */
+.hero {
+    height: 180vh;
+    position: relative;
+    color: var(--bg);
+}
+.hero__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding-top: var(--header-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.hero__sticky > .container {
+    width: min(94%, var(--container-wide));
+    margin-bottom: 15vh;
+}
+
+/* ── Hero background video ─────────────────────────────── */
+.hero__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background-color: var(--ink);
+    z-index: 0;
+}
+.hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    opacity: 0;
+    transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__video.is-active { opacity: 1; }
+.hero__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg,
+            rgba(26, 28, 31, 0.30) 0%,
+            rgba(26, 28, 31, 0.45) 60%,
+            rgba(26, 28, 31, 0.78) 100%);
+    pointer-events: none;
+}
+
+.hero > .container,
+.hero > .hero__masthead { position: relative; z-index: 1; }
+
+.hero__inner {
+    position: relative;
+    width: 100%;
+    max-width: 708px;
+    text-align: left;
+    /* Reserve enough vertical room for the tallest slide so layout stays stable */
+    min-height: clamp(280px, 38vh, 380px);
+}
+
+/* Contact strip pinned to bottom-right of hero, aligned with header's wider track */
+.hero__contact {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(40px, 6vh, 72px);
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    z-index: 2;
+}
+/* Phone + address shown as pill chips on the hero — fully rounded
+   ends with a subtle dark glass fill and hairline border. Sit over
+   the hero video without competing with it. */
+.hero__contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    line-height: 1;
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+}
+.hero__contact-link i {
+    font-size: 16px;
+    line-height: 1;
+    color: var(--bg);
+}
+.hero__contact-link:hover {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Slides stack on top of each other; only one is .is-active */
+.hero__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 0;
+    pointer-events: none;
+}
+.hero__slide.is-active { pointer-events: auto; }
+
+/* The h1 itself just lays out the two spans — no transform on h1 */
+.hero__slide .hero__headline { margin: 0; }
+
+/* Each animated line — staircase.
+   ENTER (default → active): comes from left, opacity catches up early.
+   EXIT  (active → passed):  travels visibly to the right; opacity fades
+                              with a small delay so the line actually moves
+                              before vanishing instead of just popping out. */
+.hero__slide .hero__headline-primary,
+.hero__slide .hero__headline-secondary,
+.hero__slide .hero__intro,
+.hero__slide .hero__actions {
+    display: block;
+    transform: translateX(-100%);
+    opacity: 0;
+    will-change: transform, opacity;
+    transition:
+        transform 0.85s cubic-bezier(0.7, 0, 0.18, 1),
+        opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__slide .hero__actions { display: flex; }
+
+.hero__slide.is-active .hero__headline-primary,
+.hero__slide.is-active .hero__headline-secondary,
+.hero__slide.is-active .hero__intro,
+.hero__slide.is-active .hero__actions {
+    transform: translateX(0);
+    opacity: 1;
+}
+.hero__slide.is-passed .hero__headline-primary,
+.hero__slide.is-passed .hero__headline-secondary,
+.hero__slide.is-passed .hero__intro,
+.hero__slide.is-passed .hero__actions {
+    transform: translateX(160%);
+    opacity: 0;
+    /* Longer travel + later fade = drawn-out cinematic exit. */
+    transition:
+        transform 1.8s cubic-bezier(0.4, 0, 0.4, 1),
+        opacity 0.8s cubic-bezier(0.4, 0, 1, 1) 0.7s;
+}
+
+/* Entering (default → active): top-down cascade — primary first */
+.hero__slide.is-active .hero__headline-primary   { transition-delay: 0s,    0s;    }
+.hero__slide.is-active .hero__headline-secondary { transition-delay: 0.10s, 0.05s; }
+.hero__slide.is-active .hero__intro              { transition-delay: 0.20s, 0.10s; }
+.hero__slide.is-active .hero__actions            { transition-delay: 0.32s, 0.18s; }
+
+/* Exiting (active → passed): bottom-up reversed cascade — actions leaves first */
+.hero__slide.is-passed .hero__headline-primary   { transition-delay: 0.30s, 0.15s; }
+.hero__slide.is-passed .hero__headline-secondary { transition-delay: 0.20s, 0.10s; }
+.hero__slide.is-passed .hero__intro              { transition-delay: 0.10s, 0.05s; }
+.hero__slide.is-passed .hero__actions            { transition-delay: 0s,    0s;    }
+
+
+/* ── Brand logos — pinned to bottom of hero, full-width spread ──
+   Hidden by default; revealed only when slide 2 is active. */
+.hero__brands {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(160px, 22vh, 260px);
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    z-index: 2;
+    pointer-events: none;
+}
+.hero__brand {
+    display: flex;
+    pointer-events: auto;
+    transform: translateY(40px);
+    opacity: 0;
+    will-change: transform, opacity;
+    transition:
+        transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__brand-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__brand-link:hover { transform: translateY(-4px); }
+
+.hero__brand img {
+    display: block;
+    height: 50px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    object-position: center;
+    filter: brightness(0) invert(1);
+    opacity: 0.78;
+    transition: opacity 0.22s ease;
+}
+.hero__brand-link:hover img { opacity: 1; }
+
+/* Caption — "View Inventory →" appears on hover, sits ~15% lower than the logo */
+.hero__brand-sub {
+    position: relative;
+    display: block;
+    height: 36px;
+    width: 100%;
+    min-width: 120px;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1;
+}
+.hero__brand-sub-hover {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px; /* dropped down inside the taller container */
+    text-align: center;
+    white-space: nowrap;
+    color: var(--bg);
+    opacity: 0;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+    pointer-events: auto;
+}
+
+.hero__brand-sub-hover .ph {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 12px;
+    line-height: 1;
+    vertical-align: -1px;
+}
+
+.hero__brand-link:hover .hero__brand-sub-hover { opacity: 1; }
+
+/* Direct hover on the "View Inventory" text — go semi-transparent (button-like feedback) */
+.hero__brand-link:hover .hero__brand-sub-hover:hover {
+    opacity: 0.55;
+}
+
+/* Reveal when slide 1 is active (host carries data-active-slide="0") — "Officially authorized" */
+.hero[data-active-slide="0"] .hero__brand {
+    transform: translateY(0);
+    opacity: 1;
+}
+.hero[data-active-slide="0"] .hero__brand:nth-child(1) { transition-delay: 0.55s; }
+.hero[data-active-slide="0"] .hero__brand:nth-child(2) { transition-delay: 0.65s; }
+.hero[data-active-slide="0"] .hero__brand:nth-child(3) { transition-delay: 0.75s; }
+.hero[data-active-slide="0"] .hero__brand:nth-child(4) { transition-delay: 0.85s; }
+.hero[data-active-slide="0"] .hero__brand:nth-child(5) { transition-delay: 0.95s; }
+
+/* Headline — Antic Didone, two lines per Figma */
+.hero__headline {
+    font-family: var(--font-display);
+    font-weight: 400;
+    margin: 0;
+    color: #ffffff;
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.hero__headline-primary {
+    font-size: clamp(48px, 5.4vw, 80px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-transform: none;
+}
+.hero__headline-secondary {
+    font-size: clamp(30px, 3.4vw, 50px);
+    letter-spacing: -0.02em;
+    line-height: 1.6;
+    text-transform: uppercase;
+}
+
+.hero__intro {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #d5d3cf;
+    max-width: 708px;
+    margin: 0;
+}
+
+/* CTA pair under slide 1 intro */
+.hero__actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+/* Editorial link CTA — display italic, hairline underline, sliding caret */
+.hero__cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 6px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    color: var(--bg);
+    text-decoration: none;
+    line-height: 1;
+    border-bottom: 1px solid rgba(218, 218, 218, 0.35);
+    transition: border-bottom-color 0.3s ease;
+}
+.hero__cta-link > span {
+    display: inline-block;
+}
+.hero__cta-link .ph {
+    font-size: 16px;
+    line-height: 1;
+    transform: translateX(0);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__cta-link:hover {
+    border-bottom-color: var(--bg);
+}
+.hero__cta-link:hover .ph {
+    transform: translateX(5px);
+}
+
+/* Hero footer — meta strip below the spread */
+.hero__meta {
+    margin-top: 0;
+    padding-top: var(--sp-3);
+    border-top: 1px solid rgba(213, 211, 207, 0.22);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-5);
+    width: 100%;
+}
+.hero__meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.hero__meta-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: rgba(213, 211, 207, 0.55);
+}
+.hero__meta-value {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--bg);
+}
+
+
+/* ============================================================
+   SECTIONS — generic
+   ============================================================ */
+.section {
+    padding-top: var(--section-py);
+    padding-bottom: var(--section-py);
+    position: relative;
+}
+
+.eyebrow-stamp {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    height: 22px;
+    padding: 0 10px;
+    background-color: #252525;
+    color: var(--cream);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    line-height: 22px;
+}
+
+
+/* ============================================================
+   HERO SLIDER CONTROLS — pagination (bottom-left numerals + hairline)
+   + prev/next nav buttons (right edge mid-height). Click scrolls
+   the page to that slide's position in the hero scroll runway —
+   the existing data-scrub-video logic handles the actual swap.
+   ============================================================ */
+.hero__pagination {
+    position: absolute;
+    left: clamp(20px, 4vw, 56px);
+    bottom: clamp(28px, 4vh, 48px);
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    pointer-events: auto;
+}
+.hero__dot {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 8px 0;
+    margin: 0;
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__dot-num {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    line-height: 1;
+}
+.hero__dot-line {
+    display: block;
+    width: 36px;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition:
+        width 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__dot-line::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--cream);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__dot:hover { color: rgba(255, 255, 255, 0.85); }
+.hero__dot:hover .hero__dot-line { background-color: rgba(255, 255, 255, 0.5); }
+.hero__dot.is-active { color: var(--cream); }
+.hero__dot.is-active .hero__dot-line { width: 56px; }
+.hero__dot.is-active .hero__dot-line::after { transform: scaleX(1); }
+
+.hero__nav {
+    position: absolute;
+    right: clamp(20px, 4vw, 56px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: auto;
+}
+.hero__nav-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__nav-btn i { font-size: 16px; line-height: 1; }
+.hero__nav-btn:hover {
+    background-color: var(--cream);
+    border-color: var(--cream);
+    color: var(--ink);
+    transform: scale(1.06);
+}
+.hero__nav-btn:active { transform: scale(0.98); }
+
+@media (max-width: 880px) {
+    .hero__nav { right: 16px; gap: 8px; }
+    .hero__nav-btn { width: 38px; height: 38px; }
+    .hero__pagination { left: 16px; gap: 14px; }
+}
+
+
+/* ============================================================
+   FEATURED INVENTORY
+   ============================================================ */
+.section--inventory {
+    background-color: var(--bg);
+    color: var(--ink);
+    position: relative;
+    padding-top: calc(var(--header-h) + 40px);
+    padding-bottom: var(--sp-7);
+}
+.section--inventory__sticky {
+    /* Sticky removed — Sell Your Vehicle section now sits directly below */
+    padding: 0;
+    background-color: var(--bg);
+}
+
+.inventory__header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 32px;
+}
+.inventory__header-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    flex: 1;
+}
+/* CTA — see the .btn component in the INDEX_4 SYSTEM LAYER. */
+
+@media (max-width: 880px) {
+    .inventory__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.inventory__heading {
+    font-family: var(--font-display);
+    color: var(--ink);
+    margin: 0;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 708px;
+}
+.inventory__heading-primary {
+    display: block;
+    font-size: clamp(36px, 3.4vw, 50px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+.inventory__heading-secondary {
+    display: block;
+    font-size: clamp(22px, 2vw, 30px);
+    text-transform: uppercase;
+    line-height: 1.33;
+    letter-spacing: -0.02em;
+}
+.inventory__intro {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.7;
+    max-width: 708px;
+    margin: 0;
+}
+
+.inventory__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px 25px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vehicle-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-decoration: none;
+    color: inherit;
+    /* Unified card panel — applies to both homepage and SRP. */
+    background-color: var(--surface-card);
+    border-radius: 5px;
+    overflow: hidden;
+    /* Hover lift — applies to every .vehicle-card (homepage + SRP).
+       Tokens live in the INDEX_4 SYSTEM LAYER at the end of this file. */
+    transition:
+        transform   var(--card-dur, 0.6s) var(--card-ease, cubic-bezier(0.16, 1, 0.3, 1)),
+        box-shadow  var(--card-dur, 0.6s) var(--card-ease, cubic-bezier(0.16, 1, 0.3, 1));
+    will-change: transform;
+}
+.vehicle-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-lift, 0 24px 56px -20px rgba(28, 28, 28, 0.18));
+}
+.vehicle-card__media {
+    aspect-ratio: 463 / 347;
+    background-color: #1c1c1c;
+    overflow: hidden;
+    position: relative;
+    isolation: isolate;
+    /* No own radius — the parent .vehicle-card clips. */
+}
+
+/* Status overlay — "Sale Pending" ribbon-corner. Top-right of the
+   media, cream fill + ink text + pulsing dot. Bottom-left edge is
+   angled (clip-path) so it reads as a tucked-in tag, not a chip. */
+.vehicle-card__status {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 16px 11px 24px;
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1;
+    clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%);
+    box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+}
+.vehicle-card__status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background-color: #c41e1e;
+    box-shadow: 0 0 0 2px rgba(196, 30, 30, 0.18);
+    animation: vcStatusPulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    flex-shrink: 0;
+}
+@keyframes vcStatusPulse {
+    0%, 100% { opacity: 1;   transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(1.25); }
+}
+
+/* Hover actions bar — slides up from bottom of photo (Figma: blur 6px) */
+.vehicle-card__actions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    background-color: rgba(9, 13, 15, 0.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    transform: translateY(100%);
+    opacity: 0;
+    transition:
+        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.3s ease;
+    z-index: 3;
+    pointer-events: none;
+}
+.vehicle-card:hover .vehicle-card__actions {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.vehicle-card__action {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 11px 8px;
+    background-color: transparent;
+    border: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    color: rgba(237, 234, 228, 0.78);
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    /* Smoothed to match the design-system motion tokens (Save/Share/Text on SRP cards) */
+    transition:
+        background-color 0.35s var(--card-ease),
+        color            0.35s var(--card-ease);
+}
+.vehicle-card__action:last-child { border-right: 0; }
+.vehicle-card__action:hover {
+    background-color: rgba(237, 234, 228, 0.06);
+    color: var(--cream);
+}
+.vehicle-card__action i {
+    font-size: 15px;
+    line-height: 1;
+}
+.vehicle-card__action[data-active="true"] {
+    color: var(--cream);
+}
+/* Photo is a second link to the VDP — a mouse convenience that sits
+   under the status badge / quick-action overlays. */
+.vehicle-card__media-link {
+    position: absolute;
+    inset: 0;
+    display: block;
+}
+.vehicle-card__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+.vehicle-card:hover .vehicle-card__media img {
+    transform: scale(1.03);
+}
+.vehicle-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 14px 18px;
+}
+.vehicle-card__name {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.012em;
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0;
+}
+.vehicle-card__specs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    align-items: center;
+}
+.vehicle-card__specs .spec {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15.5px;
+    font-weight: 400;
+    color: var(--ink);
+    white-space: nowrap;
+}
+.vehicle-card__specs .spec i {
+    font-size: 20px;
+    color: var(--ink);
+    line-height: 1;
+}
+
+
+/* Header: scroll-driven (JS translates it up under the header bar).
+   Cards: one-shot staircase reveal when section enters view, then stay put. */
+.inventory__header {
+    will-change: transform, opacity;
+}
+
+.inventory__grid > li {
+    opacity: 0;
+    transform: translateY(60px);
+    will-change: transform, opacity;
+    transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--inventory.is-visible .inventory__grid > li {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Tight cascading staircase — both rows reveal as one wave */
+.section--inventory.is-visible .inventory__grid > li:nth-child(1) { transition-delay: 0.05s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(2) { transition-delay: 0.12s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(3) { transition-delay: 0.19s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(4) { transition-delay: 0.26s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(5) { transition-delay: 0.33s; }
+.section--inventory.is-visible .inventory__grid > li:nth-child(6) { transition-delay: 0.40s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .inventory__grid > li { opacity: 1; transform: none; transition: none; }
+}
+
+
+/* ============================================================
+   EXPLORE OUR BRANDS — five-brand directory between Inventory
+   and Sell. Light surface continues from inventory. 5-col grid
+   with hairline separators, hover lifts the logo.
+   ============================================================ */
+.section--brands {
+    background-color: var(--bg);
+    color: var(--ink);
+    padding: clamp(80px, 12vh, 140px) 0;
+}
+
+.brands__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+    max-width: 720px;
+    margin-bottom: clamp(56px, 8vh, 88px);
+}
+
+.brands__heading {
+    font-family: var(--font-display);
+    color: var(--ink);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: 400;
+}
+.brands__heading-primary {
+    font-size: clamp(34px, 3.4vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -0.018em;
+}
+.brands__heading-secondary {
+    font-style: italic;
+    font-size: clamp(18px, 1.7vw, 24px);
+    line-height: 1.3;
+    letter-spacing: -0.012em;
+    color: var(--ink-soft);
+}
+
+.brands__intro {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 56ch;
+}
+
+.brands__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-top: 1px solid var(--rule-strong);
+    border-bottom: 1px solid var(--rule-strong);
+}
+
+.brand-card {
+    position: relative;
+    border-right: 1px solid var(--rule);
+}
+.brand-card:last-child { border-right: none; }
+
+.brand-card__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: clamp(32px, 5vh, 56px) 16px clamp(24px, 4vh, 40px);
+    text-decoration: none;
+    color: var(--ink);
+    transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.brand-card__link:hover {
+    background-color: rgba(28, 28, 28, 0.04);
+}
+
+.brand-card__media {
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.brand-card__media img {
+    height: 36px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+    filter: brightness(0);
+    opacity: 0.85;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* Compact / tall-aspect brands — bumped up so they visually match
+   the wider wordmarks of Karma and Czinger at the same height. */
+.brand-card__media img[alt="Lamborghini"],
+.brand-card__media img[alt="Pagani"],
+.brand-card__media img[alt="Lotus"] {
+    height: 52px;
+}
+.brand-card__link:hover .brand-card__media img {
+    opacity: 1;
+    transform: translateY(-3px);
+}
+
+/* Hidden visually — accessible name still comes from img alt */
+.brand-card__name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.brand-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.brand-card__cta i {
+    font-size: 13px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.brand-card__link:hover .brand-card__cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+.brand-card__link:hover .brand-card__cta i {
+    transform: translateX(4px);
+}
+
+@media (max-width: 880px) {
+    .brands__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .brand-card:nth-child(3) { border-right: none; }
+    .brand-card:nth-child(n+4) {
+        border-top: 1px solid var(--rule);
+    }
+    .brand-card__cta { opacity: 1; transform: none; } /* always show on touch */
+}
+
+@media (max-width: 560px) {
+    .brands__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .brand-card { border-right: 1px solid var(--rule); }
+    .brand-card:nth-child(2n) { border-right: none; }
+    .brand-card:nth-child(3),
+    .brand-card:nth-child(4),
+    .brand-card:nth-child(5) { border-top: 1px solid var(--rule); }
+}
+
+
+/* ============================================================
+   SELL YOUR VEHICLE — sticky video, band + text slide up on scroll.
+   Section is a tall scroll-runway; inner pins at top:0. JS animates
+   the band rising from below and the text/CTA slide-in.
+   ============================================================ */
+.section--sell {
+    position: relative;
+    height: 200vh; /* sticky scroll runway */
+    color: var(--ink);
+    padding: 0;
+    background-color: #d4d4d4;
+}
+.sell__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Panel — structural wrapper holding band + inner inside sticky */
+.sell__panel {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.sell__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+.sell__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transform: scale(1);
+    transform-origin: center center;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+.sell__sticky:hover .sell__video {
+    transform: scale(1.05);
+}
+/* Subtle full-bleed darkening overlay across the whole video for
+   text legibility. No animation — sits over the video at all times. */
+.sell__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.70);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.sell__inner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(94%, var(--container-wide));
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    text-align: center;
+}
+
+.sell__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 708px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(160px);
+    will-change: transform, opacity;
+}
+/* Eyebrow stamp defaults to align-self: flex-start globally (left
+   pinned). In sell, the whole block is centered — override so the
+   stamp also centers under the layout. */
+.sell__text .eyebrow-stamp { align-self: center; }
+/* Use a keyframe animation (not transition) so the rise replays
+   from start every time the section re-enters view. Transitions
+   would interpolate from current state — if the user returned
+   mid-leave, the text would already be near final position and
+   skip the rise. Animations always run from the keyframe start. */
+@keyframes sellTextRise {
+    from { opacity: 0; transform: translateY(160px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.section--sell.is-visible .sell__text {
+    animation: sellTextRise 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+}
+
+.sell__heading {
+    font-family: var(--font-display);
+    color: #ffffff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 400;
+}
+.sell__heading-primary {
+    font-size: 50px;
+    line-height: 60px;
+    letter-spacing: -0.02em;
+}
+.sell__heading-secondary {
+    font-size: 30px;
+    line-height: 40px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+.sell__intro {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 25.5px;
+    color: #ffffff;
+    margin: 0;
+    max-width: 708px;
+}
+
+/* CTA — see the .btn component (.btn .btn--on-dark) in the INDEX_4
+   SYSTEM LAYER. Reveal-animation state also lives there on .sell__cta. */
+
+@media (max-width: 880px) {
+    .sell__inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+        top: 50%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sell__inner { transform: translateX(-50%) translateY(0); }
+    .sell__text, .sell__cta { opacity: 1; transform: none; }
+}
+
+
+/* ============================================================
+   BEYOND THE SALE — editorial 2-column: heading + 2×2 service
+   cards on the left, large media slab on the right. Light surface
+   throughout. Section pulled up -100vh to hand off cleanly from
+   sell's exit (no dead #d4d4d4 between sections).
+   ============================================================ */
+.section--services {
+    position: relative;
+    /* min-height (not fixed height) so the section grows when the left
+       column is taller than the pin — keeps the 30vh dwell on roomy
+       screens, but expands instead of clipping the CTAs when short. */
+    min-height: 130vh;
+    height: auto;
+    /* Pulled up so it slides into view from below at 1:1 with scroll
+       while sell's sticky is still engaged — sell text translates up
+       and this section emerges at the same rate. Sticky locks in at
+       scrollY = sell.top + 100vh, then 30vh of pin before release. */
+    margin-top: -100vh;
+    z-index: 1;
+    color: var(--ink);
+    padding: 0;
+    background-color: #d4d4d4;
+}
+
+.services__sticky {
+    position: sticky;
+    top: 0;
+    /* Grows past 100vh when the in-flow inner is taller (short screens),
+       so the whole section lengthens and nothing clips. The media's
+       cinematic reveal self-clips inside .services__media, so this no
+       longer needs overflow:hidden. */
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+}
+
+/* Light surface — soft white-to-grey wash */
+.services__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(ellipse 1400px 800px at 30% 50%,
+                                #ffffff 0%,
+                                #d4d4d4 100%);
+}
+
+/* Inner — 2-col grid: text+cards on the left, media on the right.
+   Width matches sell so the left col aligns with sell's text.
+   Generous vertical padding (~100px) so the media block has room
+   to breathe top + bottom — matches the Figma framing. */
+.services__inner {
+    /* In-flow (relative, centered via margin) rather than absolute — so
+       its natural height drives .services__sticky's height. On roomy
+       screens it's shorter than 100vh and the section still pins for the
+       30vh dwell; on short screens it's taller and the section grows. */
+    position: relative;
+    margin: 0 auto;
+    width: min(94%, var(--container-wide));
+    min-height: 100vh;
+    z-index: 1;
+    padding: clamp(50px, 8vh, 90px) 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(40px, 5vw, 80px);
+    align-items: stretch;
+}
+
+/* Left column — text → cards → CTAs, top-aligned. Grid spacing uses
+   design-system tokens: --sp-4 between text and grid, --sp-3 between
+   grid and CTAs (tighter so CTAs sit close to the cards). */
+.services__col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+    min-width: 0;
+}
+
+.services__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    max-width: 560px;
+}
+
+/* Per-element staircase reveal — each item fades up with 80ms cascade.
+   Order: eyebrow → heading primary → heading secondary → intro → CTA →
+   media → cards 1-4. ~720ms total stagger, 0.8s anim each. */
+.section--services .eyebrow-stamp,
+.section--services .services__heading-primary,
+.section--services .services__heading-secondary,
+.section--services .services__intro-text,
+.section--services .services__cta {
+    opacity: 0;
+    transform: translateY(40px);
+    will-change: transform, opacity;
+    transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--services.is-visible .eyebrow-stamp,
+.section--services.is-visible .services__heading-primary,
+.section--services.is-visible .services__heading-secondary,
+.section--services.is-visible .services__intro-text,
+.section--services.is-visible .services__cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+.section--services.is-visible .eyebrow-stamp           { transition-delay: 0.05s; }
+.section--services.is-visible .services__heading-primary   { transition-delay: 0.13s; }
+.section--services.is-visible .services__heading-secondary { transition-delay: 0.21s; }
+.section--services.is-visible .services__intro-text    { transition-delay: 0.29s; }
+/* CTA now sits AFTER the card grid (HTML moved). Reveal fires
+   after the last card so the cascade reads: text → cards → CTA. */
+.section--services.is-visible .services__cta          { transition-delay: 0.85s; }
+
+.services__heading {
+    font-family: var(--font-display);
+    color: var(--ink);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-weight: 400;
+}
+.services__heading-primary {
+    font-size: clamp(34px, 3.4vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -0.018em;
+}
+.services__heading-secondary {
+    font-size: clamp(18px, 1.7vw, 24px);
+    line-height: 1.3;
+    letter-spacing: -0.018em;
+    text-transform: uppercase;
+}
+.services__intro-text {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 500px;
+    margin: 0;
+}
+
+/* CTA wrapper — two CTAs laid out on the SAME 2-col grid as the card
+   grid above (matching column-gap + 560px cap), so each button lines up
+   under its card column. Buttons stretch to fill their column. */
+.services__ctas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(12px, 1.4vw, 20px);
+    align-self: flex-start;
+    width: 100%;
+    max-width: 560px;
+    margin-top: var(--sp-3);
+}
+.services__ctas .btn {
+    width: 100%;
+}
+
+/* CTA — see the .btn component in the INDEX_4 SYSTEM LAYER.
+   Schedule = .btn .btn--solid · Speak with Specialist = .btn.
+   The .services__cta class is kept on the elements only to carry
+   the section's staircase-reveal animation (group selector above). */
+
+/* Card grid — 2×2 on the left side */
+.services__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(12px, 1.4vw, 20px);
+    row-gap: clamp(10px, 1.4vh, 16px);
+    list-style: none;
+    margin: var(--sp-4) 0 0;
+    padding: 0;
+    max-width: 560px;
+}
+
+.service {
+    position: relative;
+    padding: 20px 22px 22px;
+    border-radius: 5px;
+    background-color: var(--bg-soft);
+    box-shadow: 0 0 0 1px transparent;
+    cursor: pointer;
+
+    opacity: 0;
+    transform: translateY(60px);
+    will-change: transform, opacity;
+    /* Staircase entry delay is carried by --service-stagger (set per
+       nth-child below) so it only applies to opacity + transform.
+       Hover bg/shadow stay snappy on both enter AND leave. */
+    transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--service-stagger, 0s),
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--service-stagger, 0s),
+        background-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.service__num {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: rgba(28, 28, 28, 0.40);
+    line-height: 1;
+    margin-bottom: 14px;
+    transition: color 0.35s ease;
+}
+
+.service__title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    line-height: 1.3;
+}
+.service__body {
+    margin: 10px 0 0;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: rgba(28, 28, 28, 0.55);
+    max-width: 240px;
+    transition: color 0.35s ease;
+}
+
+/* Hover — minimal: card surface lifts to white, hairline gray outline
+   around the rounded shape. Everything else stays still. */
+.service:hover,
+.section--services.is-visible .service:hover {
+    background-color: #fff;
+    box-shadow: 0 0 0 1px var(--rule);
+}
+
+.service__num { transition: color 0.35s ease; }
+
+/* Cards staircase — continues after media in the unified reveal
+   sequence. The is-visible rule overrides the initial transform on
+   .service for the staircase entry; :hover then needs equal-or-
+   higher specificity to win — see paired selectors above. */
+.section--services.is-visible .service {
+    opacity: 1;
+    transform: translateY(0);
+}
+.section--services.is-visible .service:nth-child(1) { --service-stagger: 0.53s; }
+.section--services.is-visible .service:nth-child(2) { --service-stagger: 0.61s; }
+.section--services.is-visible .service:nth-child(3) { --service-stagger: 0.69s; }
+.section--services.is-visible .service:nth-child(4) { --service-stagger: 0.77s; }
+
+/* Media — sits in the right grid cell, ~1:1 aspect, framed by inner's
+   vertical padding so it doesn't touch top/bottom edges. The image
+   itself is in place from the start; reveal happens via a solid
+   ink "curtain" panel (::before) that slides off to the right when
+   the section becomes visible — editorial cover-pull effect. */
+.services__media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    justify-self: end;
+    align-self: stretch;
+}
+
+/* Aperture shutter — two ink blades cover the top and bottom
+   halves of the frame. On reveal, the top blade slides UP off
+   the frame and the bottom blade slides DOWN, opening like a
+   cinema aperture or theatre shutter. Strong S-curve easing
+   (cubic-bezier 0.86, 0, 0.07, 1) holds tension at the start,
+   then accelerates dramatically through the middle, then settles
+   — that "build → release → settle" timing is what reads as
+   cinematic rather than mechanical. */
+.services__media::before,
+.services__media::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 50%;
+    z-index: 2;
+    background-color: var(--ink);
+    will-change: transform;
+    pointer-events: none;
+    transition: transform 1.25s cubic-bezier(0.86, 0, 0.07, 1) 0.35s;
+}
+.services__media::before { top: 0; }
+.services__media::after  { bottom: 0; }
+
+.section--services.is-visible .services__media::before {
+    transform: translateY(-101%);
+}
+.section--services.is-visible .services__media::after {
+    transform: translateY(101%);
+}
+
+/* Image stack — 4 photos layered absolutely, one per service card.
+   Horizontal slide-in / slide-out with COMBINED direction per card.
+   Each photo has its own resting offscreen side (data-direction):
+   01 + 03 enter from the right, 02 + 04 enter from the left. For
+   every swap, the outgoing matches the incoming's direction of motion
+   so the two slide together as one continuous sweep — incoming covers
+   one half of the frame while outgoing covers the other half, no gap.
+   The outgoing's exit side is set by JS via data-exit-to. Transitions
+   only apply on .is-active / .is-exiting so the silent snap-back to
+   default after exit completes is invisible. */
+.services__media-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    z-index: 1;
+    will-change: transform;
+}
+.services__media-image[data-direction="from-right"] { transform: translateX(100%);  }
+.services__media-image[data-direction="from-left"]  { transform: translateX(-100%); }
+.services__media-image.is-active {
+    transform: translateX(0);
+    z-index: 2;
+    transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.services__media-image[data-exit-to="right"].is-exiting { transform: translateX(100%);  }
+.services__media-image[data-exit-to="left"].is-exiting  { transform: translateX(-100%); }
+.services__media-image.is-exiting {
+    z-index: 1;
+    transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section--services .eyebrow-stamp,
+    .section--services .services__heading-primary,
+    .section--services .services__heading-secondary,
+    .section--services .services__intro-text,
+    .section--services .services__cta,
+    .service,
+    .services__media { opacity: 1; transform: none; }
+    .services__media::before { transform: translateY(-101%); transition: none; }
+    .services__media::after  { transform: translateY(101%);  transition: none; }
+    .services__media-image {
+        transform: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    .services__media-image.is-active { opacity: 1; }
+}
+
+@media (max-width: 1100px) {
+    .service__body { max-width: none; }
+}
+
+@media (max-width: 880px) {
+    .section--services {
+        height: auto;
+        margin-top: -100vh;
+    }
+    .services__sticky {
+        position: relative;
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .services__media {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        order: -1;
+    }
+    .services__inner {
+        position: relative;
+        inset: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        grid-template-columns: 1fr;
+        padding: 80px 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    .section--services { margin-top: 0; }
+    .services__inner { padding: 64px 24px; }
+    .services__grid {
+        grid-template-columns: 1fr;
+        row-gap: 32px;
+    }
+    .services__ctas {
+        grid-template-columns: 1fr;
+        row-gap: 12px;
+    }
+    .services__text,
+    .service,
+    .services__media { opacity: 1; transform: none; }
+}
+
+
+
+/* ============================================================
+   NEWS & EVENTS — editorial magazine spread, sticky-pinned.
+   Same architecture as services: section is 130vh tall, sticky
+   inner is 100vh, all content fits in a single viewport. Featured
+   event (image + body) on the left, heading + upcoming list on
+   the right. Hover/click a row → swaps the featured card.
+   ============================================================ */
+.section--events {
+    position: relative;
+    height: 130vh;          /* 30vh of pin dwell */
+    color: var(--ink);
+    padding: 0;
+    background-color: #cfcfcf;
+}
+
+.events__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Subtle directional wash — no bright radial center (services already
+   has one; events stays quiet so they don't compete). */
+.events__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(180deg,
+                                #d4d4d4 0%,
+                                #cdcdcd 60%,
+                                #c8c8c8 100%);
+    pointer-events: none;
+}
+
+.events__inner {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: min(94%, var(--container-wide));
+    z-index: 1;
+    /* Extra top padding so content clears the fixed header when the
+       sticky pins (header is ~76-107px tall + breathing room). */
+    padding: clamp(120px, 16vh, 180px) 0 clamp(56px, 8vh, 90px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(40px, 5vw, 80px);
+    align-items: start;   /* both cols anchored to top */
+}
+
+/* ---- Right column: heading + list stacked ----------------- */
+/* Sized to match the featured photo's box (same aspect-ratio +
+   max-height cap), so its bottom edge lines up exactly with the
+   bottom edge of the photo on the left. Heading sits at the top,
+   list pushed to the bottom via space-between. */
+.events__col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: clamp(24px, 3.6vh, 40px);
+    min-width: 0;
+    aspect-ratio: 5 / 4;
+    max-height: 52vh;
+    width: 100%;
+}
+
+.events__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    max-width: 520px;
+}
+
+.events__heading {
+    font-family: var(--font-display);
+    color: var(--ink);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-weight: 400;
+}
+.events__heading-primary {
+    font-size: clamp(30px, 3vw, 42px);
+    line-height: 1.05;
+    letter-spacing: -0.018em;
+}
+.events__heading-secondary {
+    font-size: clamp(16px, 1.55vw, 22px);
+    line-height: 1.3;
+    letter-spacing: -0.018em;
+    text-transform: uppercase;
+}
+.events__intro-text {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 460px;
+    margin: 0;
+}
+
+/* ---- Featured event (left column) ------------------------- */
+.event-featured {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 2.2vh, 24px);
+    min-width: 0;
+    justify-content: flex-start;
+}
+
+.event-featured__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    max-height: 52vh;
+    overflow: hidden;
+    background-color: #b8b8b8;
+    display: block;
+}
+.event-featured__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition:
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.event-featured__media:hover img {
+    transform: scale(1.025);
+}
+/* Hover preview overlay — slow crossfade in/out so the image
+   replacement reads as one continuous motion, not a snap. */
+.event-featured__img-hover {
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 1;
+}
+.event-featured__media.is-previewing .event-featured__img-hover {
+    opacity: 1;
+}
+
+.event-featured__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    transition: opacity 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+}
+/* Swap pulse — body + base image fade together while content
+   is being replaced under the hood, then fade back in once new
+   content is committed. */
+.event-featured.is-swapping .event-featured__body { opacity: 0; }
+.event-featured.is-swapping .event-featured__media > img:not(.event-featured__img-hover) {
+    opacity: 0;
+}
+
+.event-featured__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    line-height: 1;
+}
+.event-featured__sep {
+    display: inline-block;
+    width: 18px;
+    height: 1px;
+    background-color: rgba(28, 28, 28, 0.35);
+}
+
+.event-featured__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.1;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 520px;
+}
+
+.event-featured__text {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 520px;
+    /* Cap to 2 lines so featured body stays compact at any viewport */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.event-featured__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+    padding: 4px 0 6px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+}
+.event-featured__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--ink);
+    transform: scaleX(0.32);
+    transform-origin: left center;
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.event-featured__link:hover::after { transform: scaleX(1); }
+.event-featured__link .ph {
+    font-size: 14px;
+    line-height: 1;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.event-featured__link:hover .ph { transform: translateX(4px); }
+
+/* ---- Upcoming events list (right column) ------------------ */
+.events__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-row {
+    border-top: 1px solid rgba(28, 28, 28, 0.16);
+}
+.event-row:last-child {
+    border-bottom: 1px solid rgba(28, 28, 28, 0.16);
+}
+
+.event-row__link {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(120px, 0.5fr) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(12px, 1.4vw, 20px);
+    padding: clamp(10px, 1.4vh, 16px) 4px;
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+    /* Long, symmetric ease-in-out so the invert reads as a smooth
+       cross-fade rather than a "switch". All transitioning props
+       share the same timing so they move as one. */
+    transition:
+        padding 0.6s cubic-bezier(0.65, 0, 0.35, 1),
+        background-color 0.6s cubic-bezier(0.65, 0, 0.35, 1),
+        color 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+/* Sliding hairline accent on the LEFT — grows on hover/active */
+.event-row__link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 1px;
+    background-color: var(--cream);
+    transition:
+        width 0.6s cubic-bezier(0.65, 0, 0.35, 1),
+        left 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Hover / active state — invert to dark fill with cream text */
+.event-row__link:hover,
+.event-row__link.is-active {
+    background-color: var(--ink);
+    color: var(--cream);
+    padding-left: 28px;
+    padding-right: 18px;
+}
+.event-row__link:hover::before,
+.event-row__link.is-active::before {
+    width: 18px;
+    left: 4px;
+}
+
+.event-row__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1;
+    white-space: nowrap;
+    transition: color 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.event-row__sep {
+    color: rgba(28, 28, 28, 0.35);
+    transition: color 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.event-row__cat {
+    color: var(--ink-soft);
+    transition: color 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Inverted text colors when row is hover / active */
+.event-row__link:hover .event-row__meta,
+.event-row__link.is-active .event-row__meta { color: rgba(244, 242, 238, 0.55); }
+.event-row__link:hover .event-row__sep,
+.event-row__link.is-active .event-row__sep { color: rgba(244, 242, 238, 0.40); }
+.event-row__link:hover .event-row__cat,
+.event-row__link.is-active .event-row__cat { color: rgba(244, 242, 238, 0.85); }
+.event-row__link:hover .event-row__title,
+.event-row__link.is-active .event-row__title { color: var(--cream); }
+.event-row__link:hover .event-row__arrow,
+.event-row__link.is-active .event-row__arrow { color: var(--cream); }
+
+.event-row__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(14px, 1.15vw, 17px);
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    margin: 0;
+    transition: color 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.event-row__arrow {
+    font-size: 16px;
+    line-height: 1;
+    color: var(--ink-soft);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition:
+        opacity 0.55s cubic-bezier(0.65, 0, 0.35, 1),
+        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.event-row__link:hover .event-row__arrow,
+.event-row__link.is-active .event-row__arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ---- Staircase reveal — same pattern as services/inventory  */
+.section--events .eyebrow-stamp,
+.section--events .events__heading-primary,
+.section--events .events__heading-secondary,
+.section--events .events__intro-text,
+.section--events .event-featured__media,
+.section--events .event-featured__meta,
+.section--events .event-featured__title,
+.section--events .event-featured__text,
+.section--events .event-featured__link,
+.section--events .event-row {
+    opacity: 0;
+    transform: translateY(36px);
+    will-change: transform, opacity;
+    transition:
+        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--events.is-visible .eyebrow-stamp,
+.section--events.is-visible .events__heading-primary,
+.section--events.is-visible .events__heading-secondary,
+.section--events.is-visible .events__intro-text,
+.section--events.is-visible .event-featured__media,
+.section--events.is-visible .event-featured__meta,
+.section--events.is-visible .event-featured__title,
+.section--events.is-visible .event-featured__text,
+.section--events.is-visible .event-featured__link,
+.section--events.is-visible .event-row {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Featured (left) leads — image first, then text cascades */
+.section--events.is-visible .event-featured__media     { transition-delay: 0.05s; }
+.section--events.is-visible .event-featured__meta      { transition-delay: 0.18s; }
+.section--events.is-visible .event-featured__title     { transition-delay: 0.26s; }
+.section--events.is-visible .event-featured__text      { transition-delay: 0.34s; }
+.section--events.is-visible .event-featured__link      { transition-delay: 0.42s; }
+/* Right column: heading block, then rows */
+.section--events.is-visible .eyebrow-stamp                 { transition-delay: 0.18s; }
+.section--events.is-visible .events__heading-primary       { transition-delay: 0.26s; }
+.section--events.is-visible .events__heading-secondary     { transition-delay: 0.34s; }
+.section--events.is-visible .events__intro-text            { transition-delay: 0.42s; }
+.section--events.is-visible .event-row:nth-child(1)        { transition-delay: 0.55s; }
+.section--events.is-visible .event-row:nth-child(2)        { transition-delay: 0.63s; }
+.section--events.is-visible .event-row:nth-child(3)        { transition-delay: 0.71s; }
+.section--events.is-visible .event-row:nth-child(4)        { transition-delay: 0.79s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .section--events .eyebrow-stamp,
+    .section--events .events__heading-primary,
+    .section--events .events__heading-secondary,
+    .section--events .events__intro-text,
+    .section--events .event-featured__media,
+    .section--events .event-featured__meta,
+    .section--events .event-featured__title,
+    .section--events .event-featured__text,
+    .section--events .event-featured__link,
+    .section--events .event-row {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (max-width: 1100px) {
+    .section--events { height: auto; }
+    .events__sticky {
+        position: relative;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+    .events__inner {
+        position: relative;
+        inset: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        grid-template-columns: 1fr;
+        row-gap: clamp(40px, 5vh, 64px);
+        padding: 80px 32px;
+    }
+    .event-featured__media { max-height: none; }
+    .event-featured__text {
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+    }
+}
+
+@media (max-width: 600px) {
+    .events__inner { padding: 64px 24px; }
+    .event-row__link {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        row-gap: 6px;
+        padding-block: 18px;
+    }
+    .event-row__meta { grid-column: 1 / -1; }
+    .event-row__arrow { grid-row: 2; grid-column: 2; }
+    .event-row__link:hover,
+    .event-row__link.is-active { padding-left: 14px; }
+}
+
+
+/* ============================================================
+   SECTION BREAK — full-bleed cinematic image, bridges from the
+   light events tail into the next dark surface. Top vignette
+   blends into events' #c8c8c8 tail; bottom deepens into ink so
+   whatever follows can dock onto a dark surface cleanly.
+   ============================================================ */
+.section-break {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #1c1c1c;
+    line-height: 0;
+    margin: 0;
+}
+.section-break img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    /* Slow, quiet entrance — image rises softly into place while
+       fading + scaling down. Long durations + ease-out so it
+       *settles* rather than snaps. */
+    opacity: 0;
+    transform: scale(1.06) translateY(28px);
+    transform-origin: center center;
+    will-change: transform, opacity;
+    transition:
+        opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section-break.is-visible img {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+.section-break::before,
+.section-break::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+}
+.section-break.is-visible::before,
+.section-break.is-visible::after {
+    opacity: 1;
+}
+.section-break::before {
+    top: 0;
+    height: 22%;
+    background: linear-gradient(to bottom,
+        rgba(200, 200, 200, 0.55) 0%,
+        rgba(200, 200, 200, 0) 100%);
+}
+.section-break::after {
+    bottom: 0;
+    height: 50%;
+    background: linear-gradient(to top,
+        rgba(28, 28, 28, 1) 0%,
+        rgba(28, 28, 28, 0.55) 35%,
+        rgba(28, 28, 28, 0) 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+    .section-break img,
+    .section-break::before,
+    .section-break::after {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+
+/* ============================================================
+   GOOGLE REVIEWS — drag-able horizontal stripe between break and
+   about. Center 3 cards fully visible; edges fade via mask
+   gradient. "Leave a Review" pill mirrors hero contact-link.
+   ============================================================ */
+.section--reviews {
+    position: relative;
+    background-color: var(--ink);
+    color: var(--cream);
+    padding: clamp(56px, 8vh, 96px) 0 clamp(48px, 6vh, 80px);
+    overflow: hidden;
+}
+
+.reviews__inner {
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(28px, 3.5vh, 44px);
+}
+
+/* ── Intro — centered stamp + Google mark + rating meta ────────── */
+.reviews__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 3vh, 32px);
+    text-align: center;
+}
+.reviews__intro .eyebrow-stamp { align-self: center; }
+.reviews__brand {
+    display: inline-flex;
+    color: var(--cream);
+}
+.reviews__brand svg {
+    width: clamp(48px, 5vw, 66px);
+    height: auto;
+}
+
+.reviews__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--cream);
+    line-height: 1;
+}
+.reviews__rating {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--cream);
+    line-height: 1;
+}
+.reviews__stars {
+    display: inline-flex;
+    align-items: center;
+    color: #f5b800;
+    font-size: 18px;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+.reviews__divider {
+    width: 1px;
+    height: 16px;
+    background-color: rgba(244, 242, 238, 0.25);
+}
+.reviews__label {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244, 242, 238, 0.7);
+}
+
+/* CTA pill — centered below the cards. Same construction as .hero__contact-link */
+.reviews__cta {
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    line-height: 1;
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+}
+.reviews__cta i {
+    font-size: 16px;
+    line-height: 1;
+}
+.reviews__cta:hover {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ── Track — horizontal scroller. Center cards are at full opacity;
+   left/right edges fade via CSS mask gradient. Snap-x for nice
+   keyboard/touch scrolling, drag-to-scroll added by JS. */
+.reviews__track {
+    display: flex;
+    gap: clamp(16px, 1.6vw, 24px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: clamp(16px, 6vw, 60px);
+    padding: 4px 0 16px;
+    cursor: grab;
+    -ms-overflow-style: none;     /* IE/Edge */
+    scrollbar-width: none;        /* Firefox */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        #000 8%,
+        #000 92%,
+        transparent 100%);
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        #000 8%,
+        #000 92%,
+        transparent 100%);
+}
+.reviews__track::-webkit-scrollbar { display: none; }
+.reviews__track.is-dragging { cursor: grabbing; }
+
+/* ── Card — fixed width so 3 cards fit comfortably across the
+   visible center of the track at typical viewport widths. */
+.review-card {
+    flex: 0 0 auto;
+    width: clamp(280px, 28vw, 360px);
+    min-height: 220px;
+    padding: 22px 24px 24px;
+    background-color: rgba(244, 242, 238, 0.04);
+    border: 1px solid rgba(244, 242, 238, 0.10);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-snap-align: start;
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+.review-card:hover {
+    background-color: rgba(244, 242, 238, 0.07);
+    border-color: rgba(244, 242, 238, 0.18);
+}
+
+.review-card__quote {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 0.6;
+    height: 22px;
+    color: #f5b800;
+}
+
+.review-card__stars {
+    display: block;
+    color: #f5b800;
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-top: -4px;
+}
+
+.review-card__text {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(244, 242, 238, 0.86);
+    flex: 1;
+    /* Cap to ~5 lines so card heights stay close to uniform */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.review-card__author {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(244, 242, 238, 0.10);
+}
+.review-card__name {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cream);
+}
+.review-card__date {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(244, 242, 238, 0.5);
+}
+
+/* ── Pagination dots — one per scroll page, active fills gold ───── */
+.reviews__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.reviews__dot {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background-color: rgba(244, 242, 238, 0.25);
+    cursor: pointer;
+    transition: background-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.reviews__dot:hover { background-color: rgba(244, 242, 238, 0.5); }
+.reviews__dot.is-active {
+    background-color: #f5b800;
+    transform: scale(1.15);
+}
+
+/* Reveal */
+.section--reviews .reviews__intro,
+.section--reviews .reviews__track,
+.section--reviews .reviews__dots,
+.section--reviews .reviews__cta {
+    opacity: 0;
+    transform: translateY(24px);
+    will-change: transform, opacity;
+    transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--reviews.is-visible .reviews__intro { opacity: 1; transform: translateY(0); transition-delay: 0.03s; }
+.section--reviews.is-visible .reviews__track { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
+.section--reviews.is-visible .reviews__dots  { opacity: 1; transform: translateY(0); transition-delay: 0.20s; }
+.section--reviews.is-visible .reviews__cta   { opacity: 1; transform: translateY(0); transition-delay: 0.28s; }
+
+@media (max-width: 600px) {
+    .review-card { width: 80vw; min-height: 200px; padding: 18px 20px 20px; }
+}
+
+
+/* ============================================================
+   PRESTIGE DIFFERENCE — combo of "Editorial Spread" (heading +
+   portrait stacked left, dropcap manifesto + stats + See More
+   CTA right) on top of "Year Monolith" atmosphere (huge italic
+   1977 watermark behind everything). Dark ink surface docks onto
+   the section break's bottom vignette.
+   ============================================================ */
+
+/* Eyebrow stamp inverted for dark surfaces */
+.eyebrow-stamp--light {
+    background-color: var(--cream);
+    color: var(--ink);
+}
+
+.section--difference {
+    position: relative;
+    background-color: var(--ink);
+    color: var(--cream);
+    padding: clamp(80px, 12vh, 140px) 0 clamp(96px, 14vh, 160px);
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* ── Background — about.jpg (Prestige showroom + lineup) under a
+   heavy ink overlay. Image is "felt" not "shown": you sense the
+   building and parked cars but the section reads as dark-ink
+   editorial. Radial vignette deepens the corners. */
+.diff__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+        radial-gradient(ellipse 110% 90% at 50% 50%,
+            rgba(28, 28, 28, 0.88) 0%,
+            rgba(28, 28, 28, 0.95) 60%,
+            rgba(28, 28, 28, 1) 100%),
+        url('../images/about.jpg');
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    pointer-events: none;
+}
+
+/* ── "1977" watermark — sits above the bg, below the content */
+.diff__year {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(280px, 36vw, 600px);
+    line-height: 0.85;
+    color: rgba(244, 242, 238, 0.08);
+    letter-spacing: -0.04em;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+}
+
+/* Inner — vertical flow: header (full-width) → body (2-col split).
+   Capped at 1280px (not container-wide 1684px) so the manifesto
+   doesn't sprawl on large screens. About is a compact editorial
+   moment, not a full-bleed spread. */
+.diff__inner {
+    position: relative;
+    z-index: 2;
+    width: min(94%, 1280px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(48px, 6vh, 80px);
+}
+
+/* ── Header — eyebrow + 2-line heading + thin rule ─────────── */
+.diff__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+    max-width: 940px;
+}
+
+.diff__heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    margin: 0;
+    color: var(--cream);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.diff__heading-primary {
+    font-size: clamp(34px, 3.4vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -0.018em;
+}
+.diff__heading-secondary {
+    font-style: italic;
+    font-size: clamp(18px, 1.7vw, 24px);
+    line-height: 1.3;
+    letter-spacing: -0.012em;
+    color: rgba(244, 242, 238, 0.7);
+}
+
+.diff__rule {
+    width: 80px;
+    height: 1px;
+    background-color: rgba(244, 242, 238, 0.4);
+    margin-top: 6px;
+}
+
+/* ── Body — manifesto on the left (wider), sidebar on the right
+   (stats stacked vertically + See More CTA at the bottom).
+   Sidebar has min 300px so it doesn't pinch at mid-widths;
+   manifesto ratio softened so dead space to the right of the
+   62ch text doesn't yawn open at ~1440px. */
+.diff__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(300px, 1fr);
+    gap: clamp(40px, 4.5vw, 80px);
+    align-items: start;
+}
+
+.diff__manifesto {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+
+.diff__para {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: rgba(244, 242, 238, 0.78);
+    margin: 0;
+    max-width: 62ch;
+}
+.diff__para--lead {
+    font-size: 16.5px;
+    color: rgba(244, 242, 238, 0.94);
+}
+
+.diff__dropcap {
+    float: left;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 84px;
+    line-height: 0.82;
+    color: var(--cream);
+    margin: 6px 18px 0 0;
+}
+
+/* Subtle inline "Read more" — sits below the manifesto, low-contrast
+   so it doesn't compete with the See More CTA in the sidebar. Hover
+   brightens text + slides arrow forward. */
+.diff__readmore {
+    align-self: flex-start;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244, 242, 238, 0.5);
+    text-decoration: none;
+    line-height: 1;
+    transition: color 0.35s ease;
+}
+.diff__readmore .ph {
+    font-size: 14px;
+    line-height: 1;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.diff__readmore:hover {
+    color: var(--cream);
+}
+.diff__readmore:hover .ph {
+    transform: translateX(4px);
+}
+
+/* Sidebar — vertical stack of stats with hairline separators,
+   then CTA at the bottom right-aligned within the column. */
+.diff__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(28px, 3.4vh, 40px);
+    min-width: 0;
+    align-items: flex-start;
+}
+
+.diff__stats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-top: 1px solid rgba(244, 242, 238, 0.18);
+}
+.diff__stats li {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    align-items: baseline;
+    gap: 18px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(244, 242, 238, 0.18);
+}
+.diff__stat-label {
+    font-family: var(--font-sans);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(244, 242, 238, 0.55);
+    line-height: 1;
+}
+.diff__stat-value {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.2;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+}
+
+/* Wrapper — See More + Contact Us sit in a flex row, wrap on narrow */
+.diff__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+/* CTA — see the .btn component in the INDEX_4 SYSTEM LAYER.
+   See More = .btn .btn--on-dark · Contact Us = .btn .btn--on-dark
+   .btn--ghost. (Previously 15/24px · 0.24em — now standard 17/26px
+   · 0.22em, in line with every other CTA on the page.) */
+
+/* ── Reveal — staircase fade-up. Year fades in first as ambient
+   ground, then header, then body content (manifesto + sidebar). */
+.section--difference .diff__year,
+.section--difference .eyebrow-stamp,
+.section--difference .diff__heading-primary,
+.section--difference .diff__heading-secondary,
+.section--difference .diff__rule,
+.section--difference .diff__manifesto,
+.section--difference .diff__sidebar {
+    opacity: 0;
+    transform: translateY(28px);
+    will-change: transform, opacity;
+    transition:
+        opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--difference.is-visible .diff__year,
+.section--difference.is-visible .eyebrow-stamp,
+.section--difference.is-visible .diff__heading-primary,
+.section--difference.is-visible .diff__heading-secondary,
+.section--difference.is-visible .diff__rule,
+.section--difference.is-visible .diff__manifesto,
+.section--difference.is-visible .diff__sidebar {
+    opacity: 1;
+    transform: translateY(0);
+}
+.section--difference.is-visible .diff__year             { transition-delay: 0.10s; }
+.section--difference.is-visible .eyebrow-stamp          { transition-delay: 0.18s; }
+.section--difference.is-visible .diff__heading-primary  { transition-delay: 0.26s; }
+.section--difference.is-visible .diff__heading-secondary{ transition-delay: 0.34s; }
+.section--difference.is-visible .diff__rule             { transition-delay: 0.44s; }
+.section--difference.is-visible .diff__manifesto        { transition-delay: 0.52s; }
+.section--difference.is-visible .diff__sidebar          { transition-delay: 0.62s; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1100px) {
+    .diff__body { grid-template-columns: 1fr; row-gap: 48px; }
+    .diff__sidebar { width: 100%; max-width: 480px; }
+    .diff__year { font-size: clamp(220px, 50vw, 420px); }
+}
+@media (max-width: 600px) {
+    .diff__stats li { grid-template-columns: 110px 1fr; gap: 12px; padding: 14px 0; }
+    .diff__dropcap { font-size: 64px; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 960px) {
+    :root {
+        --section-py: 96px;
+        --header-h: 76px;
+    }
+    .hero__inner {
+        gap: var(--sp-5);
+    }
+    .hero__meta  { gap: var(--sp-3); }
+    .logo img    { height: 48px; }
+    .site-header.is-scrolled .logo img { height: 42px; }
+    .hero__masthead { display: none; }
+    .site-menu__grid { grid-template-columns: 1fr; gap: var(--sp-5); }
+    .site-menu__link { font-size: clamp(34px, 8vw, 56px); }
+}
+
+
+/* ============================================================
+   INSTAGRAM — static curated feed. Light frame, square grid,
+   hover reveals a dark scrim + IG glyph. Heading uses the shared
+   section-heading scale; CTA is the standard .btn--solid.
+   ============================================================ */
+.section--instagram {
+    background-color: var(--bg);
+}
+.ig__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px 40px;
+    flex-wrap: wrap;
+    margin-bottom: clamp(32px, 5vh, 60px);
+}
+.ig__header-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+}
+.ig__heading {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.ig__heading-primary {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(36px, 3.4vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+}
+.ig__heading-secondary {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(20px, 1.9vw, 26px);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: var(--ink-muted);
+}
+
+.ig__handle {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+.ig__handle > i { font-size: 24px; line-height: 1; }
+.ig__handle-name { font-size: 15px; font-weight: 500; }
+.ig__handle-stat { font-size: 14px; color: var(--ink-muted); }
+.ig__handle-stat strong { font-weight: 600; color: var(--ink); }
+.ig__handle:hover { color: var(--ink-soft); }
+
+.ig__grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(8px, 1vw, 14px);
+}
+.ig__tile {
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: var(--bg-soft);
+}
+.ig__tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+}
+.ig__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(28, 28, 28, 0);
+    color: var(--cream);
+    opacity: 0;
+    transition:
+        background-color 0.45s var(--ease),
+        opacity 0.45s var(--ease);
+}
+.ig__overlay i { font-size: 30px; line-height: 1; }
+.ig__tile:hover img { transform: scale(1.06); }
+.ig__tile:hover .ig__overlay {
+    opacity: 1;
+    background-color: rgba(28, 28, 28, 0.34);
+}
+
+.ig__cta-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(32px, 5vh, 56px);
+}
+
+/* Reveal */
+.section--instagram .ig__header,
+.section--instagram .ig__grid,
+.section--instagram .ig__cta-wrap {
+    opacity: 0;
+    transform: translateY(24px);
+    will-change: transform, opacity;
+    transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section--instagram.is-visible .ig__header   { opacity: 1; transform: translateY(0); transition-delay: 0.05s; }
+.section--instagram.is-visible .ig__grid     { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
+.section--instagram.is-visible .ig__cta-wrap { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
+
+@media (max-width: 900px) {
+    .ig__grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 480px) {
+    .ig__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+
+/* ============================================================
+   FOOTER — dark continuation from About. Brand block + 4-col link
+   grid + bottom bar with copyright, social icons, legal.
+   ============================================================ */
+.site-footer {
+    background-color: var(--ink);
+    color: var(--cream);
+    padding: clamp(64px, 9vh, 100px) 0 clamp(28px, 4vh, 44px);
+}
+
+.site-footer__inner {
+    width: min(94%, var(--container-wide));
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(36px, 5vh, 56px);
+}
+
+/* ── Footer top — identity (wider) + 3 nav columns, one even grid ─ */
+.site-footer__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 3.5vw, 64px);
+    align-items: start;
+}
+.site-footer__nav { display: contents; }
+.site-footer__identity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+.site-footer__logo img {
+    height: 48px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+.site-footer__tagline {
+    margin: 0;
+    max-width: 360px;
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(244, 242, 238, 0.65);
+}
+
+.site-footer__rule {
+    height: 1px;
+    background-color: rgba(244, 242, 238, 0.14);
+}
+
+.site-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+}
+/* Drop the nav columns so their titles line up with the tagline's
+   first line (past the logo): logo height 48 + identity gap 20. */
+.site-footer__nav .site-footer__col { margin-top: 68px; }
+
+.site-footer__col-title {
+    margin: 0 0 4px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(244, 242, 238, 0.5);
+}
+
+.site-footer__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.site-footer__links a {
+    align-self: flex-start;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(244, 242, 238, 0.62);
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+.site-footer__links a:hover { color: var(--cream); }
+
+/* ── Visit column — address + hours ───────────────────────── */
+.site-footer__address {
+    margin: 0;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.site-footer__address p {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.4;
+    color: rgba(244, 242, 238, 0.85);
+}
+.site-footer__address a {
+    color: rgba(244, 242, 238, 0.85);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.site-footer__address a:hover { color: var(--cream); }
+
+/* ── Hours band — schedule on the left, CTA buttons on the right ─ */
+.site-footer__hours-band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(24px, 4vw, 64px);
+    flex-wrap: wrap;
+}
+.site-footer__actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* ── Hours strip — two condensed rows: label + schedule groups ─── */
+.site-footer__hours {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.site-footer__hours-row {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(16px, 2vw, 32px);
+    flex-wrap: wrap;
+}
+.site-footer__hours-label {
+    flex: 0 0 124px;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(244, 242, 238, 0.5);
+}
+.site-footer__hours-groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgba(244, 242, 238, 0.85);
+}
+.site-footer__hours-groups > span {
+    position: relative;
+    white-space: nowrap;
+}
+.site-footer__hours-groups > span:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 12px;
+    background-color: rgba(244, 242, 238, 0.18);
+}
+
+/* ── Social icons — small circle/round chip set ───────────── */
+.site-footer__social {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+.site-footer__social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(244, 242, 238, 0.22);
+    border-radius: 999px;
+    color: rgba(244, 242, 238, 0.78);
+    text-decoration: none;
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+}
+.site-footer__social i {
+    font-size: 18px;
+    line-height: 1;
+}
+.site-footer__social a:hover {
+    background-color: var(--cream);
+    border-color: var(--cream);
+    color: var(--ink);
+}
+
+/* ── Bottom bar — copyright + legal links ─────────────────── */
+.site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+.site-footer__copy {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: rgba(244, 242, 238, 0.5);
+    line-height: 1.4;
+}
+.site-footer__legal {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+}
+.site-footer__legal a {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: rgba(244, 242, 238, 0.55);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.site-footer__legal a:hover { color: var(--cream); }
+
+/* ── Powered-by line — quiet attribution at the very bottom ──── */
+.site-footer__powered {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: rgba(244, 242, 238, 0.32);
+    line-height: 1.4;
+}
+.site-footer__powered a {
+    color: #1c1c1c;
+    background-color: #9e9e9e;
+    padding: 1px 7px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+.site-footer__powered a:hover { background-color: #b5b5b5; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 880px) {
+    .site-footer__top { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 40px; }
+    .site-footer__identity { grid-column: 1 / -1; }
+    .site-footer__nav .site-footer__col { margin-top: 0; }
+}
+@media (max-width: 560px) {
+    .site-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .site-footer__hours-row { flex-direction: column; gap: 6px; }
+    .site-footer__hours-label { flex-basis: auto; }
+    .site-footer__bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .site-footer__legal { flex-wrap: wrap; gap: 14px; }
+}
+
+
+/* === Back to top === */
+.back-to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    text-decoration: none;
+    font-size: 22px;
+    line-height: 1;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 220ms ease, transform 220ms ease, background 200ms ease, visibility 220ms ease;
+    z-index: 1000;
+}
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.back-to-top:hover {
+    background: #000;
+}
+@media (max-width: 560px) {
+    .back-to-top { right: 16px; bottom: 16px; width: 44px; height: 44px; font-size: 20px; }
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   INDEX_4 SYSTEM LAYER
+   Continental type system · Variant A · readability + audit pass.
+   Merged in from the former inline <style> block in index_4.html
+   so there is one source of truth. The :root font tokens that
+   used to live here are now set directly in the :root at the top
+   of this file — no longer duplicated.
+   ════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────
+   HERO — louder variant + 940px container for 1-line primary
+   ───────────────────────────────────────────── */
+.hero__inner {
+    max-width: 940px;
+}
+.hero__headline {
+    font-weight: 700;
+    line-height: 1.0;
+}
+.hero__headline-primary {
+    font-size: clamp(48px, 5.4vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    text-transform: none;
+    text-wrap: balance;
+}
+.hero__headline-secondary {
+    font-size: clamp(26px, 2.6vw, 36px);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION HEADINGS — uniform pair
+   ───────────────────────────────────────────── */
+.inventory__heading-primary,
+.brands__heading-primary,
+.sell__heading-primary,
+.services__heading-primary,
+.events__heading-primary,
+.diff__heading-primary {
+    font-size: clamp(36px, 3.4vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    text-transform: none;
+    font-style: normal;
+}
+
+.inventory__heading-secondary,
+.brands__heading-secondary,
+.sell__heading-secondary,
+.services__heading-secondary,
+.events__heading-secondary,
+.diff__heading-secondary {
+    font-size: clamp(20px, 1.9vw, 26px);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+    text-transform: none;
+    font-style: normal;
+}
+
+.inventory__heading-secondary,
+.brands__heading-secondary,
+.services__heading-secondary,
+.events__heading-secondary {
+    color: var(--ink-muted);
+}
+.sell__heading-secondary    { color: rgba(255, 255, 255, 0.7); }
+.diff__heading-secondary    { color: rgba(244, 242, 238, 0.7); }
+
+/* ─────────────────────────────────────────────
+   CARD / ROW TITLES — Medium weight (refined, not bold)
+   ───────────────────────────────────────────── */
+.event-featured__title,
+.event-row__title,
+.service__title,
+.vehicle-card__name,
+.brand-card__name {
+    font-weight: 500;
+    letter-spacing: -0.015em;
+}
+
+/* ─────────────────────────────────────────────
+   EYEBROW — bigger, tighter, higher contrast
+   ───────────────────────────────────────────── */
+.eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--ink-soft);
+}
+
+/* ─────────────────────────────────────────────
+   INTROS — single size, tighter line height
+   ───────────────────────────────────────────── */
+.hero__intro,
+.inventory__intro,
+.brands__intro,
+.sell__intro,
+.services__intro-text,
+.events__intro-text {
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 400;
+}
+.diff__para {
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 400;
+}
+.diff__para--lead {
+    font-size: 17px;
+}
+
+/* Hero intro on video — guarantee contrast across all video frames */
+.hero__intro {
+    text-shadow: 0 1px 24px rgba(0, 0, 0, 0.55);
+}
+
+/* ─────────────────────────────────────────────
+   MENU / NAV
+   ───────────────────────────────────────────── */
+.site-menu__link {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-style: normal;
+}
+.site-nav__link {
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+/* ─────────────────────────────────────────────
+   BODY default — Regular (was Light)
+   ───────────────────────────────────────────── */
+body { font-weight: 400; }
+
+
+/* =============================================
+   DESIGN AUDIT FIXES — composition, rhythm, proportion
+   Applied: 01 · 02 · 03 · 06 · 07 · 08 · 09 · 10 · 12
+   ============================================= */
+
+:root {
+    --w-narrow:   540px;
+    --w-standard: 720px;
+}
+
+/* 01 — Hero column alignment: intro matches headline width (940px) */
+.hero__intro {
+    max-width: 940px;
+}
+
+/* 02 — Section padding: one symmetric formula for "normal" sections.
+   Sell + Services keep their sticky scroll runways. Inventory keeps
+   its header-offset top. */
+.section--brands,
+.section--difference {
+    padding: clamp(96px, 12vh, 144px) 0;
+}
+.section--inventory {
+    padding-top: calc(var(--header-h) + 56px);
+    padding-bottom: clamp(96px, 12vh, 144px);
+}
+
+/* 03 — Container widths: collapse to two tokens. */
+.inventory__heading,
+.inventory__intro,
+.sell__heading,
+.sell__intro,
+.events__heading,
+.diff__heading {
+    max-width: var(--w-standard);
+}
+.brands__header {
+    max-width: var(--w-standard);
+}
+.services__intro-text,
+.events__intro-text,
+.event-featured__text,
+.event-featured__inner {
+    max-width: var(--w-narrow);
+}
+
+/* 06 — Sell ↔ Services separator: hairline at the boundary so the
+   330vh stacked runway stops feeling like one endless screen. */
+.section--services {
+    border-top: 1px solid rgba(28, 28, 28, 0.12);
+}
+
+/* 07 — Events: balanced padding (was 180/56 — too asymmetric). */
+.events__inner {
+    padding: clamp(120px, 14vh, 160px) 0 clamp(96px, 12vh, 144px);
+}
+
+/* 08 — Heading-stack: unify the primary→secondary gap to 8px.
+   And the brands header stamp→heading→intro stack to 16px. */
+.hero__headline,
+.inventory__heading,
+.brands__heading,
+.sell__heading,
+.services__heading,
+.events__heading,
+.diff__heading {
+    gap: 8px;
+}
+.brands__header {
+    gap: 16px;
+}
+
+/* 09 — Hero inline CTA: drop the italic (Playfair-era flourish that
+   doesn't carry on Plus Jakarta). Clean Medium link + arrow. */
+.hero__cta-link {
+    font-style: normal;
+    font-weight: 500;
+}
+
+/* 10 — Vehicle card body: small horizontal inset so text steps back
+   from the photo edge — card reads as an object, not a block.
+   Preserve existing 16px padding-top (separation from media). */
+.vehicle-card__body {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* 12 — Stat label: lift opacity for AA contrast across photo frames. */
+.diff__stat-label {
+    color: rgba(244, 242, 238, 0.72);
+}
+
+/* ─────────────────────────────────────────────
+   Brand card — city marker under logo
+   Modest: small tracked uppercase. Fades on hover so the
+   "View Inventory" CTA takes the stage.
+   ───────────────────────────────────────────── */
+.brand-card__city {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    line-height: 1;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.brand-card__link:hover .brand-card__city {
+    opacity: 0;
+}
+
+/* ─────────────────────────────────────────────
+   Brand logo proportions — Gunther + Eccentrica are wide
+   wordmarks (9.15 and 5.19 aspect). Capped at 136px wide
+   (20 % smaller than the previous 170) so they sit modestly
+   against the wider Karma / Pagani neighbors.
+      Eccentrica: 136 / 5.19 = ~26h × 136w
+      Gunther:    136 / 9.15 = ~15h × 136w
+   ───────────────────────────────────────────── */
+.brand-card__media img[alt="Gunther Werks"],
+.brand-card__media img[alt="Eccentrica"] {
+    max-width: 136px;
+}
+
+/* ─────────────────────────────────────────────
+   Hero brand row — precise alignment + balanced visual mass.
+   All imgs share a uniform 56 px slot. object-fit:contain
+   centers each logo vertically inside the slot, so their
+   visual centers all sit on the same baseline. Visual mass
+   controlled by per-logo max-width (logos scale down to fit).
+                          aspect   rendered
+      Lamborghini (badge)   0.86     48 × 56  (fills slot)
+      Lotus       (badge)   1.0      56 × 56  (fills slot)
+      Czinger     (mid)     2.56     97 × 38
+      Pagani      (wide)    8.37    175 × 21
+      Karma       (wide)    5.32    140 × 26
+      Eccentrica  (wide)    5.19    135 × 26
+      Gunther     (xwide)   9.15    165 × 18
+   ───────────────────────────────────────────── */
+.hero__brand img {
+    height: 56px;
+    width: auto;
+    object-fit: contain;
+    object-position: center;
+}
+.hero__brand img[alt="Lamborghini"],
+.hero__brand img[alt="Lotus"] {
+    max-width: none;
+}
+.hero__brand img[alt="Czinger"]    { max-width: 97px;  }
+.hero__brand img[alt="Pagani"]     { max-width: 175px; }
+.hero__brand img[alt="Karma"]      { max-width: 140px; }
+.hero__brand img[alt="Eccentrica"] { max-width: 135px; }
+.hero__brand img[alt="Gunther Werks"]    { max-width: 165px; }
+
+/* Align the brand row by vertical center so logo midpoints
+   land on the same Y. Labels follow naturally below. */
+.hero__brands {
+    align-items: center;
+}
+
+/* Staggered reveal — items 6 + 7 continue the existing cascade. */
+.hero[data-active-slide="0"] .hero__brand:nth-child(6) { transition-delay: 1.05s; }
+.hero[data-active-slide="0"] .hero__brand:nth-child(7) { transition-delay: 1.15s; }
+
+/* ─────────────────────────────────────────────
+   Logo colors — uniform across each section.
+   Hero (dark video bg): pure #FFFFFF
+   Brands (Authorized House, light bg): pure #181818
+   ───────────────────────────────────────────── */
+.hero__brand img {
+    filter: brightness(0) invert(1);
+    opacity: 1;
+}
+.hero__brand-link:hover img { opacity: 1; }
+
+.brand-card__media img {
+    filter: brightness(0) invert(0.094);
+    opacity: 1;
+}
+.brand-card__link:hover .brand-card__media img {
+    opacity: 1;
+}
+
+/* ─────────────────────────────────────────────
+   Hero — Miami city marker under each logo.
+   Visible by default, fades out on hover so the
+   "View Inventory →" CTA takes the stage.
+   ───────────────────────────────────────────── */
+.hero__brand-sub-city {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    opacity: 1;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero__brand-link:hover .hero__brand-sub-city {
+    opacity: 0;
+}
+
+/* ─────────────────────────────────────────────
+   Smoother transitions — unified across hero + brands.
+      easing:   cubic-bezier(0.22, 1, 0.36, 1)  (ease-out-quint)
+      opacity:  0.55s
+      transform: 0.65s
+   Removes the whole-link lift on hero (only the logo lifts).
+   ───────────────────────────────────────────── */
+.hero__brand-link:hover { transform: none; }
+
+.hero__brand img,
+.brand-card__media img {
+    transition:
+        opacity   0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero__brand-link:hover img,
+.brand-card__link:hover .brand-card__media img {
+    transform: translateY(-3px);
+    opacity: 1;
+}
+
+.hero__brand-sub-city,
+.hero__brand-sub-hover,
+.brand-card__city,
+.brand-card__cta {
+    transition:
+        opacity   0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brand-card__link {
+    transition: background-color 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─────────────────────────────────────────────
+   Brands grid — 7 brands (was 5).
+   Desktop: single row of 7. Tablet: 4+3. Mobile: 2 cols.
+   Hairlines reset per breakpoint.
+   ───────────────────────────────────────────── */
+.brands__grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+@media (max-width: 1100px) {
+    .brands__grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .brand-card { border-right: 1px solid var(--rule); }
+    .brand-card:nth-child(4n),
+    .brand-card:last-child { border-right: none; }
+    .brand-card:nth-child(n+5) { border-top: 1px solid var(--rule); }
+}
+
+@media (max-width: 720px) {
+    .brands__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .brand-card { border-right: 1px solid var(--rule); }
+    .brand-card:nth-child(2n),
+    .brand-card:last-child { border-right: none; }
+    .brand-card:nth-child(n+3) { border-top: 1px solid var(--rule); }
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   COMPONENT — BUTTONS  (.btn)
+   One boutique-CTA component. Replaces the former per-section
+   copies: .inventory__cta · .sell__cta · .services__cta(--ghost)
+   · .diff__cta(--ghost). Pattern: 1px border, uppercase 11px /
+   0.22em label, a panel that slides in from the left on hover,
+   icon nudges 4px forward.
+       .btn            outline on a light surface (ink)        — default
+       .btn--solid     solid ink fill, cream text              — primary
+       .btn--on-dark   cream border/fill for dark surfaces
+       .btn--ghost     quieter border (secondary action)
+   Reveal-animation state stays on the section class (.sell__cta /
+   .services__cta) — see the reveal block just below.
+   ════════════════════════════════════════════════════════════ */
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 17px 26px;
+    background-color: transparent;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    line-height: 1;
+    flex-shrink: 0;
+    overflow: hidden;
+    z-index: 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--ink);
+    transform: translateX(-101%);
+    transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: -1;
+}
+.btn > span,
+.btn .ph {
+    position: relative;
+    z-index: 1;
+}
+.btn .ph {
+    font-size: 14px;
+    line-height: 1;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn:hover {
+    color: var(--bg);
+}
+.btn:hover::before {
+    transform: translateX(0);
+}
+.btn:hover .ph {
+    transform: translateX(4px);
+}
+
+/* Solid — ink fill by default, cream fill slides out on hover */
+.btn--solid {
+    background-color: var(--ink);
+    color: var(--bg);
+}
+.btn--solid::before {
+    background-color: var(--bg);
+}
+.btn--solid:hover {
+    color: var(--ink);
+}
+
+/* On dark surfaces — cream border/fill instead of ink */
+.btn--on-dark {
+    border-color: var(--cream);
+    color: var(--cream);
+}
+.btn--on-dark::before {
+    background-color: var(--cream);
+}
+.btn--on-dark:hover {
+    color: var(--ink);
+}
+
+/* On dark + solid — cream-filled primary on dark surfaces.
+   Combines existing modifiers: cream fill / ink text, inverts to
+   ink fill / cream text on hover via the shared ::before sweep. */
+.btn--on-dark.btn--solid {
+    background-color: var(--cream);
+    color: var(--ink);
+    border-color: var(--cream);
+}
+.btn--on-dark.btn--solid::before {
+    background-color: var(--ink);
+}
+.btn--on-dark.btn--solid:hover {
+    color: var(--cream);
+}
+
+/* Ghost — quieter border for the secondary action in a pair */
+.btn--ghost {
+    border-color: var(--rule-strong);
+}
+.btn--on-dark.btn--ghost {
+    border-color: rgba(244, 242, 238, 0.32);
+}
+.btn--on-dark.btn--ghost:hover {
+    border-color: var(--cream);
+}
+
+/* Reveal-animation state — these CTAs fade/slide in with their
+   section. The section class is kept as a 2nd class purely to
+   carry this; all visual styling comes from .btn above. Declared
+   after .btn so the transition shorthand (incl. reveal props) wins. */
+.sell__cta {
+    opacity: 0;
+    transform: translateY(60px);
+    will-change: transform, opacity;
+    transition:
+        opacity   0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s,
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s,
+        color     0.3s ease;
+}
+.section--sell.is-visible .sell__cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+    .sell__cta { opacity: 1; transform: none; }
+}
+/* Diff CTAs go full-width when the sidebar stacks on mobile */
+@media (max-width: 600px) {
+    .diff__ctas .btn { width: 100%; }
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   COMPONENT — VEHICLE CARD EXTENDED  (.vehicle-card--extended)
+   The SRP variant of the base .vehicle-card. Same photo + name
+   contract, but body sits on a cool-cream panel and carries
+   richer info: stock# · engine line · specs · color · trust
+   chips · price block · two CTAs. On hover the whole card lifts
+   ~4 px with a soft shadow — the one elevation exception on the
+   site, reserved for catalog cards. Homepage uses the flat base.
+   ════════════════════════════════════════════════════════════ */
+
+:root {
+    --surface-card: #fff;               /* unified card panel — homepage + SRP */
+    /* Soft diffused elevation — bigger blur, lower alpha = gentler shadow */
+    --card-lift:    0 24px 56px -20px rgba(28, 28, 28, 0.18);
+    /* Smoother easing — ease-out-expo (gentler tail than --ease's quint).
+       Longer duration so the lift feels considered, not snappy. */
+    --card-ease:    cubic-bezier(0.16, 1, 0.3, 1);
+    --card-dur:     0.6s;
+}
+
+/* Base .vehicle-card carries the F6F6F6 panel + 5px radius + the
+   hover lift. The --extended modifier adds generous padding + the
+   richer SRP body: title · 3-spec row · detail rows · price ·
+   CTAs · trust logos. Title + spec row are identical to the
+   homepage short card (.vehicle-card__name + .vehicle-card__specs). */
+.vehicle-card--extended .vehicle-card__body {
+    padding: 24px 22px;
+    gap: 18px;
+}
+
+/* Heading link — wraps the title, decoration-free */
+.vehicle-card__heading-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Detail rows — label : value pairs (Exterior / Interior / Engine / Stock) */
+.vehicle-card__details {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+.vehicle-card__details li {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 16px;
+    align-items: baseline;
+}
+.vehicle-card__detail-label {
+    font-family: var(--font-sans);
+    font-size: 13px;                 /* = t-small */
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--ink-muted);
+}
+.vehicle-card__detail-value {
+    font-family: var(--font-sans);
+    font-size: 13px;                 /* = t-small */
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--ink);
+}
+
+/* Price block — "Sale Price" label + figure, hairline above */
+.vehicle-card__price-block {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+}
+.vehicle-card__price-label {
+    font-family: var(--font-sans);
+    font-size: 12px;                 /* = t-eyebrow / t-caption */
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+/* .vehicle-card__price size/weight/family come from the TYPE SCALE
+   (.t-h3 join, 22px). Here just colour + tabular figures. */
+.vehicle-card__price {
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+}
+
+/* CTA group — INQUIRE + SEE PAYMENT stacked; START BUYING is a
+   separate full-width .btn below the trust logos. */
+.vehicle-card__ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.vehicle-card__ctas .btn,
+.vehicle-card__cta-full {
+    width: 100%;
+    padding: 14px 18px;
+}
+
+/* Trust logos — three white tiles carrying the real vendor marks
+   (CARFAX · AutoCheck · iPacket). Shown in colour, deliberately —
+   they read as third-party verification, not brand chrome. */
+.vehicle-card__trust {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+.vehicle-card__trust-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 92px;
+    padding: 8px;
+    background-color: transparent;       /* no white fill — logo sits on the card panel */
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+/* Hover — a soft gray fill lifts the tile off the white card panel
+   + the border darkens */
+.vehicle-card__trust-item:hover {
+    background-color: var(--bg);
+    border-color: var(--rule-strong);
+}
+.vehicle-card__trust-item img {
+    max-width: 100%;
+    max-height: 47px;            /* 67px − 30% */
+    width: auto;
+    object-fit: contain;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   TYPE SCALE — Continental.  THE single source of truth.
+   Ten steps, monotonic. Every heading / body / label on the
+   site must use one of these — never an off-scale px value.
+
+      STEP        FAMILY  SIZE                    USE
+      .t-display  PJS-700 clamp(48,5.4vw,80)      hero headline
+      .t-h1       PJS-700 clamp(36,3.4vw,50)      section heading
+      .t-h2       PJS-600 clamp(26,2.4vw,34)      large standalone heading
+      .t-h3       PJS-600 22px                    card / panel heading · price
+      .t-h4       PJS-600 18px                    card title · small heading
+      .t-lead     Inter-400 17px                  intro paragraph
+      .t-body     Inter-400 15px                  default body
+      .t-small    Inter-400 13px                  compact / secondary text
+      .t-caption  Inter-400 12px                  fine print
+      .t-eyebrow  Inter-500 12px upper 0.16em     label / eyebrow
+
+   Every .t-* resets margin:0 — spacing is the parent's job
+   (see HEADING STACK below). New pages: apply .t-* directly.
+   index_4 / inventory selectors are joined onto these rules so
+   there is exactly one set of numbers.
+   ════════════════════════════════════════════════════════════ */
+.t-display,
+.t-h1, .t-h2, .t-h3, .t-h4,
+.t-eyebrow, .t-micro,
+.t-lead, .t-body, .t-small, .t-caption {
+    margin: 0;
+}
+
+/* ── Display ── */
+.t-display,
+.hero__headline-primary {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(48px, 5.4vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+}
+
+/* ── H1 — section heading ── */
+.t-h1,
+.inventory__heading-primary,
+.brands__heading-primary,
+.sell__heading-primary,
+.services__heading-primary,
+.events__heading-primary,
+.diff__heading-primary {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(36px, 3.4vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+}
+
+/* ── H2 — large standalone heading ── */
+.t-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(26px, 2.4vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+/* ── H3 — card / panel heading, price ── */
+.t-h3,
+.vehicle-card__price {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+}
+
+/* ── H4 — card title, small heading ── */
+.t-h4,
+.vehicle-card__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+}
+
+/* ── Lead — intro paragraph ── */
+.t-lead,
+.diff__para--lead {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.65;
+}
+
+/* ── Body — default ── */
+.t-body,
+.hero__intro,
+.inventory__intro,
+.brands__intro,
+.sell__intro,
+.services__intro-text,
+.events__intro-text,
+.diff__para {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+/* ── Small — compact / secondary ── */
+.t-small {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+}
+
+/* ── Caption — fine print ── */
+.t-caption {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+}
+
+/* ── Eyebrow — label ── */
+.t-eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+/* ── Micro — smallest tier, for tiny tracked UI labels only
+   (filter group titles, chip text, stat labels). 11px is the
+   floor — nothing on the site goes below it. ── */
+.t-micro {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   HEADING STACK — the canonical spacing for a section / page
+   intro group: eyebrow-stamp → primary heading → secondary
+   heading → lead/intro. Use a flex-column wrapper with these
+   gaps. All .t-* and .eyebrow-stamp elements have margin:0,
+   so the parent's `gap` is the only spacing controller.
+
+   STACK PATTERN
+       stamp → primary heading       16 px
+       primary → secondary heading    8 px  (they read as one statement)
+       secondary → lead / intro      16 px
+
+   For a homepage section header (one heading) use a single
+   gap: 16px on the container. For a heading that splits into
+   primary + secondary spans, nest the spans inside a flex
+   column with its own gap: 8px (already set on .X__heading
+   in the INDEX_4 SYSTEM LAYER above).
+   ════════════════════════════════════════════════════════════ */
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+}
+.stack--tight { gap: 8px; }
+.stack--loose { gap: 24px; }
+
+
+/* ════════════════════════════════════════════════════════════
+   SITE-WIDE COMPACT HEADER  (.srp-header)
+   Slim fixed ink bar — applies to every page on the site
+   (homepage + inventory + future pages). Replaces the older
+   .site-header / .site-menu pattern. Class name kept as
+   .srp-header for legacy reasons; semantically it is THE site
+   header. Token: --header-h (72px).
+   ════════════════════════════════════════════════════════════ */
+.srp-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    height: var(--srp-header-h);
+    background-color: var(--header-bg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+.srp-header__inner {
+    width: min(94%, var(--container-wide));
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+}
+.srp-logo {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.srp-logo img {
+    height: 38px;
+    width: auto;
+    filter: brightness(0) invert(1);   /* cream on ink */
+}
+
+/* ── Nav ─────────────────────────────────────────────────── */
+.srp-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    margin-left: auto;
+}
+.srp-nav__link {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.62);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.25s var(--ease);
+}
+.srp-nav__link:hover { color: #fff; }
+
+/* ── INVENTORY dropdown — <details>, grouped (no JS) ──────── */
+.srp-drop {
+    position: relative;
+}
+.srp-drop__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.62);
+    cursor: pointer;
+    list-style: none;
+    white-space: nowrap;
+    transition: color 0.25s var(--ease);
+}
+.srp-drop__trigger::-webkit-details-marker { display: none; }
+.srp-drop[open] .srp-drop__trigger,
+.srp-drop__trigger:hover { color: #fff; }
+.srp-drop__caret {
+    font-size: 12px;
+    transition: transform 0.3s var(--ease);
+}
+.srp-drop[open] .srp-drop__caret { transform: rotate(180deg); }
+
+.srp-drop__panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--header-h);
+    background-color: #fff;
+    border-bottom: 1px solid var(--rule);
+    box-shadow: var(--pop);
+    z-index: 210;
+}
+/* Slide-down + fade on open. <details> renders the panel only when
+   [open], so the animation fires fresh each time the menu opens. */
+.srp-drop[open] .srp-drop__panel {
+    animation: srp-drop-in 0.42s var(--ease);
+}
+@keyframes srp-drop-in {
+    from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.srp-drop__inner {
+    width: min(92%, var(--container-max));
+    margin: 0 auto;
+    padding: var(--sp-4) 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: var(--sp-5);
+    align-items: start;
+}
+.srp-drop__col-title {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+}
+.srp-drop__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.srp-drop__item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 8px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 0.2s var(--ease);
+}
+.srp-drop__item:hover { background-color: rgba(28, 28, 28, 0.05); }
+.srp-drop__count {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+}
+.srp-drop__cta {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    padding-left: var(--sp-5);
+    border-left: 1px solid var(--rule);
+}
+.srp-drop__cta .btn { white-space: nowrap; }
+
+/* ── Header search ───────────────────────────────────────── */
+.srp-search {
+    position: relative;
+    flex-shrink: 0;
+}
+.srp-search__input {
+    width: 220px;
+    height: 40px;
+    padding: 0 14px 0 38px;
+    background-color: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 0;
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    letter-spacing: 0.01em;
+    transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease);
+}
+.srp-search__input::placeholder { color: rgba(255, 255, 255, 0.4); }
+.srp-search__input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.10);
+}
+.srp-search__icon {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+}
+
+/* Compact header responsive — match what search.css used */
+@media (max-width: 760px) {
+    .srp-header__inner { gap: var(--sp-3); }
+    .srp-nav { gap: var(--sp-3); }
+    .srp-search__input { width: 150px; }
+    .srp-nav__link { display: none; }    /* keep only Inventory dropdown + search */
+    .srp-drop__inner {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sp-3) var(--sp-4);
+        padding: var(--sp-3) 0;
+    }
+    .srp-drop__cta {
+        grid-column: 1 / -1;
+        border-left: none;
+        border-top: 1px solid var(--rule);
+        padding-left: 0;
+        padding-top: var(--sp-3);
+    }
+}
+@media (max-width: 480px) {
+    .srp-search { display: none; }
+}

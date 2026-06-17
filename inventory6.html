@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory — Prestige Imports</title>
+    <meta name="description" content="Browse the Prestige Imports inventory of luxury, exotic and collector automobiles. New Lamborghini, Pagani, Lotus, Karma, Czinger, Gunther, Eccentrica — and a curated pre-owned selection.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/thin/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+
+    <link rel="stylesheet" href="assets/css/home-v6.css">
+    <link rel="stylesheet" href="assets/css/search6.css">
+
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/search5.js" defer></script>
+</head>
+<body class="page-inventory">
+
+    <!-- Same header as index_6.html — transparent over content by default,
+         dark on scroll. On inventory the transparent state is inverted to
+         dark text (see .site-header rules in home-v6.css). -->
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a href="index_6.html" class="logo" aria-label="Prestige Imports — Home">
+                <img src="assets/images/prestige_logo.svg" alt="Prestige Imports">
+            </a>
+            <nav class="site-nav" aria-label="Primary">
+
+                <details class="srp-drop">
+                    <summary class="srp-drop__trigger site-nav__link is-active">
+                        <span>Inventory</span>
+                        <i class="ph ph-caret-down srp-drop__caret" aria-hidden="true"></i>
+                    </summary>
+                    <div class="srp-drop__panel">
+                      <div class="srp-drop__inner">
+
+                        <div class="srp-drop__col">
+                            <p class="srp-drop__col-title">Shop</p>
+                            <ul class="srp-drop__list">
+                                <li><a class="srp-drop__item" href="inventory6.html"><span>View All</span><span class="srp-drop__count">149</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?cond=new"><span>New</span><span class="srp-drop__count">61</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?cond=preowned"><span>Pre-Owned</span><span class="srp-drop__count">88</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?sort=new-arrivals"><span>New Arrivals</span><span class="srp-drop__count">14</span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="srp-drop__col">
+                            <p class="srp-drop__col-title">By Type</p>
+                            <ul class="srp-drop__list">
+                                <li><a class="srp-drop__item" href="inventory6.html?body=convertible"><span>Convertible</span><span class="srp-drop__count">31</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?body=coupe"><span>Coupe</span><span class="srp-drop__count">62</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?body=electric"><span>Electric</span><span class="srp-drop__count">11</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?body=hyper"><span>Hyper / Exotic</span><span class="srp-drop__count">9</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?body=sedan"><span>Sedan</span><span class="srp-drop__count">14</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?body=suv"><span>SUV</span><span class="srp-drop__count">28</span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="srp-drop__col">
+                            <p class="srp-drop__col-title">Our Brands</p>
+                            <ul class="srp-drop__list">
+                                <li><a class="srp-drop__item" href="inventory6.html?make=czinger"><span>Czinger</span><span class="srp-drop__count">2</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=eccentrica"><span>Eccentrica</span><span class="srp-drop__count">1</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=gunther"><span>Gunther</span><span class="srp-drop__count">2</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=karma"><span>Karma</span><span class="srp-drop__count">4</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=lamborghini"><span>Lamborghini</span><span class="srp-drop__count">44</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=lotus"><span>Lotus</span><span class="srp-drop__count">6</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=pagani"><span>Pagani</span><span class="srp-drop__count">3</span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="srp-drop__col">
+                            <p class="srp-drop__col-title">Pre-Owned Brands</p>
+                            <ul class="srp-drop__list">
+                                <li><a class="srp-drop__item" href="inventory6.html?make=bentley"><span>Bentley</span><span class="srp-drop__count">5</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=ferrari"><span>Ferrari</span><span class="srp-drop__count">7</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=mclaren"><span>McLaren</span><span class="srp-drop__count">6</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=mercedes-benz"><span>Mercedes-Benz</span><span class="srp-drop__count">15</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?make=porsche"><span>Porsche</span><span class="srp-drop__count">32</span></a></li>
+                                <li><a class="srp-drop__item" href="inventory6.html?all-makes"><span>All makes →</span><span class="srp-drop__count"></span></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="srp-drop__cta">
+                            <a class="btn btn--solid" href="inventory6.html">View All Inventory</a>
+                        </div>
+
+                      </div>
+                    </div>
+                </details>
+
+                <a href="index_6.html#sell" class="site-nav__link">Sell Your Vehicle</a>
+                <a href="index_6.html#service" class="site-nav__link">Service</a>
+                <a href="#" class="site-nav__link">Store</a>
+                <a href="#" class="site-nav__link">Research</a>
+                <a href="index_6.html#about" class="site-nav__link">About</a>
+            </nav>
+        </div>
+    </header>
+
+
+    <main class="srp-main">
+
+        <!-- ═══════════ INTRO ═══════════ -->
+        <section class="srp-intro" aria-labelledby="inventory-heading">
+            <div class="srp-intro__text">
+                <span class="eyebrow-stamp">Inventory</span>
+                <h1 class="t-h1" id="inventory-heading">The current collection.</h1>
+            </div>
+            <p class="srp-intro__count"><b>149</b> vehicles</p>
+        </section>
+
+
+        <!-- ═══════════ FILTER BAR ═══════════ -->
+        <div class="filter-bar" role="search" aria-label="Refine results">
+            <div class="filter-bar__inner">
+
+                <!-- YEAR -->
+                <details class="filter">
+                    <summary class="filter__trigger">
+                        <span>Year</span>
+                        <i class="ph ph-caret-down filter__caret" aria-hidden="true"></i>
+                    </summary>
+                    <div class="filter__panel">
+                        <p class="filter__group-title">Year range</p>
+                        <ul class="filter__list">
+                            <li><label class="filter__option"><input type="checkbox"> 2025 – 2026 <span class="filter__option-count">42</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox" checked> 2022 – 2024 <span class="filter__option-count">71</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> 2018 – 2021 <span class="filter__option-count">26</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Pre-2018 <span class="filter__option-count">10</span></label></li>
+                        </ul>
+                        <div class="filter__panel-foot">
+                            <button class="filter__clear" type="button">Clear</button>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- MAKE -->
+                <details class="filter">
+                    <summary class="filter__trigger">
+                        <span>Make</span>
+                        <i class="ph ph-caret-down filter__caret" aria-hidden="true"></i>
+                    </summary>
+                    <div class="filter__panel filter__panel--wide">
+                        <p class="filter__group-title">Make</p>
+                        <ul class="filter__list">
+                            <li><label class="filter__option"><input type="checkbox"> Bentley <span class="filter__option-count">5</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Czinger <span class="filter__option-count">2</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Eccentrica <span class="filter__option-count">1</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Ferrari <span class="filter__option-count">7</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Gunther <span class="filter__option-count">2</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Karma <span class="filter__option-count">4</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox" checked> Lamborghini <span class="filter__option-count">44</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Lotus <span class="filter__option-count">6</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> McLaren <span class="filter__option-count">6</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Mercedes-Benz <span class="filter__option-count">15</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Pagani <span class="filter__option-count">3</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Porsche <span class="filter__option-count">32</span></label></li>
+                        </ul>
+                        <div class="filter__panel-foot">
+                            <button class="filter__clear" type="button">Clear</button>
+                            <span class="t-caption">12 of 23</span>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- MODEL -->
+                <details class="filter">
+                    <summary class="filter__trigger">
+                        <span>Model</span>
+                        <i class="ph ph-caret-down filter__caret" aria-hidden="true"></i>
+                    </summary>
+                    <div class="filter__panel">
+                        <p class="filter__group-title">Lamborghini models</p>
+                        <ul class="filter__list">
+                            <li><label class="filter__option"><input type="checkbox"> Aventador <span class="filter__option-count">5</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Huracán <span class="filter__option-count">16</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Revuelto <span class="filter__option-count">8</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Temerario <span class="filter__option-count">1</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Urus <span class="filter__option-count">14</span></label></li>
+                        </ul>
+                        <div class="filter__panel-foot">
+                            <button class="filter__clear" type="button">Clear</button>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- TRIM -->
+                <details class="filter">
+                    <summary class="filter__trigger">
+                        <span>Trim</span>
+                        <i class="ph ph-caret-down filter__caret" aria-hidden="true"></i>
+                    </summary>
+                    <div class="filter__panel">
+                        <p class="filter__group-title">Trim</p>
+                        <ul class="filter__list">
+                            <li><label class="filter__option"><input type="checkbox"> Base <span class="filter__option-count">38</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Competizione <span class="filter__option-count">4</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> GT <span class="filter__option-count">9</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Performante <span class="filter__option-count">12</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> S <span class="filter__option-count">21</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> STO <span class="filter__option-count">6</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> SVJ <span class="filter__option-count">5</span></label></li>
+                        </ul>
+                        <div class="filter__panel-foot">
+                            <button class="filter__clear" type="button">Clear</button>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- ENGINE -->
+                <details class="filter">
+                    <summary class="filter__trigger">
+                        <span>Engine</span>
+                        <i class="ph ph-caret-down filter__caret" aria-hidden="true"></i>
+                    </summary>
+                    <div class="filter__panel">
+                        <p class="filter__group-title">Engine</p>
+                        <ul class="filter__list">
+                            <li><label class="filter__option"><input type="checkbox"> Electric <span class="filter__option-count">8</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Hybrid V6 <span class="filter__option-count">6</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> Flat-6 <span class="filter__option-count">24</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> V8 <span class="filter__option-count">31</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> V10 <span class="filter__option-count">22</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> V12 <span class="filter__option-count">29</span></label></li>
+                            <li><label class="filter__option"><input type="checkbox"> W16 <span class="filter__option-count">3</span></label></li>
+                        </ul>
+                        <div class="filter__panel-foot">
+                            <button class="filter__clear" type="button">Clear</button>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- ALL FILTERS — toggle pill; opens the full-width accordion below the row -->
+                <details class="filter filter--all">
+                    <summary class="filter__trigger">
+                        <i class="ph ph-sliders-horizontal" aria-hidden="true"></i>
+                        <span>All filters</span>
+                        <i class="ph ph-caret-down filter__caret" aria-hidden="true"></i>
+                    </summary>
+                </details>
+
+                <span class="filter-bar__spacer"></span>
+
+                <!-- SORT -->
+                <details class="sort">
+                    <summary class="sort__trigger">
+                        <span class="sort__label">Sort:</span>
+                        <span class="sort__value">Recently listed</span>
+                        <i class="ph ph-caret-down sort__caret" aria-hidden="true"></i>
+                    </summary>
+                    <div class="sort__panel">
+                        <a class="sort__option sort__option--active" href="#">Recently listed</a>
+                        <a class="sort__option" href="#">Relevance</a>
+                        <a class="sort__option" href="#">Price · low to high</a>
+                        <a class="sort__option" href="#">Price · high to low</a>
+                        <a class="sort__option" href="#">Year · newest first</a>
+                        <a class="sort__option" href="#">Mileage · lowest first</a>
+                    </div>
+                </details>
+
+            </div>
+
+            <!-- ALL FILTERS panel — full-width accordion, revealed when the
+                 "All filters" toggle in the row above is open. In normal flow,
+                 so opening pushes the chips + results down. -->
+            <div class="filter-all" data-all-filters>
+                <div class="filter-all__body">
+                    <div class="filter-all__grid">
+
+                        <div class="filter-all__col">
+                            <p class="filter__group-title">Body style</p>
+                            <ul class="filter__list">
+                                <li><label class="filter__option"><input type="checkbox"> Convertible <span class="filter__option-count">31</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Coupe <span class="filter__option-count">62</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Hyper / Exotic <span class="filter__option-count">9</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Roadster <span class="filter__option-count">5</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Sedan <span class="filter__option-count">14</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> SUV <span class="filter__option-count">28</span></label></li>
+                            </ul>
+                        </div>
+
+                        <div class="filter-all__col">
+                            <p class="filter__group-title">Exterior color</p>
+                            <ul class="filter__list">
+                                <li><label class="filter__option"><input type="checkbox"> Black <span class="filter__option-count">34</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Blue <span class="filter__option-count">14</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Green <span class="filter__option-count">6</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Red <span class="filter__option-count">18</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Silver / Grey <span class="filter__option-count">22</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> White <span class="filter__option-count">27</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Yellow <span class="filter__option-count">8</span></label></li>
+                            </ul>
+                        </div>
+
+                        <div class="filter-all__col">
+                            <p class="filter__group-title">Transmission</p>
+                            <ul class="filter__list">
+                                <li><label class="filter__option"><input type="checkbox"> Automatic <span class="filter__option-count">112</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Dual-clutch <span class="filter__option-count">28</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Manual <span class="filter__option-count">9</span></label></li>
+                            </ul>
+                        </div>
+
+                        <div class="filter-all__col">
+                            <p class="filter__group-title">Drivetrain</p>
+                            <ul class="filter__list">
+                                <li><label class="filter__option"><input type="checkbox"> All-wheel drive <span class="filter__option-count">86</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Four-wheel drive <span class="filter__option-count">15</span></label></li>
+                                <li><label class="filter__option"><input type="checkbox"> Rear-wheel drive <span class="filter__option-count">48</span></label></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="filter-all__foot">
+                        <button class="filter__clear" type="button">Reset all</button>
+                        <a class="btn btn--solid" href="#"><span>Show 149 results</span><i class="ph ph-caret-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active filter chips — seeded + maintained by search.js -->
+            <div class="filter-chips" aria-label="Active filters">
+                <button class="chip-clear" type="button">Clear all</button>
+            </div>
+
+        </div>
+
+
+        <!-- ═══════════ RESULTS ═══════════ -->
+        <section class="srp-results" aria-label="Inventory results">
+            <ul class="srp-grid">
+
+                <li>
+                    <article class="vehicle-card vehicle-card--extended">
+                        <div class="vehicle-card__media">
+                            <a class="vehicle-card__media-link" href="vehicle-inventory6.html" tabindex="-1" aria-hidden="true"><img src="assets/images/2024%20Lamborghini%20Revuelto.jpg" alt="2024 Lamborghini Revuelto" loading="lazy"></a>
+                            <span class="vehicle-card__status">
+                                <span class="vehicle-card__status-dot" aria-hidden="true"></span>
+                                Sale Pending
+                            </span>
+                            <div class="vehicle-card__actions" aria-label="Quick actions">
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-heart" aria-hidden="true"></i><span>Save</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-share-network" aria-hidden="true"></i><span>Share</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-chat-circle" aria-hidden="true"></i><span>Text</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vehicle-card__body">
+                            <a href="vehicle-inventory6.html" class="vehicle-card__heading-link">
+                                <h3 class="vehicle-card__name">2024 Lamborghini Revuelto</h3>
+                            </a>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>120 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
+                            </ul>
+                            <ul class="vehicle-card__details">
+                                <li><span class="vehicle-card__detail-label">Exterior</span><span class="vehicle-card__detail-value">Arancio Borealis</span></li>
+                                <li><span class="vehicle-card__detail-label">Interior</span><span class="vehicle-card__detail-value">Nero leather</span></li>
+                                <li><span class="vehicle-card__detail-label">Engine</span><span class="vehicle-card__detail-value">6.5L V12 Hybrid</span></li>
+                                <li><span class="vehicle-card__detail-label">Stock</span><span class="vehicle-card__detail-value">PR2024-01</span></li>
+                            </ul>
+                            <div class="vehicle-card__price-block">
+                                <span class="vehicle-card__price-label">Sale Price</span>
+                                <span class="vehicle-card__price">$645,000</span>
+                            </div>
+                            <div class="vehicle-card__ctas">
+                                <a href="#" class="btn btn--solid"><span>More Details</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="vehicle-card vehicle-card--extended">
+                        <div class="vehicle-card__media">
+                            <a class="vehicle-card__media-link" href="vehicle-inventory6.html" tabindex="-1" aria-hidden="true"><img src="assets/images/2024%20Pagani%20Utopia.webp" alt="2024 Pagani Utopia" loading="lazy"></a>
+                            <span class="vehicle-card__cert"><i class="ph-thin ph-shield-check" aria-hidden="true"></i>Prestige Certified</span>
+                            <div class="vehicle-card__actions" aria-label="Quick actions">
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-heart" aria-hidden="true"></i><span>Save</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-share-network" aria-hidden="true"></i><span>Share</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-chat-circle" aria-hidden="true"></i><span>Text</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vehicle-card__body">
+                            <a href="vehicle-inventory6.html" class="vehicle-card__heading-link">
+                                <h3 class="vehicle-card__name">2024 Pagani Utopia</h3>
+                            </a>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>85 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Manual</span></li>
+                            </ul>
+                            <ul class="vehicle-card__details">
+                                <li><span class="vehicle-card__detail-label">Exterior</span><span class="vehicle-card__detail-value">Aluminum</span></li>
+                                <li><span class="vehicle-card__detail-label">Interior</span><span class="vehicle-card__detail-value">Tobacco leather</span></li>
+                                <li><span class="vehicle-card__detail-label">Engine</span><span class="vehicle-card__detail-value">6.0L V12 Twin-Turbo</span></li>
+                                <li><span class="vehicle-card__detail-label">Stock</span><span class="vehicle-card__detail-value">PR2024-02</span></li>
+                            </ul>
+                            <div class="vehicle-card__price-block">
+                                <span class="vehicle-card__price-label">Sale Price</span>
+                                <span class="vehicle-card__price">$2,900,000</span>
+                            </div>
+                            <div class="vehicle-card__ctas">
+                                <a href="#" class="btn btn--solid"><span>More Details</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="vehicle-card vehicle-card--extended">
+                        <div class="vehicle-card__media">
+                            <a class="vehicle-card__media-link" href="vehicle-inventory6.html" tabindex="-1" aria-hidden="true"><img src="assets/images/2024%20Czinger%2021C.webp" alt="2024 Czinger 21C" loading="lazy"></a>
+                            <span class="vehicle-card__cert"><i class="ph-thin ph-shield-check" aria-hidden="true"></i>Prestige Certified</span>
+                            <div class="vehicle-card__actions" aria-label="Quick actions">
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-heart" aria-hidden="true"></i><span>Save</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-share-network" aria-hidden="true"></i><span>Share</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-chat-circle" aria-hidden="true"></i><span>Text</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vehicle-card__body">
+                            <a href="vehicle-inventory6.html" class="vehicle-card__heading-link">
+                                <h3 class="vehicle-card__name">2024 Czinger 21C</h3>
+                            </a>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>60 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Sequential</span></li>
+                            </ul>
+                            <ul class="vehicle-card__details">
+                                <li><span class="vehicle-card__detail-label">Exterior</span><span class="vehicle-card__detail-value">Carbon Fiber</span></li>
+                                <li><span class="vehicle-card__detail-label">Interior</span><span class="vehicle-card__detail-value">Black</span></li>
+                                <li><span class="vehicle-card__detail-label">Engine</span><span class="vehicle-card__detail-value">2.88L V8 Hybrid</span></li>
+                                <li><span class="vehicle-card__detail-label">Stock</span><span class="vehicle-card__detail-value">PR2024-03</span></li>
+                            </ul>
+                            <div class="vehicle-card__price-block">
+                                <span class="vehicle-card__price-label">Sale Price</span>
+                                <span class="vehicle-card__price">$2,000,000</span>
+                            </div>
+                            <div class="vehicle-card__ctas">
+                                <a href="#" class="btn btn--solid"><span>More Details</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="vehicle-card vehicle-card--extended">
+                        <div class="vehicle-card__media">
+                            <a class="vehicle-card__media-link" href="vehicle-inventory6.html" tabindex="-1" aria-hidden="true"><img src="assets/images/2023_Lamborghini_Huracan_STO_1.jpg" alt="2023 Lamborghini Huracán STO" loading="lazy"></a>
+                            <div class="vehicle-card__actions" aria-label="Quick actions">
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-heart" aria-hidden="true"></i><span>Save</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-share-network" aria-hidden="true"></i><span>Share</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-chat-circle" aria-hidden="true"></i><span>Text</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vehicle-card__body">
+                            <a href="vehicle-inventory6.html" class="vehicle-card__heading-link">
+                                <h3 class="vehicle-card__name">2023 Lamborghini Huracán STO</h3>
+                            </a>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>1,800 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Dual-clutch</span></li>
+                            </ul>
+                            <ul class="vehicle-card__details">
+                                <li><span class="vehicle-card__detail-label">Exterior</span><span class="vehicle-card__detail-value">Verde Mantis</span></li>
+                                <li><span class="vehicle-card__detail-label">Interior</span><span class="vehicle-card__detail-value">Black Alcantara</span></li>
+                                <li><span class="vehicle-card__detail-label">Engine</span><span class="vehicle-card__detail-value">5.2L V10</span></li>
+                                <li><span class="vehicle-card__detail-label">Stock</span><span class="vehicle-card__detail-value">PR2023-04</span></li>
+                            </ul>
+                            <div class="vehicle-card__price-block">
+                                <span class="vehicle-card__price-label">Sale Price</span>
+                                <span class="vehicle-card__price">$412,000</span>
+                            </div>
+                            <div class="vehicle-card__ctas">
+                                <a href="#" class="btn btn--solid"><span>More Details</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="vehicle-card vehicle-card--extended">
+                        <div class="vehicle-card__media">
+                            <a class="vehicle-card__media-link" href="vehicle-inventory6.html" tabindex="-1" aria-hidden="true"><img src="assets/images/2022%20Ferrari%20812%20Superfast.avif" alt="2022 Ferrari 812 Superfast" loading="lazy"></a>
+                            <span class="vehicle-card__cert"><i class="ph-thin ph-shield-check" aria-hidden="true"></i>Prestige Certified</span>
+                            <div class="vehicle-card__actions" aria-label="Quick actions">
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-heart" aria-hidden="true"></i><span>Save</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-share-network" aria-hidden="true"></i><span>Share</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-chat-circle" aria-hidden="true"></i><span>Text</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vehicle-card__body">
+                            <a href="vehicle-inventory6.html" class="vehicle-card__heading-link">
+                                <h3 class="vehicle-card__name">2022 Ferrari 812 Superfast</h3>
+                            </a>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>3,400 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Dual-clutch</span></li>
+                            </ul>
+                            <ul class="vehicle-card__details">
+                                <li><span class="vehicle-card__detail-label">Exterior</span><span class="vehicle-card__detail-value">Rosso Corsa</span></li>
+                                <li><span class="vehicle-card__detail-label">Interior</span><span class="vehicle-card__detail-value">Tan leather</span></li>
+                                <li><span class="vehicle-card__detail-label">Engine</span><span class="vehicle-card__detail-value">6.5L V12</span></li>
+                                <li><span class="vehicle-card__detail-label">Stock</span><span class="vehicle-card__detail-value">PR2022-05</span></li>
+                            </ul>
+                            <div class="vehicle-card__price-block">
+                                <span class="vehicle-card__price-label">Sale Price</span>
+                                <span class="vehicle-card__price">$389,000</span>
+                            </div>
+                            <div class="vehicle-card__ctas">
+                                <a href="#" class="btn btn--solid"><span>More Details</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="vehicle-card vehicle-card--extended">
+                        <div class="vehicle-card__media">
+                            <a class="vehicle-card__media-link" href="vehicle-inventory6.html" tabindex="-1" aria-hidden="true"><img src="assets/images/2024%20Lotus%20Emira%20First%20Edition.avif" alt="2024 Lotus Emira First Edition" loading="lazy"></a>
+                            <div class="vehicle-card__actions" aria-label="Quick actions">
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-heart" aria-hidden="true"></i><span>Save</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-share-network" aria-hidden="true"></i><span>Share</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-chat-circle" aria-hidden="true"></i><span>Text</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vehicle-card__body">
+                            <a href="vehicle-inventory6.html" class="vehicle-card__heading-link">
+                                <h3 class="vehicle-card__name">2024 Lotus Emira First Edition</h3>
+                            </a>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>450 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Manual</span></li>
+                            </ul>
+                            <ul class="vehicle-card__details">
+                                <li><span class="vehicle-card__detail-label">Exterior</span><span class="vehicle-card__detail-value">Hethel Yellow</span></li>
+                                <li><span class="vehicle-card__detail-label">Interior</span><span class="vehicle-card__detail-value">Black</span></li>
+                                <li><span class="vehicle-card__detail-label">Engine</span><span class="vehicle-card__detail-value">3.5L V6 Supercharged</span></li>
+                                <li><span class="vehicle-card__detail-label">Stock</span><span class="vehicle-card__detail-value">PR2024-06</span></li>
+                            </ul>
+                            <div class="vehicle-card__price-block">
+                                <span class="vehicle-card__price-label">Sale Price</span>
+                                <span class="vehicle-card__price">$108,500</span>
+                            </div>
+                            <div class="vehicle-card__ctas">
+                                <a href="#" class="btn btn--solid"><span>More Details</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="vehicle-card vehicle-card--extended">
+                        <div class="vehicle-card__media">
+                            <a class="vehicle-card__media-link" href="vehicle-inventory6.html" tabindex="-1" aria-hidden="true"><img src="assets/images/Karma%20GS-6.avif" alt="2024 Karma GS-6" loading="lazy"></a>
+                            <span class="vehicle-card__cert"><i class="ph-thin ph-shield-check" aria-hidden="true"></i>Prestige Certified</span>
+                            <div class="vehicle-card__actions" aria-label="Quick actions">
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-heart" aria-hidden="true"></i><span>Save</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-share-network" aria-hidden="true"></i><span>Share</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-chat-circle" aria-hidden="true"></i><span>Text</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vehicle-card__body">
+                            <a href="vehicle-inventory6.html" class="vehicle-card__heading-link">
+                                <h3 class="vehicle-card__name">2024 Karma GS-6</h3>
+                            </a>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>45 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Single-speed</span></li>
+                            </ul>
+                            <ul class="vehicle-card__details">
+                                <li><span class="vehicle-card__detail-label">Exterior</span><span class="vehicle-card__detail-value">Silver</span></li>
+                                <li><span class="vehicle-card__detail-label">Interior</span><span class="vehicle-card__detail-value">Black</span></li>
+                                <li><span class="vehicle-card__detail-label">Engine</span><span class="vehicle-card__detail-value">1.5L EV Range-Extender</span></li>
+                                <li><span class="vehicle-card__detail-label">Stock</span><span class="vehicle-card__detail-value">PR2024-07</span></li>
+                            </ul>
+                            <div class="vehicle-card__price-block">
+                                <span class="vehicle-card__price-label">Sale Price</span>
+                                <span class="vehicle-card__price">$96,000</span>
+                            </div>
+                            <div class="vehicle-card__ctas">
+                                <a href="#" class="btn btn--solid"><span>More Details</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="vehicle-card vehicle-card--extended">
+                        <div class="vehicle-card__media">
+                            <a class="vehicle-card__media-link" href="vehicle-inventory6.html" tabindex="-1" aria-hidden="true"><img src="assets/images/2024%20Lamborghini%20Revuelto.jpg" alt="2024 Lamborghini Revuelto" loading="lazy"></a>
+                            <div class="vehicle-card__actions" aria-label="Quick actions">
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-heart" aria-hidden="true"></i><span>Save</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-share-network" aria-hidden="true"></i><span>Share</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-chat-circle" aria-hidden="true"></i><span>Text</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vehicle-card__body">
+                            <a href="vehicle-inventory6.html" class="vehicle-card__heading-link">
+                                <h3 class="vehicle-card__name">2024 Lamborghini Revuelto</h3>
+                            </a>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>340 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Automatic</span></li>
+                            </ul>
+                            <ul class="vehicle-card__details">
+                                <li><span class="vehicle-card__detail-label">Exterior</span><span class="vehicle-card__detail-value">Nero Aldebaran</span></li>
+                                <li><span class="vehicle-card__detail-label">Interior</span><span class="vehicle-card__detail-value">Nero</span></li>
+                                <li><span class="vehicle-card__detail-label">Engine</span><span class="vehicle-card__detail-value">6.5L V12 Hybrid</span></li>
+                                <li><span class="vehicle-card__detail-label">Stock</span><span class="vehicle-card__detail-value">PR2024-08</span></li>
+                            </ul>
+                            <div class="vehicle-card__price-block">
+                                <span class="vehicle-card__price-label">Sale Price</span>
+                                <span class="vehicle-card__price">$668,000</span>
+                            </div>
+                            <div class="vehicle-card__ctas">
+                                <a href="#" class="btn btn--solid"><span>More Details</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+
+                <li>
+                    <article class="vehicle-card vehicle-card--extended">
+                        <div class="vehicle-card__media">
+                            <a class="vehicle-card__media-link" href="vehicle-inventory6.html" tabindex="-1" aria-hidden="true"><img src="assets/images/2023_Lamborghini_Huracan_STO_1.jpg" alt="2022 Lamborghini Huracán Tecnica" loading="lazy"></a>
+                            <div class="vehicle-card__actions" aria-label="Quick actions">
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-heart" aria-hidden="true"></i><span>Save</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-share-network" aria-hidden="true"></i><span>Share</span>
+                                </button>
+                                <button class="vehicle-card__action" type="button">
+                                    <i class="ph-thin ph-chat-circle" aria-hidden="true"></i><span>Text</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="vehicle-card__body">
+                            <a href="vehicle-inventory6.html" class="vehicle-card__heading-link">
+                                <h3 class="vehicle-card__name">2022 Lamborghini Huracán Tecnica</h3>
+                            </a>
+                            <ul class="vehicle-card__specs">
+                                <li class="spec"><i class="ph-thin ph-gauge" aria-hidden="true"></i><span>4,200 mi</span></li>
+                                <li class="spec"><i class="ph-thin ph-gear-six" aria-hidden="true"></i><span>Dual-clutch</span></li>
+                            </ul>
+                            <ul class="vehicle-card__details">
+                                <li><span class="vehicle-card__detail-label">Exterior</span><span class="vehicle-card__detail-value">Grigio Lynx</span></li>
+                                <li><span class="vehicle-card__detail-label">Interior</span><span class="vehicle-card__detail-value">Black</span></li>
+                                <li><span class="vehicle-card__detail-label">Engine</span><span class="vehicle-card__detail-value">5.2L V10</span></li>
+                                <li><span class="vehicle-card__detail-label">Stock</span><span class="vehicle-card__detail-value">PR2022-09</span></li>
+                            </ul>
+                            <div class="vehicle-card__price-block">
+                                <span class="vehicle-card__price-label">Sale Price</span>
+                                <span class="vehicle-card__price">$365,000</span>
+                            </div>
+                            <div class="vehicle-card__ctas">
+                                <a href="#" class="btn btn--solid"><span>More Details</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </li>
+
+            </ul>
+
+            <!-- Pagination -->
+            <nav class="pagination" aria-label="Results pagination">
+                <a class="pagination__link pagination__link--nav pagination__link--disabled" href="#" aria-disabled="true">← Prev</a>
+                <a class="pagination__link pagination__link--active" href="#" aria-current="page">1</a>
+                <a class="pagination__link" href="#">2</a>
+                <a class="pagination__link" href="#">3</a>
+                <a class="pagination__link" href="#">4</a>
+                <a class="pagination__link" href="#">5</a>
+                <span class="pagination__ellipsis" aria-hidden="true">…</span>
+                <a class="pagination__link" href="#">12</a>
+                <a class="pagination__link pagination__link--nav" href="#">Next →</a>
+            </nav>
+
+        </section>
+
+    </main>
+
+
+    <!-- ════════════════════════════════════════════════════════════
+         FOOTER — reused from home-v6.css (.site-footer)
+         ════════════════════════════════════════════════════════════ -->
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+
+            <div class="site-footer__top">
+
+                <div class="site-footer__identity">
+                    <a href="index_6.html" class="site-footer__logo" aria-label="Prestige Imports — Home">
+                        <img src="assets/images/prestige_logo.svg" alt="Prestige Imports">
+                    </a>
+                    <p class="site-footer__tagline">A second-generation, family-owned dealership for luxury, exotic, and collector automobiles. South Florida, since 1977.</p>
+                    <address class="site-footer__address">
+                        <p>14780 Biscayne Blvd<br>North Miami Beach, FL 33181</p>
+                        <p>
+                            <a href="tel:+18332906287">+1 (833) 290-6287</a>
+                        </p>
+                    </address>
+                    <ul class="site-footer__social" aria-label="Social media">
+                        <li>
+                            <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+                                <i class="ph-thin ph-instagram-logo" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
+                                <i class="ph-thin ph-facebook-logo" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube">
+                                <i class="ph-thin ph-youtube-logo" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                                <i class="ph-thin ph-linkedin-logo" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <nav class="site-footer__nav" aria-label="Footer navigation">
+
+                <div class="site-footer__col">
+                    <h3 class="site-footer__col-title">Inventory</h3>
+                    <ul class="site-footer__links">
+                        <li><a href="inventory6.html">All Inventory</a></li>
+                        <li><a href="inventory6.html?cond=new">New</a></li>
+                        <li><a href="inventory6.html?cond=preowned">Pre-Owned</a></li>
+                        <li><a href="inventory6.html?sort=new-arrivals">New Arrivals</a></li>
+                    </ul>
+                </div>
+
+                <div class="site-footer__col">
+                    <h3 class="site-footer__col-title">Service</h3>
+                    <ul class="site-footer__links">
+                        <li><a href="index_6.html#service">About Service</a></li>
+                        <li><a href="index_6.html#service">Schedule Appointment</a></li>
+                        <li><a href="index_6.html#service">Parts</a></li>
+                        <li><a href="index_6.html#sell">Sell Your Vehicle</a></li>
+                    </ul>
+                </div>
+
+                <div class="site-footer__col">
+                    <h3 class="site-footer__col-title">Connect</h3>
+                    <ul class="site-footer__links">
+                        <li><a href="index_6.html#about">About Us</a></li>
+                        <li><a href="index_6.html#about">Our Team</a></li>
+                        <li><a href="index_6.html#about">Heritage</a></li>
+                        <li><a href="index_6.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                </nav>
+
+            </div>
+
+            <div class="site-footer__rule" aria-hidden="true"></div>
+
+            <div class="site-footer__hours-band">
+                <div class="site-footer__hours">
+                    <div class="site-footer__hours-row">
+                        <span class="site-footer__hours-label">Store Hours</span>
+                        <span class="site-footer__hours-groups">
+                            <span>Mon – Fri &middot; 9:00 AM – 7:00 PM</span>
+                            <span>Saturday &middot; 10:00 AM – 6:00 PM</span>
+                            <span>Sunday &middot; Closed</span>
+                        </span>
+                    </div>
+                    <div class="site-footer__hours-row">
+                        <span class="site-footer__hours-label">Service Hours</span>
+                        <span class="site-footer__hours-groups">
+                            <span>Mon – Fri &middot; 8:00 AM – 5:30 PM</span>
+                            <span>Saturday – Sunday &middot; Closed</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="site-footer__actions">
+                    <a href="tel:+18332906287" class="btn btn--on-dark btn--solid">
+                        <span>Call</span>
+                        <i class="ph-thin ph-phone" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://maps.google.com/?q=14780+Biscayne+Blvd+North+Miami+Beach+FL" target="_blank" rel="noopener" class="btn btn--on-dark btn--ghost">
+                        <span>Get Directions</span>
+                        <i class="ph-thin ph-map-pin" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="site-footer__rule" aria-hidden="true"></div>
+
+            <div class="site-footer__bottom">
+                <p class="site-footer__copy">&copy; 2025 Prestige Imports. All rights reserved.</p>
+                <ul class="site-footer__legal">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Sitemap</a></li>
+                </ul>
+            </div>
+
+            <p class="site-footer__powered">Powered by <a href="https://allautonetwork.com" target="_blank" rel="noopener">All Auto Network</a></p>
+
+        </div>
+    </footer>
+
+</body>
+</html>
