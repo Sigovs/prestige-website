@@ -4673,3 +4673,193 @@ body { font-weight: 400; }
 @media (max-width: 480px) {
     .srp-search { display: none; }
 }
+
+
+/* ============================================================
+   PRESTIGE AUTO SPA & MARINE — dark band after reviews.
+   Two equal full-bleed media boxes, gold accent, Cormorant
+   display. Scoped tokens only (no global overrides).
+   ============================================================ */
+.section--spa {
+    --spa-gold: #c9a25a;
+    --spa-bg: #1c1c1c;
+    --spa-glow: #2b2b2b;
+    background-color: var(--spa-bg);
+    color: #fff;
+    padding: clamp(72px, 9vh, 104px) 0;
+    position: relative;
+    overflow: hidden;
+}
+/* Radial glow anchored low — soft lighter light rising from the bottom. */
+.section--spa::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 42%);
+    width: 130%;
+    height: 70%;
+    background: radial-gradient(ellipse at center,
+        var(--spa-glow) 0%,
+        rgba(43, 43, 43, 0.45) 38%,
+        rgba(43, 43, 43, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+.section--spa .container { position: relative; z-index: 1; }
+
+.spa__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.spa__header .eyebrow-stamp { align-self: center; }
+
+.spa__heading {
+    margin: var(--sp-3) 0 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(34px, 3.4vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -0.018em;
+    color: #fff;
+}
+.spa__heading-accent { color: #fff; }
+.spa__title-accent { color: #fff; }
+
+.spa__grid {
+    list-style: none;
+    max-width: 1080px;
+    margin: clamp(28px, 3.5vw, 44px) auto 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(18px, 2vw, 26px);
+}
+
+.spa__box { position: relative; }
+
+.spa__link {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #161616;
+    text-decoration: none;
+    color: #fff;
+}
+.spa__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top,
+        rgba(0, 0, 0, 0.90) 0%,
+        rgba(0, 0, 0, 0.62) 26%,
+        rgba(0, 0, 0, 0.25) 52%,
+        rgba(0, 0, 0, 0) 78%);
+}
+
+.spa__media { position: absolute; inset: 0; }
+.spa__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease);
+}
+
+.spa__label {
+    position: absolute;
+    z-index: 2;
+    left: clamp(20px, 3vw, 40px);
+    right: clamp(20px, 3vw, 40px);
+    bottom: clamp(14px, 1.8vw, 20px);
+    text-align: center;
+    transition: transform 0.5s var(--ease);
+}
+.spa__kicker {
+    display: block;
+    margin-bottom: 10px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #fff;
+}
+.spa__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.05;
+    letter-spacing: -0.018em;
+    color: #fff;
+}
+/* CTA = our .btn .btn--on-dark. Collapsed at rest so the title sits at
+   the very bottom; on hover it expands and lifts the title up. */
+.spa__cta {
+    margin-top: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.45s var(--ease), transform 0.45s var(--ease),
+                max-height 0.45s var(--ease), margin-top 0.45s var(--ease), color 0.3s ease;
+}
+
+.spa__link:hover .spa__media img,
+.spa__link:focus-visible .spa__media img { transform: scale(1.07); }
+.spa__link:hover .spa__label,
+.spa__link:focus-visible .spa__label { transform: translateY(-6px); }
+.spa__link:hover .spa__cta,
+.spa__link:focus-visible .spa__cta { opacity: 1; max-height: 64px; margin-top: 16px; transform: translateY(0); }
+
+.spa__link:focus-visible {
+    outline: 2px solid var(--spa-gold);
+    outline-offset: 3px;
+}
+
+/* Marine photo — bias the crop down so the full yacht stays in frame. */
+.spa__box:nth-child(2) .spa__media img { object-position: center 58%; }
+
+/* Scroll reveal — header items + boxes slide up from the bottom,
+   staggered, re-firing on re-entry (matches the site's [data-reveal]). */
+.section--spa .eyebrow-stamp,
+.section--spa .spa__heading,
+.section--spa .spa__box {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.section--spa.is-visible .eyebrow-stamp,
+.section--spa.is-visible .spa__heading,
+.section--spa.is-visible .spa__box {
+    opacity: 1;
+    transform: translateY(0);
+}
+.section--spa.is-visible .eyebrow-stamp        { transition-delay: 0.05s; }
+.section--spa.is-visible .spa__heading         { transition-delay: 0.13s; }
+.section--spa.is-visible .spa__box:nth-child(1){ transition-delay: 0.24s; }
+.section--spa.is-visible .spa__box:nth-child(2){ transition-delay: 0.34s; }
+
+@media (max-width: 820px) {
+    .spa__grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spa__media img,
+    .spa__label,
+    .spa__cta { transition: none; }
+    .spa__link:hover .spa__media img,
+    .spa__link:focus-visible .spa__media img { transform: none; }
+    .spa__link:hover .spa__label,
+    .spa__link:focus-visible .spa__label { transform: none; }
+    .spa__cta { opacity: 1; max-height: 64px; margin-top: 16px; transform: none; }
+    .section--spa .eyebrow-stamp,
+    .section--spa .spa__heading,
+    .section--spa .spa__box { opacity: 1; transform: none; transition: none; }
+}
