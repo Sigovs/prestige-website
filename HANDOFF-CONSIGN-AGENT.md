@@ -25,7 +25,7 @@ Update one existing WordPress page (theme by All Auto Network) to match an appro
 6. **Retail Your Ride picture** uses `mix-blend-mode: multiply` so its white background disappears into the page.
 7. **Brand logos**: the files listed in `HANDOFF-CONSIGN.md`, one colour via `.brand-card__media img { filter: brightness(0) }`, sizes per
    logo as in `consign.css`. Not links.
-8. Header and footer: the site's own. Sell Your Vehicle is the active menu item.
+8. Header and footer: the site's own. Do not mark any menu item active on this page (Consign is its own page).
 
 ## Acceptance checks (report each)
 - [ ] 1920, 1440, 1024, 768, 390 px: no horizontal scroll (`scrollWidth - clientWidth === 0`).

@@ -17,9 +17,9 @@ idx = (ROOT / 'index_6.html').read_text(encoding='utf-8')
 header = re.search(r'\n(\s*<header class="site-header">.*?</header>)', idx, re.S).group(1)
 footer = re.search(r'\n(\s*<!-- =+\s*\n\s*FOOTER.*?</footer>\s*<a href="#top" id="back-to-top".*?</a>\s*<script>.*?</script>)', idx, re.S).group(1)
 
-# Header links point at the portal's pages; Consign lives under Sell Your Vehicle.
+# Header links point at the portal's pages. No item is marked active: Consign is its own page (the devs link the menu).
 header = (header
-          .replace('href="#sell" class="site-nav__link"', 'href="sell-your-car.html" class="site-nav__link is-active" aria-current="page"')
+          .replace('href="#sell"', 'href="index_6.html#sell"')
           .replace('href="#service"', 'href="index_6.html#service"')
           .replace('href="#store"', 'href="index_6.html#store"')
           .replace('href="#research"', 'href="index_6.html#research"')

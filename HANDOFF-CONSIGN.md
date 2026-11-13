@@ -17,7 +17,7 @@ portal's design (the same system as the home page: `home-v6.css`).
 | 5 | Why Choose Prestige Imports' Consignment Program? | Dark section (the home page's "Prestige Difference" surface), 4 numbered points. |
 | 6 | We're Looking For... | The home page's brand grid, 10 logos: Porsche, Rolls Royce, Land Rover, Ferrari, McLaren, Lamborghini, BMW, Audi, Tesla, Mercedes-Benz. |
 
-Header and footer are the site's own (unchanged). In the menu, Sell Your Vehicle is the active item on this page.
+Header and footer are the site's own (unchanged). No menu item is highlighted on this page — Consign is a page of its own; link it in the menu as you see fit.
 
 ## The image upload
 The form's grey "Upload Images (up to 8) / Drag and Drop Here / UPLOAD" block is replaced with a dashed drop zone, a file icon, the
