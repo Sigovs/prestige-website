@@ -214,7 +214,7 @@ BODY = f'''
                     <span class="t-h1">Retail Your Ride.</span>
                     <span class="consign-pair__secondary">The Safe and Easy Way to Sell Your Car.</span>
                 </h2>
-                <img class="consign-retail__img" src="assets/images/consign/consign-retail.jpg" alt="A red and black Lamborghini Huracán, a yellow Aventador SVJ and a blue Aventador Ultimae Roadster" width="1920" height="640" loading="lazy">
+                <img class="consign-retail__img" src="assets/images/consign/consign-retail.png" alt="Three Lamborghinis: red and black, yellow and blue" width="1920" height="640" loading="lazy">
             </div>
         </section>
 
