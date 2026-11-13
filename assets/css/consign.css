@@ -1,0 +1,224 @@
+/* ============================================================
+   CONSIGN WITH PRESTIGE — page layer on top of home-v6.css + vdp6.css.
+   Only modifiers of existing components and page wrappers, on the
+   system's tokens (--bg*, --ink*, --cream, --rule*, --sp-*, --ease).
+   No new colours, fonts or spacing values.
+   ============================================================ */
+
+/* ── Page hero — the home hero's surface (ink + photo), static ── */
+.page-hero {
+    position: relative;
+    min-height: 72vh;
+    display: flex;
+    align-items: flex-end;
+    padding: calc(var(--header-h) + var(--sp-7)) 0 var(--sp-6);
+    background-color: var(--header-bg);
+    color: var(--cream);
+    overflow: hidden;
+}
+.page-hero__media { position: absolute; inset: 0; }
+.page-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+.page-hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28, 28, 28, 0.88) 0%, rgba(28, 28, 28, 0.35) 55%, rgba(28, 28, 28, 0.55) 100%);
+}
+.page-hero .container { position: relative; z-index: 1; }
+.page-hero .t-display { color: #fff; max-width: 11em; text-wrap: balance; }
+
+
+/* ── Form — the demo's fields on the portal's field style (.vdp-calc__*) ── */
+.consign-form { background-color: var(--bg); }
+.consign-form__form { display: flex; flex-direction: column; gap: var(--sp-5); }
+.consign-form__next { margin-top: var(--sp-3); }
+
+.vdp-calc__grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.vdp-calc__field--2 { grid-column: span 2; }
+.vdp-calc__input--area { resize: vertical; min-height: 96px; line-height: 1.5; }
+.vdp-calc__select:has(option[value=""]:checked) { color: var(--ink-muted); }
+
+.consign-form__agree { display: flex; align-items: flex-start; gap: 12px; color: var(--ink-soft); cursor: pointer; }
+.consign-form__agree input { width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--ink); flex-shrink: 0; }
+
+/* The site renders its own reCAPTCHA here — this only keeps its place */
+.consign-form__captcha {
+    width: 304px;
+    max-width: 100%;
+    height: 78px;
+    display: grid;
+    place-items: center;
+    border: 1px dashed var(--rule-strong);
+}
+.consign-form__actions { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.consign-form__actions [data-status]:empty { display: none; }
+
+/* Image upload — the demo's words; zone on the field hairline, the system .btn */
+.upload { display: flex; flex-direction: column; gap: var(--sp-2); }
+.upload__file { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.upload__zone {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-3);
+    border: 1px dashed var(--rule-strong);
+    transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+.upload__zone.is-over { border-color: var(--ink); background-color: var(--bg-soft); }
+.upload.is-full .upload__zone { opacity: 0.5; }
+.upload__icon { font-size: 36px; line-height: 1; color: var(--ink-soft); flex-shrink: 0; }
+.upload__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.upload__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--sp-1);
+}
+.upload__list:empty { display: none; }
+.upload__item { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background-color: var(--bg-deep); }
+.upload__item img { width: 100%; height: 100%; object-fit: cover; }
+.upload__rm {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--ink);
+    color: var(--cream);
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.85;
+}
+.upload__rm:hover, .upload__rm:focus-visible { opacity: 1; }
+
+
+/* ── How it works — the Services split: copy + cards | media ── */
+.consign-steps { background-color: var(--bg-soft); }
+.consign-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(40px, 5vw, 80px);
+    align-items: stretch;
+}
+.consign-steps__intro { color: var(--ink-soft); max-width: 560px; }
+.services__grid--steps { grid-template-columns: minmax(0, 1fr); }
+.service--static { opacity: 1; transform: none; cursor: default; background-color: var(--bg); }
+.service--static .service__body { max-width: 440px; }
+.consign-split__media { position: relative; overflow: hidden; align-self: stretch; min-height: 420px; }   /* as tall as the copy column */
+.consign-split__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 38% 50%;   /* keep the car's nose in frame when the column is narrow */
+}
+
+
+/* ── Heading pair — the system's uniform primary/secondary pair ── */
+.consign-pair { display: flex; flex-direction: column; gap: var(--sp-1); margin: 0; }
+.consign-pair__secondary {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 1.9vw, 26px);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+    color: var(--ink-muted);
+}
+.consign-pair--on-dark .t-h1 { color: var(--cream); }
+.consign-pair--on-dark .consign-pair__secondary { color: rgba(237, 234, 228, 0.6); }
+
+
+/* ── Retail Your Ride — the live picture sits on the page (white ground multiplied away) ── */
+.consign-retail { background-color: var(--bg); }
+.consign-retail__img {
+    width: 100%;
+    height: auto;
+    margin-top: var(--sp-5);
+    mix-blend-mode: multiply;
+}
+
+
+/* ── Why — the dark surface (Difference / Reviews) ── */
+.consign-why { background-color: var(--ink); color: var(--cream); }
+.consign-why__list {
+    list-style: none;
+    margin: var(--sp-6) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sp-4);
+}
+.consign-why__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    padding-top: var(--sp-3);
+    border-top: 1px solid rgba(237, 234, 228, 0.18);
+}
+.consign-why__num { color: rgba(237, 234, 228, 0.45); }
+.consign-why__item .t-h4 { color: var(--cream); }
+.consign-why__item .t-small { color: rgba(237, 234, 228, 0.62); }
+
+
+/* ── We're Looking For — the Brands grid, 10 makes in two rows of five ── */
+.consign-brands { background-color: var(--bg); }
+.consign-brands__heading { margin-bottom: var(--sp-5); }
+.brands__grid.brands__grid--ten { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.brands__grid--ten .brand-card { border-right: 1px solid var(--rule); border-top: none; }
+.brands__grid--ten .brand-card:nth-child(5n) { border-right: none; }
+.brands__grid--ten .brand-card:nth-child(n + 6) { border-top: 1px solid var(--rule); }
+.brands__grid--ten .brand-card__link { cursor: default; }
+.brands__grid--ten .brand-card__media img { height: 34px; max-width: 120px; }
+.brands__grid--ten .brand-card__media img[alt="Porsche"],
+.brands__grid--ten .brand-card__media img[alt="McLaren"] { height: 18px; max-width: 140px; }
+.brands__grid--ten .brand-card__media img[alt="Rolls Royce"],
+.brands__grid--ten .brand-card__media img[alt="Ferrari"],
+.brands__grid--ten .brand-card__media img[alt="Lamborghini"] { height: 40px; }
+.brands__grid--ten .brand-card__media img[alt="Land Rover"] { height: 46px; max-width: 92px; }
+.brands__grid--ten .brand-card__media img[alt="Audi"] { height: 24px; }
+.brands__grid--ten .brand-card__media img[alt="Tesla"] { height: 42px; }
+.brands__grid--ten .brand-card__media img[alt="BMW"],
+.brands__grid--ten .brand-card__media img[alt="Mercedes-Benz"] { height: 32px; }
+.brand-card__missing {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px dashed var(--rule-strong);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+}
+
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .vdp-calc__grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .consign-why__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--sp-5); }
+    .upload__list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+    .consign-split { grid-template-columns: minmax(0, 1fr); }
+    .consign-split__media { order: -1; min-height: 0; aspect-ratio: 5 / 4; }
+    .brands__grid.brands__grid--ten { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .brands__grid--ten .brand-card,
+    .brands__grid--ten .brand-card:nth-child(5n) { border-right: 1px solid var(--rule); border-top: none; }
+    .brands__grid--ten .brand-card:nth-child(2n) { border-right: none; }
+    .brands__grid--ten .brand-card:nth-child(n + 3) { border-top: 1px solid var(--rule); }
+}
+@media (max-width: 600px) {
+    .page-hero { min-height: 60vh; padding-bottom: var(--sp-5); }
+    .vdp-calc__grid--4, .vdp-calc__grid { grid-template-columns: minmax(0, 1fr); }
+    .vdp-calc__field--2 { grid-column: auto; }
+    .upload__zone { flex-wrap: wrap; }
+    .upload__zone .btn { width: 100%; }
+    .consign-why__list { grid-template-columns: minmax(0, 1fr); }
+}
